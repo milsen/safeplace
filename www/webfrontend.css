@@ -348,37 +348,3 @@ section.help section {
 .highlight {
 	background-color: yellow;
 }
-
-.xml-readout {
-	display: block;
-	padding: 1em;
-}
-
-.xml-readout code {
-	display: block;
-	margin-bottom: 1em;
-}
-
-.xml-readout code pre {
-	background: #eee;
-}
-
-.xml-readout code pre:hover {
-	background: #ddd;
-}
-
-code.numbered pre {
-	margin: 0;
-	position: relative;
-	white-space: pre-wrap;
-	padding-left: 5ch;
-}
-
-code.numbered pre:before {
-	position: absolute;
-	left: 0;
-	width: 4ch;
-	text-align: right;
-	content: attr(data-lineno);
-	color: rgba(0, 0, 0, 0.4);
-}
