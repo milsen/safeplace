@@ -82,15 +82,12 @@ table {
 	border-spacing: 0;
 }
 
-.knowledge-bases th,
 .analysis-table th {
 	text-align: left;
 	font-weight: normal;
 	border-bottom: 1px solid silver;
 }
 
-.knowledge-bases td,
-.knowledge-bases th,
 .analysis-table td,
 .analysis-table th {
 	padding: 0 1em;
@@ -101,8 +98,6 @@ table {
 	color: red;
 }
 
-.knowledge-bases th:nth-child(1),
-.knowledge-bases td:nth-child(1),
 .analysis-table th:nth-child(1),
 .analysis-table td:nth-child(1) {
 	border-left: none;
@@ -113,7 +108,6 @@ table {
 	width: 200px;
 }
 
-.knowledge-bases,
 .completed {
 	max-width: 900px;
 	margin: 0 auto;
@@ -257,37 +251,6 @@ table {
 
 .fact-state dd small:after {
 	content: '';
-}
-
-.action a,
-.action button {
-	border: 1px solid silver;
-	background: #eee;
-	margin: 0.2em;
-	padding: 0.1em 1em;
-	border-radius: 2px;
-	cursor: pointer;
-	color: black;
-	font: inherit;
-	display: inline-block;
-	text-decoration: none;
-	text-shadow: white 0 1px 0;
-}
-
-.action a:hover,
-.action button:hover {
-	background: #ddd;
-}
-
-.delete button {
-	background: #e33;
-	border-color: #c33;
-	color: white;
-	text-shadow: black 0 1px 0;
-}
-
-.delete button:hover {
-	background: #d33;
 }
 
 form > div {
