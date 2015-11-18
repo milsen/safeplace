@@ -9,7 +9,6 @@
 			<a href="<?=$this->attr($_SERVER['REQUEST_URI'])?>">Start over</a>
 			<a href="analyse.php?kb=<?=rawurlencode($_GET['kb'])?>">Analyse</a>
 			<a href="index.php">Upload</a>
-			<a href="#debug">Toggle debug</a>
 		</nav>
 		<?php if ($state): ?>
 		<header>
@@ -23,41 +22,7 @@
 				<pre><?=$exception->getTraceAsString()?></pre>
 			</div>
 		</section>
-		<?php if ($state): ?>
-		<aside id="debug-info">
-			<section class="state-info fact-state">
-				<h3>Facts</h3>
-				<dl>
-					<?php foreach($state->facts as $name => $value): ?>
-					<dt><?=$name?></dt>
-					<dd><?=$value?></dd>
-					<?php endforeach ?>
-				</dl>
-			</section>
-			
-			<section class="state-info goal-stack">
-				<h3>Goal stack</h3>
-				<ol>
-					<?php foreach ($state->goalStack as $goal): ?>
-					<li><?=$goal?></li>
-					<?php endforeach ?>
-				</ol>
-			</section>
-			
-			<section class="state-info rule-state">
-				<h3>Rules</h3>
-				<?php $formatter = new HTMLFormatter($state); ?>
-				<ul>
-					<?php foreach($state->rules as $rule): ?>
-					<li><?=$formatter->formatRule($rule)?></li>
-					<?php endforeach ?>
-				</ul>
-			</section>
-		</aside>
-		<?php endif ?>
-
-		<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-		<script>
+		<script src="//code.jquery.com/jquery-1.11.0.min.js">
 		/* when clicking on an item, select the accompanying radio-button
 		and submit the form. Unless the user clicks on a link. */
 		$('.question > .options > li')
@@ -73,46 +38,6 @@
 			});
 		
 		$('.question button[type=submit]').hide();
-
-		var panel = $('#debug-info');
-
-		var grippy = $('<div>').addClass('grippy').appendTo(panel);
-
-		var delta = 15;
-
-		function updateDebugPanelVisibility() {
-			console.log(parseInt(localStorage.debug));
-			$(document.body).toggleClass('show-debug-info', !!parseInt(localStorage.debug));
-
-			if (localStorage.debugPanelWidth)
-				panel.css('width', localStorage.debugPanelWidth);
-		}
-
-		updateDebugPanelVisibility();
-
-		$('a[href=#debug]').click(function(e) {
-			e.preventDefault();
-			localStorage.debug = parseInt(localStorage.debug) ? 0 : 1;
-			updateDebugPanelVisibility();
-		});
-
-		function resizeDebugPanel(e) {
-			localStorage.debugPanelWidth = Math.max(document.body.clientWidth - e.clientX + delta, 150);
-			panel.css('width', localStorage.debugPanelWidth);
-		}
-
-		function removeResizeListener() {
-			$(window)
-				.off('mousemove', resizeDebugPanel)
-				.off('mouseup', removeResizeListener);
-		}
-
-		grippy.mousedown(function(e) {
-			e.preventDefault();
-			jQuery(window)
-				.on('mousemove', resizeDebugPanel)
-				.on('mouseup', removeResizeListener);
-		});
 		</script>
 	</body>
 </html>
