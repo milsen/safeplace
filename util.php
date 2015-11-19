@@ -465,13 +465,3 @@ function dict_to_string($dict, $pair_format = '%s: %s')
 	}, array_keys($dict), array_values($dict)));
 }
 
-define('LOG_LEVEL_WARNING', 3);
-
-define('LOG_LEVEL_INFO', 2);
-
-define('LOG_LEVEL_VERBOSE', 1);
-
-interface Logger
-{
-	public function write($format, $arguments, $level);
-}
