@@ -42,38 +42,6 @@ if (PHP_SAPI === 'cli')
 	});
 }
 
-/**
- * Bind some arguments already to a function. The arguments which whom the function
- * finally is called are appended after the already bound arguments.
- * e.g. $a = curry('implode', ':') will return a function $a which then can be called
- * with the remaining missing arguments (an array in this example) and then will call
- * implode(':', supplied-array) eventually. Very handy in combination with array_map
- * and array_filter.
- * 
- * @param callable $function function
- * @param mixed $arg,... one or more arguments
- * @return callable
- */
-function curry($function, $arg)
-{
-	$bound_arguments = func_get_args();
-	array_shift($bound_arguments);
-
-	return function() use ($function, $bound_arguments) {
-		$call_arguments = func_get_args();
-		return call_user_func_array($function,
-			array_merge($bound_arguments, $call_arguments));
-	};
-}
-
-function compare($a, $b)
-{
-    if ($a == $b)
-        return 0;
-    
-    return $a < $b ? -1 : 1;
-}
-
 function array_filter_type($type, $array)
 {
 	$hits = array();
@@ -130,16 +98,6 @@ function iterator_first(Iterator $it)
 function iterator_map(Iterator $it, Callable $callback)
 {
 	return new CallbackMapIterator($it, $callback);
-}
-
-function unequals($a, $b)
-{
-	return $a != $b;
-}
-
-function pick($property, $object)
-{
-	return $object->$property;
 }
 
 class CallbackMapIterator extends IteratorIterator
@@ -292,66 +250,6 @@ class Stack extends SplStack implements Serializable
 	}
 }
 
-/**
- * Dit makeshift datatype lijkt nogal op C++'s pair class. Het is gewoon handig.
- * ArrayAccess interface is geïmplementeerd zodat je hem in combinatie met list($a, $b)
- * kan gebruiken.
- */
-class Pair implements ArrayAccess
-{
-	public $first;
-
-	public $second;
-
-	public function __construct($first = null, $second = null)
-	{
-		$this->first = $first;
-
-		$this->second = $second;
-	}
-
-	public function offsetExists($n)
-	{
-		return $n == 0 || $n == 1;
-	}
-
-	public function offsetGet($n)
-	{
-		if ($n == 0)
-			return $this->first;
-		
-		elseif ($n == 1)
-			return $this->second;
-		
-		else
-			throw new Exception('Index out of bounds exception');
-	}
-
-	public function offsetSet($n, $value)
-	{
-		if ($n == 0)
-			$this->first = $value;
-		
-		elseif ($n == 1)
-			$this->second = $value;
-		
-		else
-			throw new Exception('Index out of bounds exception');
-	}
-
-	public function offsetUnset($n)
-	{
-		if ($n == 0)
-			$this->first = null;
-		
-		elseif ($n == 1)
-			$this->second = null;
-		
-		else
-			throw new Exception('Index out of bounds exception');
-	}
-}
-
 class Template
 {
 	private $__TEMPLATE__;
@@ -437,23 +335,5 @@ function simplify(Condition $condition)
 		$condition = $simplified;
 
 	return $condition;
-}
-
-function to_debug_string($value)
-{
-	if ($value instanceof Traversable)
-		$value = iterator_to_array($value);
-
-	if (is_array($value))
-		return implode(', ', array_map('to_debug_string', $value));
-
-	return strval($value);
-}
-
-function dict_to_string($dict, $pair_format = '%s: %s')
-{
-	return implode(', ', array_map(function($key, $value) use ($pair_format) {
-		return sprintf($pair_format, $key, $value);
-	}, array_keys($dict), array_values($dict)));
 }
 
