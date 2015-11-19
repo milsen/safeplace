@@ -422,14 +422,6 @@ class Template
 	}
 }
 
-function verbose($state = null)
-{
-	static $verbose;
-	return $state === null
-		? $verbose
-		: $verbose = $state;
-}
-
 function first_found_path(array $possible_paths)
 {
 	foreach ($possible_paths as $path)

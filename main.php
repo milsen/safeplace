@@ -16,18 +16,10 @@ function usage($path)
 
 function main($argc, $argv)
 {
-	if ($argc < 2 || $argc > 3)
+	if ($argc !== 2)
+    {
 		usage($argv[0]);
-	
-	// Als '-v' is meegegeven tijdens het starten, ga in verbose mode
-	if ($argv[1] == '-v')
-	{
-		verbose(true);
-		$argc--;
-		array_shift($argv);
-	}
-	else
-		verbose(false);
+    }
 
 	// Reader voor de XML-bestanden
 	$reader = new KnowledgeBaseReader;
