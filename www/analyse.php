@@ -5,14 +5,9 @@ include '../solver.php';
 include '../reader.php';
 include '../formatter.php';
 
-if (!preg_match('/^[a-zA-Z0-9_\-\.]+\.xml$/i', $_GET['kb']))
-	die('Doe eens niet!');
-
 $reader = new KnowledgeBaseReader;
-$state = $reader->parse(first_found_path(array(
-	'./' . $_GET['kb'],
-	'../knowledgebases/' . $_GET['kb']
-)));
+$state = $reader->parse(first_found_path(
+	array(constant('MODIFIED_KB'),constant('DEFAULT_KB'))));
 
 class FactStatistics
 {

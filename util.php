@@ -1,5 +1,8 @@
 <?php
 
+define('DEFAULT_KB','./default-kb.xml');
+define('MODIFIED_KB','./modified-kb.xml');
+
 assert_options(ASSERT_BAIL, true);
 
 function get_error_enum($errno)

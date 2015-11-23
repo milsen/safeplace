@@ -28,7 +28,7 @@ function red_if_zero($value) {
 	</head>
 	<body>
 		<nav class="site-nav">
-			<a href="webfrontend.php?kb=<?=urlencode($_GET['kb'])?>">Run <?=$this->html($kb->title)?></a>
+			<a href="webfrontend.php">Run <?=$this->html($kb->title)?></a>
         	<a href="index.php">Upload</a>
 		</nav>
         
@@ -48,7 +48,7 @@ function red_if_zero($value) {
 		<?php foreach ($stats as $fact): ?>
 		<h3 id="var_<?=$this->id($fact->name)?>">
 			<?=$this->html($fact->name)?>
-			<small>(<a href="webfrontend.php?kb=<?=urlencode($_GET['kb'])?>&amp;goals=<?=urlencode($fact->name)?>">try to infer this fact</a>)</small>
+			<small>(<a href="webfrontend.php?goals=<?=urlencode($fact->name)?>">try to infer this fact</a>)</small>
 		</h3>
 		<table class="fact-analysis analysis-table">
 			<thead>
