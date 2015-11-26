@@ -29,14 +29,18 @@
 		<section class="upload-knowledge-base-form">
 			<h2>Run a knowledge base</h2>
 			<form method="post" enctype="multipart/form-data">
+				<div class="controls">
+					<button type="submit" name="action" value="run">Run</button>
+					<button type="submit" name="action" value="analyse">Analyse</button>
+					<button type="submit" name="action" value="download">Download</button>
+				</div>
 				<div>
 					<label for="input-knowledgebase">Knowledge base XML file:</label>
 					<input type="file" name="knowledgebase" id="input-knowledgebase">
 				</div>
-
 				<div class="controls">
-					<button type="submit" name="action" value="run">Run</button>
-					<button type="submit" name="action" value="analyse">Analyse</button>
+					<button type="submit" name="action" value="upload">Upload</button>
+					<button type="submit" name="action" value="reset">Reset to Default</button>
 				</div>
 			</form>
 		</section>
