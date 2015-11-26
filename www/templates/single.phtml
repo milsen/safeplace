@@ -27,7 +27,13 @@
 		<?php endif ?>
 
 		<section class="upload-knowledge-base-form">
-			<h2>Run a knowledge base</h2>
+			<?php if (current_kb() == DEFAULT_KB): ?>
+				<h1>Currently using the default database.</h1>
+			<?php elseif (current_kb() == MODIFIED_KB): ?>
+				<h1>Currently using a non-default database, last modified <?=date("d-m-Y, H:i:s.", filemtime(MODIFIED_KB))?></h1>
+			<?php else: ?>
+				<h1>A knowledge base error occurred. Please contact the system administrator.</h1>
+			<?php endif ?>
 			<form method="post" enctype="multipart/form-data">
 				<div class="controls">
 					<button type="submit" name="action" value="run">Run</button>
