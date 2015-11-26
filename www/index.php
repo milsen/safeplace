@@ -8,22 +8,34 @@ date_default_timezone_set('Europe/Amsterdam');
 
 $errors = array();
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST'
-	&& isset($_FILES['knowledgebase'])
-	&& process_file($_FILES['knowledgebase'], $errors))
+if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
-	switch ($_POST['action'])
-	{
-		case 'analyse':
-			header('Location: analyse.php');
-			break;
+	switch ($_POST['action']) {
+	case 'run':
+		header('Location: webfrontend.php');
+		exit;
+		break;
 
-		case 'run':
-			header('Location: webfrontend.php');
-			break;
+	case 'analyse':
+		header('Location: analyse.php');
+		exit;
+		break;
+
+	case 'download':
+		header('Location: download.php');
+		exit;
+		break;
+
+	case 'upload':
+		process_file($_FILES['knowledgebase'], $errors);
+		break;
+
+	case 'reset':
+		if (file_exists(MODIFIED_KB)) {
+			unlink(MODIFIED_KB);
+		}
+		break;
 	}
-
-	exit;
 }
 
 /**
