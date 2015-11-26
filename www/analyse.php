@@ -6,8 +6,7 @@ include '../reader.php';
 include '../formatter.php';
 
 $reader = new KnowledgeBaseReader;
-$state = $reader->parse(first_found_path(
-	array(constant('MODIFIED_KB'),constant('DEFAULT_KB'))));
+$state = $reader->parse(current_kb());
 
 class FactStatistics
 {

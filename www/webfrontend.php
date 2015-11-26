@@ -119,6 +119,5 @@ class WebFrontend
 }
 
 header('Content-Type: text/html; charset=UTF-8');
-$frontend = new WebFrontend(first_found_path(
-	array(constant('MODIFIED_KB'),constant('DEFAULT_KB'))));
+$frontend = new WebFrontend(current_kb());
 $frontend->main();

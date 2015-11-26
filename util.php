@@ -1,5 +1,6 @@
 <?php
 
+// define the file names of the default and modified databases
 define('DEFAULT_KB','./default-kb.xml');
 define('MODIFIED_KB','./modified-kb.xml');
 
@@ -323,15 +324,6 @@ class Template
 	}
 }
 
-function first_found_path(array $possible_paths)
-{
-	foreach ($possible_paths as $path)
-		if (file_exists($path))
-			return $path;
-
-	return null;
-}
-
 function simplify(Condition $condition)
 {
 	while (($simplified = $condition->simplify()) != $condition)
@@ -340,3 +332,14 @@ function simplify(Condition $condition)
 	return $condition;
 }
 
+// return the file name of the currently used database
+function current_kb()
+{
+	if (file_exists(MODIFIED_KB)) {
+		return MODIFIED_KB;
+	} else if (file_exists(DEFAULT_KB)) {
+		return DEFAULT_KB;
+	} else {
+		return null;
+	}
+}
