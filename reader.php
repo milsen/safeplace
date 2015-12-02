@@ -96,13 +96,6 @@ class KnowledgeBaseReader
 					$kb->goals->push($goal);
 					break;
 				
-				/*
-				case 'constraint':
-					$constraint = $this->parseConstraint($childNode);
-					$kb->constraints[] = $constraint;
-					break;
-				*/
-
 				case 'fact':
 					list($name, $value) = $this->parseFact($childNode);
 					$kb->facts[$name] = $value;
@@ -264,10 +257,6 @@ class KnowledgeBaseReader
 		return $goal;
 	}
 
-	private function parseConstraint($node)
-	{
-		//
-	}
 
 	private function parseRuleCondition($node)
 	{
@@ -516,25 +505,3 @@ class DOMElementIterator extends FilterIterator
 		return self::current()->nodeType == XML_ELEMENT_NODE;
 	}
 }
-
-/*
-function test_reader()
-{
-	include_once 'solver.php';
-
-	$reader = new KnowledgeBaseReader();
-
-	$kb = $reader->parse('regen.xml');
-
-	foreach ($kb->goals as $goal)
-	{
-		$result = $kb->infer($goal->proof);
-
-		printf("%s: %s\n",
-			$goal->description,
-			$reader->stringifyTruthValue($result));
-	}
-}
-
-test_reader();
-*/
