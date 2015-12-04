@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!ELEMENT knowledge (title?, description?, (fact|rule|question|goal)*) >
+<!ELEMENT knowledge (title?, description?, (fact|rule|question|building|checklist_item)*) >
 
 <!ELEMENT rule (description?, if, then) >
 <!ELEMENT question (description, option+) >
-
-<!ELEMENT goal (description, answer+) >
-<!ATTLIST goal name CDATA #REQUIRED >
 
 <!ELEMENT title (#PCDATA) >
 <!ELEMENT description (#PCDATA) >
 
 <!ELEMENT fact (#PCDATA) >
 <!ATTLIST fact name CDATA #REQUIRED>
+
+<!ELEMENT building (description?, risk+) >
+<!ATTLIST building name CDATA #REQUIRED >
+<!ATTLIST building value CDATA #REQUIRED >
+<!ELEMENT risk EMPTY>
+<!ATTLIST risk name CDATA #REQUIRED >
+
+<!ELEMENT checklist_item (description, advice) >
+<!ATTLIST checklist_item name CDATA #REQUIRED>
+<!ELEMENT advice (#PCDATA) >
 
 <!ELEMENT if (fact|and|or|not) >
 <!ELEMENT or ((fact|and|or|not)+) >
@@ -21,6 +28,3 @@
 <!ELEMENT then (fact+) >
 
 <!ELEMENT option (description, then) >
-
-<!ELEMENT answer (#PCDATA) >
-<!ATTLIST answer value CDATA #REQUIRED>
