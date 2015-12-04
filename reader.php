@@ -25,7 +25,9 @@ class KnowledgeBaseReader
 	{
 		$doc = new DOMDocument();
 
-		$kb = new KnowledgeState;
+		$kb = new KnowledgeState();
+
+		$checklist = new Checklist();
 
 		// backup-titel, een <title/>-element in het bestand zal dit overschrijven.
 		$kb->title = basename($file, '.xml');
@@ -38,9 +40,9 @@ class KnowledgeBaseReader
 		if (!$doc->firstChild)
 			return $this->logError('Could not parse xml document', E_USER_WARNING);
 
-		$this->parseKnowledgeBase($doc->firstChild, $kb);
+		$this->parseKnowledgeBase($doc->firstChild, $kb, $checklist);
 
-		return $kb;
+		return array($kb, $checklist);
 	}
 
 	/**
@@ -72,7 +74,7 @@ class KnowledgeBaseReader
 		return $errors;
 	}
 
-	private function parseKnowledgeBase($node, $kb)
+	private function parseKnowledgeBase($node, $kb, $checklist)
 	{
 		assert('$node->nodeName == "knowledge"',
 			'The document root node is not a <knowledge/> element');
@@ -91,6 +93,16 @@ class KnowledgeBaseReader
 					$kb->questions->push($question);
 					break;
 				
+				case 'building':
+					$building = $this->parseBuilding($childNode);
+					$kb->buildings->push($building);
+					break;
+
+				case 'checklist_item':
+					$checklist_item = $this->parseChecklistItem($childNode);
+					$checklist->push($checklist_item);
+					break;
+
 				case 'fact':
 					list($name, $value) = $this->parseFact($childNode);
 					$kb->facts[$name] = $value;
@@ -215,6 +227,87 @@ class KnowledgeBaseReader
 				$question->inferred_facts->push($inferred_fact);
 		
 		return $question;
+	}
+
+	private function parseBuilding($node)
+	{
+		$building = new Building();
+
+		$building->name = $node->getAttribute('name');
+
+		$building->value = $node->getAttribute('value');
+
+		foreach ($this->childElements($node) as $childNode)
+		{
+			switch ($childNode->nodeName)
+			{
+				case 'description':
+					$building->description = $this->parseText($childNode);
+					break;
+
+				case 'risk':
+					$building->risks->push($childNode->getAttribute('name'));
+					break;
+
+				default:
+					$this->logError("KnowledgeBaseReader::parseBuildingItem: "
+						. "Skipping unknown element '{$childNode->nodeName}'",
+						E_USER_NOTICE);
+					continue;
+			}
+		}
+
+		if (count($building->risks) === 0) {
+			$this->logError("KnowledgeBaseReader::parseBuildingItem: "
+				. "'building' node on line " . $node->getLineNo()
+				. " has no possible risks (missing 'risk' nodes)",
+				E_USER_WARNING);
+		}
+
+		return $building;
+	}
+
+	private function parseChecklistItem($node)
+	{
+		$checklist_item = new ChecklistItem();
+
+		$checklist_item->name = $node->getAttribute('name');
+
+		foreach ($this->childElements($node) as $childNode)
+		{
+			switch ($childNode->nodeName)
+			{
+				case 'description':
+					$checklist_item->description = $this->parseText($childNode);
+					break;
+
+				case 'advice':
+					$checklist_item->advice = $this->parseText($childNode);
+					break;
+
+				default:
+					$this->logError("KnowledgeBaseReader::parseChecklistItem: "
+						. "Skipping unknown element '{$childNode->nodeName}'",
+						E_USER_NOTICE);
+					continue;
+			}
+		}
+
+		if ($checklist_item->description === null) {
+			$this->logError("KnowledgeBaseReader::parseChecklistItem: "
+				. "'checklist_item' node on line " . $node->getLineNo()
+				. " is missing a 'description' element",
+				E_USER_WARNING);
+		}
+
+		if ($checklist_item->advice === null) {
+			$this->logError("KnowledgeBaseReader::parseChecklistItem: "
+				. "'checklist_item' node on line " . $node->getLineNo()
+				. " is missing an 'advice' element",
+				E_USER_WARNING);
+		}
+
+		return $checklist_item;
 	}
 
 	private function parseRuleCondition($node)
