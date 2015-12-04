@@ -91,11 +91,6 @@ class KnowledgeBaseReader
 					$kb->questions->push($question);
 					break;
 				
-				case 'goal':
-					$goal = $this->parseGoal($childNode);
-					$kb->goals->push($goal);
-					break;
-				
 				case 'fact':
 					list($name, $value) = $this->parseFact($childNode);
 					$kb->facts[$name] = $value;
@@ -221,42 +216,6 @@ class KnowledgeBaseReader
 		
 		return $question;
 	}
-
-	private function parseGoal($node)
-	{
-		$goal = new Goal;
-
-		$goal->name = $node->getAttribute('name');
-
-		foreach ($this->childElements($node) as $childNode)
-		{
-			switch ($childNode->nodeName)
-			{
-				case 'description':
-					$goal->description = $this->parseText($childNode);
-					break;
-				
-				case 'answer':
-					$goal->answers->push($this->parseAnswer($childNode));
-					break;
-				
-				default:
-					$this->logError("KnowledgeBaseReader::parseGoal: "
-						. "Skipping unknown element '{$childNode->nodeName}'",
-						E_USER_NOTICE);
-					continue;
-			}
-		}
-
-		if (count($goal->answers) === 0)
-			$this->logError("KnowledgeBaseReader::parseGoal: "
-				. "'goal' node on line " . $node->getLineNo()
-				. " has no possible outcomes (missing 'answer' nodes)",
-				E_USER_WARNING);
-
-		return $goal;
-	}
-
 
 	private function parseRuleCondition($node)
 	{
@@ -411,19 +370,6 @@ class KnowledgeBaseReader
 				E_USER_WARNING);
 
 		return $option;
-	}
-
-	private function parseAnswer($node)
-	{
-		$answer = new Answer;
-
-		$answer->value = $node->hasAttribute('value')
-			? $node->getAttribute('value')
-			: null;
-		
-		$answer->description = $this->parseText($node);
-
-		return $answer;
 	}
 
 	private function parseText(DOMNode $node)
