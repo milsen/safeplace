@@ -295,64 +295,6 @@ class Building
 	}
 }
 
-/**
- * Voor het gemak kan je ook goals in je knowledge base voor programmeren.
- * Als je dan main.php zonder te bewijzen goal aanroept gaat hij al deze
- * goals proberen af te leiden.
- *
- * <goal name="">
- *     <description/>
- *	   <answer/>
- * </goal>
- */
-class Goal
-{
-	public $name;
-	
-	public $description;
-
-	public $answers;
-
-	public function __construct()
-	{
-		$this->answers = new Set();
-	}
-
-	public function answer(KnowledgeState $state)
-	{
-		$state_value = $state->value($this->name);
-		
-		foreach ($this->answers as $answer)
-		{
-			$answer_value = $answer->value;
-
-			// If this is the default option, return it always.
-			if ($answer_value === null)
-				return $answer;
-
-			// If the value is a variable, try to resolve it.
-			if (KnowledgeState::is_variable($answer_value))
-				$answer_value = $state->resolve($answer_value);
-
-			if ($state_value == $answer_value)
-				return $answer;
-		}
-
-		// We didn't find an appropriate answer :O
-		return null;
-	}
-}
-
-/**
- * <answer value="value">message</answer>
- */
-class Answer
-{
-	public $value;
-
-	public $description;
-}
-
 abstract class TruthState
 {
 	public $factors;
