@@ -269,6 +269,33 @@ class FactCondition implements Condition
 }
 
 /**
+ * <building name="swimming_bath" value="Yes">
+ *    <description>
+ *        A swimming bath yields many dangers for children.
+ *    </description>
+ *    <risk name="drown">
+ *    <risk name="burning_eyes">
+ * </building>
+ */
+class Building
+{
+	public $name;
+
+	public $description;
+
+	public $value;
+
+	public $risks;
+
+	public $line_number;
+
+	public function __construct()
+	{
+		$this->risks = new Set();
+	}
+}
+
+/**
  * Voor het gemak kan je ook goals in je knowledge base voor programmeren.
  * Als je dan main.php zonder te bewijzen goal aanroept gaat hij al deze
  * goals proberen af te leiden.
