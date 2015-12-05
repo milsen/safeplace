@@ -4,9 +4,12 @@ include '../util.php';
 include '../solver.php';
 include '../reader.php';
 include '../formatter.php';
+include '../checklist.php';
 
 $reader = new KnowledgeBaseReader;
-$state = $reader->parse(current_kb());
+$kb = $reader->parse(current_kb());
+$state = $kb[0];
+$checklist = $kb[1];
 
 class FactStatistics
 {
@@ -19,7 +22,7 @@ class FactStatistics
 		$this->name = $name;
 
 		$this->values = new Map(function() {
-			return new FactValueStatistics;
+			return new FactValueStatistics();
 		});
 	}
 }
@@ -34,11 +37,11 @@ class FactValueStatistics
 
 	public function __construct()
 	{
-		$this->inferringRules = new Set;
+		$this->inferringRules = new Set();
 
-		$this->dependingRules = new Set;
+		$this->dependingRules = new Set();
 
-		$this->inferringQuestions = new Set;
+		$this->inferringQuestions = new Set();
 	}
 }
 
@@ -72,15 +75,16 @@ foreach ($state->questions as $question)
 				->inferringQuestions
 				->push($question);
 
-foreach ($state->goals as $goal)
-	foreach ($stats[$goal->name]->values as $possible_value)
+foreach ($state->buildings as $building)
+	foreach ($stats[$building->name]->values as $possible_value)
 		$possible_value
 			->dependingRules
-			->push($goal);
+			->push($building);
 
 $template = new Template('templates/analyse.phtml');
 $template->domain = KnowledgeDomain::deduceFromState($state);
 $template->kb = $state;
+$template->checklist = $checklist;
 $template->stats = $stats;
 
 echo $template->render();
