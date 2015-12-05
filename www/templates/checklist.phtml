@@ -1,0 +1,39 @@
+<section class="checklist">
+	<ol class="checklist_item">
+		<form method="post">
+		<?php $i = 0; ?>
+		<?php foreach ($checklist as $checklist_item): ?>
+		<li>
+			<label>
+				<?=$state->substitute_variables($checklist_item->description, ['Template', 'html'])?>
+				Risk Factor:
+				<?php
+				echo '
+				<input type="radio" name="radioGroup['.$i.']"
+				value="'.ChecklistItem::GREAT.'">
+				<input type="radio" name="radioGroup['.$i.']"
+				value="'.ChecklistItem::SMALL.'">
+				<input type="radio" name="radioGroup['.$i.']"
+				value="'.ChecklistItem::NEGLIGABLE.'" checked="checked" >';
+				$i++;
+
+
+				echo '
+				<br/>
+				Potential Injury:
+				<input type="radio" name="radioGroup['.$i.']"
+				value="'.ChecklistItem::GREAT.'">
+				<input type="radio" name="radioGroup['.$i.']"
+				value="'.ChecklistItem::SMALL.'" checked="checked" >';
+				$i++;
+				?>
+
+			</label>
+		</li>
+		<?php endforeach ?>
+		</form>
+	</ol>
+
+	<button type="submit">Continue</button>
+</section>
+
