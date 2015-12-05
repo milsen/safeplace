@@ -37,21 +37,47 @@ class WebFrontend
 	{
 		try
 		{
-			$this->state = $this->getState();
-
-			if (isset($_POST['answer']))
-				$this->state->apply(_decode($_POST['answer']));
-
-			$step = $this->solver->solveAll($this->state);
-
 			$page = new Template('templates/layout.phtml');
 
-			if ($step instanceof AskedQuestion) {
-				$this->question = $step;
-				$page->content = $this->display('templates/question.phtml');
-			} else {
+			// if a checklist was filled out, we process it and
+			// display the conclusion
+			if (isset($_POST['radioGroup'])) {
+
+				foreach ($_POST['radioGroup'] as $i => $checklist_answer) {
+
+					// the first radio group always concerns
+					// the risk factor, set it
+					if ($i % 2 == 0) {
+						$this->checklist->elem((int)($i/2))->setRiskFactor($checklist_answer);
+
+					} else {
+						// the second radio group always
+						// concerns the potential injury,
+						// set it
+						$this->checklist->elem((int)($i/2))->setPotentialInjury($checklist_answer);
+					}
+				}
+
+				$this->checklist->sort();
 				$page->content = $this->display('templates/completed.phtml');
-			}
+
+			} else {
+
+				// if an answer to a question given, use the answer for
+				// further fact deduction
+				if (isset($_POST['answer'])) {
+					$this->state->apply(_decode($_POST['answer']));
+				}
+
+				$step = $this->solver->solveAll($this->state);
+
+				if ($step instanceof AskedQuestion) {
+					$this->question = $step;
+					$page->content = $this->display('templates/question.phtml');
+				} else {
+					$this->checklist->create($this->state);
+					$page->content = $this->display('templates/checklist.phtml');
+				}
 			}
 		}
 		catch (Exception $e)
@@ -62,6 +88,8 @@ class WebFrontend
 
 		$page->state = $this->state;
 
+		$page->checklist = $this->checklist;
+
 		echo $page->render();
 	}
 
@@ -70,6 +98,8 @@ class WebFrontend
 		$template = new Template($template_file);
 
 		$template->state = $this->state;
+
+		$template->checklist = $this->checklist;
 
 		$template->question = $this->question;
 
