@@ -3,6 +3,7 @@
 include '../util.php';
 include '../solver.php';
 include '../reader.php';
+include '../checklist.php';
 
 function _encode($data)
 {
@@ -21,7 +22,7 @@ class WebFrontend
 
 	private $state;
 
-	private $kb_file;
+	private $checklist;
 
 	private $question;
 
@@ -29,7 +30,7 @@ class WebFrontend
 	{
 		$this->solver = new Solver();
 
-		$this->kb_file = $kb_file;
+		$this->getState($kb_file);
 	}
 
 	public function main()
@@ -75,18 +76,29 @@ class WebFrontend
 		return $template->render();
 	}
 
-	private function getState()
+	private function getState($kb_file)
 	{
-		if (isset($_POST['state']))
-			return _decode($_POST['state']);
-		else
-			return $this->createNewState();
+		if (!isset($_POST['state']) || !isset($_POST['checklist'])) {
+			$reader = new KnowledgeBaseReader();
+			$kb = $reader->parse($kb_file);
+		}
+
+		if (isset($_POST['state'])) {
+			$this->state = _decode($_POST['state']);
+		} else {
+			$this->state = $kb[0];
+			$this->pushGoals();
+		}
+
+		if (isset($_POST['checklist'])) {
+			$this->checklist = _decode($_POST['checklist']);
+		} else {
+			$this->checklist = $kb[1];
+		}
 	}
 
-	private function createNewState()
+	private function pushGoals()
 	{
-		$state = $this->readState($this->kb_file);
-
 		if (!empty($_GET['goals'])) {
 			foreach (explode(',', $_GET['goals']) as $goal) {
 				$this->state->goalStack->push($goal);
@@ -102,16 +114,6 @@ class WebFrontend
 				}
 			}
 		}
-
-		return $state;
-	}
-
-	private function readState($file)
-	{
-		$reader = new KnowledgeBaseReader;
-		$state = $reader->parse($file);
-
-		return $state;
 	}
 }
 
