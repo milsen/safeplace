@@ -233,6 +233,21 @@ class Set implements IteratorAggregate, Countable
 	{
 		return $this->count() === 0;
 	}
+
+	public function elem($index)
+	{
+		return $this->values[$index];
+	}
+
+	/**
+	 * Sort the set using a given comparison-function.
+	 *
+	 * @return void
+	 */
+	public function sort(callable $func)
+	{
+		usort($this->values, $func);
+	}
 }
 
 /**
