@@ -27,14 +27,13 @@ class WebFrontend
 
 	public function __construct($kb_file)
 	{
+		$this->solver = new Solver();
+
 		$this->kb_file = $kb_file;
 	}
 
 	public function main()
 	{
-
-		$this->solver = new Solver();
-
 		try
 		{
 			$this->state = $this->getState();
