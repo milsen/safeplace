@@ -3,6 +3,7 @@
 include '../util.php';
 include '../solver.php';
 include '../reader.php';
+include '../checklist.php';
 
 date_default_timezone_set('Europe/Amsterdam');
 
