@@ -87,19 +87,21 @@ class WebFrontend
 	{
 		$state = $this->readState($this->kb_file);
 
-		if (!empty($_GET['goals']))
-			foreach (explode(',', $_GET['goals']) as $goal)
-				$state->goalStack->push($goal);
-		else
-			foreach ($state->goals as $goal)
-			{
-				$state->goalStack->push($goal->name);
-
-				// Also push any answer values that are variables as goals to be solved.
-				foreach ($goal->answers as $answer)
-					if (KnowledgeState::is_variable($answer->value))
-						$state->goalStack->push(KnowledgeState::variable_name($answer->value));
+		if (!empty($_GET['goals'])) {
+			foreach (explode(',', $_GET['goals']) as $goal) {
+				$this->state->goalStack->push($goal);
 			}
+		} else {
+			foreach ($this->state->buildings as $building) {
+				$this->state->goalStack->push($building->name);
+
+				// Also push the building's answer value (if it
+				// is a variable) as a goal to be solved.
+				if (KnowledgeState::is_variable($building->value)) {
+					$this->state->goalStack->push(KnowledgeState::variable_name($building->value));
+				}
+			}
+		}
 
 		return $state;
 	}

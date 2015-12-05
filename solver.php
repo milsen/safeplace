@@ -451,7 +451,7 @@ class KnowledgeState
 
 	public $questions;
 
-	public $goals;
+	public $buildings;
 
 	public $solved;
 
@@ -467,7 +467,7 @@ class KnowledgeState
 
 		$this->questions = new Set();
 
-		$this->goals = new Set();
+		$this->buildings = new Set();
 
 		$this->solved = new Set();
 
