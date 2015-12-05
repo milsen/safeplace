@@ -23,6 +23,8 @@ class WebFrontend
 
 	private $kb_file;
 
+	private $question;
+
 	public function __construct($kb_file)
 	{
 		$this->kb_file = $kb_file;
@@ -44,10 +46,13 @@ class WebFrontend
 
 			$page = new Template('templates/layout.phtml');
 
-			if ($step instanceof AskedQuestion)
-				$page->content = $this->displayQuestion($step);
-			else
-				$page->content = $this->displayConclusions();
+			if ($step instanceof AskedQuestion) {
+				$this->question = $step;
+				$page->content = $this->display('templates/question.phtml');
+			} else {
+				$page->content = $this->display('templates/completed.phtml');
+			}
+			}
 		}
 		catch (Exception $e)
 		{
@@ -60,22 +65,13 @@ class WebFrontend
 		echo $page->render();
 	}
 
-	private function displayQuestion(AskedQuestion $question)
+	private function display($template_file)
 	{
-		$template = new Template('templates/question.phtml');
+		$template = new Template($template_file);
 
 		$template->state = $this->state;
 
-		$template->question = $question;
-
-		return $template->render();
-	}
-
-	private function displayConclusions()
-	{
-		$template = new Template('templates/completed.phtml');
-
-		$template->state = $this->state;
+		$template->question = $this->question;
 
 		return $template->render();
 	}
