@@ -1,6 +1,55 @@
 <?php
 
 /**
+ * This is a sorted Set of ChecklistItems which store questions and advice
+ * concerning safety measures and possible risks in a building.
+ */
+class Checklist extends Set
+{
+	/**
+	 * Turn this Checklist of all possible ChecklistItems into one that only
+	 * contains the ChecklistItems associated with Buildings deduced by the
+	 * Solver.
+	 *
+	 * @param $state KnowledgeState that is checked for deduced Buildings.
+	 * @return void
+	 */
+	public function create(KnowledgeState $state)
+	{
+		$relevant_risks = new Set();
+
+		// for each building that was deduced from rules and facts,
+		// store the names of its associated risks in relevant_risks
+		foreach ($state->buildings as $building) {
+			if ($state->value($building->name) == $building->value){
+				$relevant_risks->pushAll($building->risks);
+			}
+		}
+
+		// delete all checklist_items from our checklist whose names are
+		// not in relevant_risks
+		foreach ($this as $checklist_item) {
+			if (!$relevant_risks->contains($checklist_item->name)) {
+				parent::remove($checklist_item);
+			}
+		}
+	}
+
+	/**
+	 * Sort this Checklist using strcmp() on the security_levels of the
+	 * ChecklistItems.
+	 */
+	public function sort() {
+		parent::sort(function($a, $b) {
+			return strcmp(
+				$a->getSecurityLevel(),
+				$b->getSecurityLevel()
+			);
+		});
+	}
+}
+
+/**
  * <checklist_item name="hand_burn">
  *    <description>
  *	  Are children able to reach hot cooking plates?
