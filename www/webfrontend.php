@@ -58,7 +58,7 @@ class WebFrontend
 					}
 				}
 
-				$this->checklist->sort();
+				$this->checklist->sortBySecurityLevel();
 				$page->content = $this->display('templates/completed.phtml');
 
 			} else {

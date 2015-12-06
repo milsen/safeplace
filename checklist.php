@@ -39,7 +39,7 @@ class Checklist extends Set
 	 * Sort this Checklist using strcmp() on the security_levels of the
 	 * ChecklistItems.
 	 */
-	public function sort() {
+	public function sortBySecurityLevel() {
 		parent::sort(function($a, $b) {
 			return strcmp(
 				$a->getSecurityLevel(),
