@@ -46,6 +46,19 @@ class Checklist extends Set
 			);
 		});
 	}
+
+	/**
+	 * Sort this Checklist using strcmp() on the descriptions of the
+	 * ChecklistItems.
+	 */
+	public function sortByDescription() {
+		parent::sort(function($a, $b) {
+			return strcmp(
+				$a->description,
+				$b->description
+			);
+		});
+	}
 }
 
 /**

@@ -79,6 +79,7 @@ class WebFrontend
 				} else {
 					$this->deduced_buildings = $this->state->getDeducedBuildings();
 					$this->checklist->create($this->deduced_buildings);
+					$this->checklist->sortByDescription();
 					$page->content = $this->display('templates/checklist.phtml');
 				}
 			}
