@@ -60,6 +60,7 @@ class WebFrontend
 					}
 				}
 
+				$this->checklist->removeBySecurityLevel(ChecklistItem::C);
 				$this->checklist->sortBySecurityLevel();
 				$page->content = $this->display('templates/completed.phtml');
 

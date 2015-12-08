@@ -35,6 +35,37 @@ class Checklist extends Set
 	}
 
 	/**
+	 * Remove all ChecklistItems from this Checklist that have the given
+	 * security_level.
+	 *
+	 * @param $security_level
+	 * @throws InvalidArgumentException if the given $security_level is not
+	 * one of ChecklistItem::{A1,A2,B1,B2,C}
+	 * @return void
+	 */
+	public function removeBySecurityLevel($security_level)
+	{
+		switch ($security_level)
+		{
+		case ChecklistItem::A1:
+		case ChecklistItem::A2:
+		case ChecklistItem::B1:
+		case ChecklistItem::B2:
+		case ChecklistItem::C:
+			foreach ($this as $checklist_item) {
+				if ($checklist_item->getSecurityLevel() == $security_level) {
+					parent::remove($checklist_item);
+				}
+			}
+			break;
+		default:
+			throw new InvalidArgumentException("The given " .
+				"SecurityLevel is not one of the " .
+				"ChecklistItem-constants A1,A2,B1,B2,C.");
+		}
+	}
+
+	/**
 	 * Sort this Checklist using strcmp() on the security_levels of the
 	 * ChecklistItems.
 	 */
@@ -122,11 +153,11 @@ class ChecklistItem
 		if ($rf != ChecklistItem::SMALL &&
 			$rf != ChecklistItem::GREAT &&
 			$rf != ChecklistItem::NEGLIGABLE ) {
-			throw new InvalidArgumentException("RiskFactor can"
-				. " only be ChecklistItem::SMALL,"
-				. " ChecklistItem::GREAT or "
-				. " ChecklistItem::NEGLIGABLE.");
-		}
+				throw new InvalidArgumentException("RiskFactor can"
+					. " only be ChecklistItem::SMALL,"
+					. " ChecklistItem::GREAT or "
+					. " ChecklistItem::NEGLIGABLE.");
+			}
 		$this->risk_factor = $rf;
 		$this->calcSecurityLevel();
 	}
