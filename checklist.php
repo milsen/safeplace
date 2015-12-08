@@ -11,19 +11,18 @@ class Checklist extends Set
 	 * contains the ChecklistItems associated with Buildings deduced by the
 	 * Solver.
 	 *
-	 * @param $state KnowledgeState that is checked for deduced Buildings.
+	 * @param $deduced_buildings All Buildings that can be deduced from the
+	 * current KnowledgeState.
 	 * @return void
 	 */
-	public function create(KnowledgeState $state)
+	public function create($deduced_buildings)
 	{
 		$relevant_risks = new Set();
 
 		// for each building that was deduced from rules and facts,
 		// store the names of its associated risks in relevant_risks
-		foreach ($state->buildings as $building) {
-			if ($state->value($building->name) == $building->value){
-				$relevant_risks->pushAll($building->risks);
-			}
+		foreach ($deduced_buildings as $building) {
+			$relevant_risks->pushAll($building->risks);
 		}
 
 		// delete all checklist_items from our checklist whose names are

@@ -532,6 +532,19 @@ class KnowledgeState
 		return preg_replace_callback('/\$([a-z][a-z0-9_]*)\b/i', $callback, $text);
 	}
 
+	public function getDeducedBuildings()
+	{
+		$deduced_buildings = new Set();
+
+		foreach ($this->buildings as $building) {
+			if ($this->value($building->name) == $building->value){
+				$deduced_buildings->push($building);
+			}
+		}
+
+		return $deduced_buildings;
+	}
+
 	static public function is_variable($fact_name)
 	{
 		return substr($fact_name, 0, 1) == '$';

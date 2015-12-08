@@ -26,6 +26,8 @@ class WebFrontend
 
 	private $question;
 
+	private $deduced_buildings;
+
 	public function __construct($kb_file)
 	{
 		$this->solver = new Solver();
@@ -75,7 +77,8 @@ class WebFrontend
 					$this->question = $step;
 					$page->content = $this->display('templates/question.phtml');
 				} else {
-					$this->checklist->create($this->state);
+					$this->deduced_buildings = $this->state->getDeducedBuildings();
+					$this->checklist->create($this->deduced_buildings);
 					$page->content = $this->display('templates/checklist.phtml');
 				}
 			}
@@ -102,6 +105,8 @@ class WebFrontend
 		$template->checklist = $this->checklist;
 
 		$template->question = $this->question;
+
+		$template->deduced_buildings = $this->deduced_buildings;
 
 		return $template->render();
 	}
