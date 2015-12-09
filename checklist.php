@@ -116,7 +116,7 @@ class ChecklistItem
 	const C  = "C";
 
 	// risk_factor and potential_injury constants
-	const NEGLIGABLE = 0;
+	const NEGLIGIBLE = 0;
 
 	const SMALL	 = 1;
 
@@ -138,7 +138,7 @@ class ChecklistItem
 
 	public function __construct()
 	{
-		$this->risk_factor = ChecklistItem::NEGLIGABLE;
+		$this->risk_factor = ChecklistItem::NEGLIGIBLE;
 		$this->potential_injury = ChecklistItem::SMALL;
 	}
 
@@ -146,17 +146,17 @@ class ChecklistItem
 	 * @param $rf ChecklistItem-constant
 	 * @return void
 	 * @throws InvalidArgumentException if $rf is neither ChecklistItem::SMALL
-	 * nor ChecklistItem::GREAT nor ChecklistItem::NEGLIGABLE
+	 * nor ChecklistItem::GREAT nor ChecklistItem::NEGLIGIBLE
 	 */
 	public function setRiskFactor($rf)
 	{
 		if ($rf != ChecklistItem::SMALL &&
 			$rf != ChecklistItem::GREAT &&
-			$rf != ChecklistItem::NEGLIGABLE ) {
+			$rf != ChecklistItem::NEGLIGIBLE ) {
 				throw new InvalidArgumentException("RiskFactor can"
 					. " only be ChecklistItem::SMALL,"
 					. " ChecklistItem::GREAT or "
-					. " ChecklistItem::NEGLIGABLE.");
+					. " ChecklistItem::NEGLIGIBLE.");
 			}
 		$this->risk_factor = $rf;
 		$this->calcSecurityLevel();
@@ -205,7 +205,7 @@ class ChecklistItem
 			}
 			break;
 
-		case ChecklistItem::NEGLIGABLE:
+		case ChecklistItem::NEGLIGIBLE:
 			$this->security_level = ChecklistItem::C;
 			break;
 
