@@ -241,6 +241,10 @@ class KnowledgeBaseReader
 		{
 			switch ($childNode->nodeName)
 			{
+				case 'title':
+					$building->title = $this->parseText($childNode);
+					break;
+
 				case 'description':
 					$building->description = $this->parseText($childNode);
 					break;
@@ -255,6 +259,13 @@ class KnowledgeBaseReader
 						E_USER_NOTICE);
 					continue;
 			}
+		}
+
+		if ($checklist_item->title === null) {
+			$this->logError("KnowledgeBaseReader::parseChecklistItem: "
+				. "'checklist_item' node on line " . $node->getLineNo()
+				. " is missing a 'title' element",
+				E_USER_WARNING);
 		}
 
 		if (count($building->risks) === 0) {

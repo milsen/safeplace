@@ -28,11 +28,13 @@
     and not show the goal at all.
     -->
     <building name="chemical-plant" value="Yes">
+        <title>Chemical Plant</title>
         <risk name="hand-burn"></risk>
         <risk name="watery-eyes"></risk>
     </building>
 
     <building name="elementary-school" value="Yes">
+        <title>Elementary School</title>
         <risk name="fall-through-window"></risk>
     </building>
 

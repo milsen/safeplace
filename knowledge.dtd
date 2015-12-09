@@ -10,7 +10,7 @@
 <!ELEMENT fact (#PCDATA) >
 <!ATTLIST fact name CDATA #REQUIRED>
 
-<!ELEMENT building (description?, risk+) >
+<!ELEMENT building (title, description?, risk+) >
 <!ATTLIST building name CDATA #REQUIRED >
 <!ATTLIST building value CDATA #REQUIRED >
 <!ELEMENT risk EMPTY>

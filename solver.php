@@ -270,6 +270,7 @@ class FactCondition implements Condition
 
 /**
  * <building name="swimming_bath" value="Yes">
+ *    <title>Swimming Bath</title>
  *    <description>
  *        A swimming bath yields many dangers for children.
  *    </description>
@@ -280,6 +281,8 @@ class FactCondition implements Condition
 class Building
 {
 	public $name;
+
+	public $title;
 
 	public $description;
 
