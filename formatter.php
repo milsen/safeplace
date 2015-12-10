@@ -50,13 +50,13 @@ class HTMLFormatter
 		switch (get_class($condition))
 		{
 			case 'WhenAllCondition':
-				return $this->formatWhenAllCondition($condition);
+				return $this->formatComplexCondition($condition,"AND");
 
 			case 'WhenAnyCondition':
-				return $this->formatWhenAnyCondition($condition);
+				return $this->formatComplexCondition($condition,"OR");
 
 			case 'NegationCondition':
-				return $this->formatNegationCondition($condition);
+				return $this->formatComplexCondition($condition,"NOT");
 
 			case 'FactCondition':
 				return $this->formatFactCondition($condition);
@@ -73,31 +73,34 @@ class HTMLFormatter
 			$this->escape(strval($condition)));
 	}
 
-	private function formatWhenAllCondition(WhenAllCondition $condition)
+	private function formatComplexCondition(Condition $condition, $keyword)
 	{
-		return sprintf('<table class="kb-when-all-condition kb-condition evaluation-%s"><tr><th>AND</th><td><table>%s</table></td></tr></table>',
-			$this->evaluatedValue($condition),
-			implode("\n",
-				array_map(
-					function($condition) { return '<tr><td>' . $this->formatCondition($condition) . '</td></tr>'; },
-					iterator_to_array($condition->conditions))));
-	}
+		// for NegationCondition, get negated condition
+		if ($keyword == "NOT") {
+			$content = $this->formatCondition($condition->condition);
 
-	private function formatWhenAnyCondition(WhenAnyCondition $condition)
-	{
-		return sprintf('<table class="kb-when-any-condition kb-condition evaluation-%s"><tr><th>OR</th><td><table>%s</table></td></tr></table>',
-			$this->evaluatedValue($condition),
-			implode("\n",
-				array_map(
-					function($condition) { return '<tr><td>' . $this->formatCondition($condition) . '</td></tr>'; },
-					iterator_to_array($condition->conditions))));
-	}
+		// for When*Condition, get combined conditions
+		} else {
+			$content = array_map(
+				function($condition) {
+					return sprintf('<tr><td>%s</td></tr>',
+						$this->formatCondition($condition));
+				},
+				iterator_to_array($condition->conditions));
 
-	private function formatNegationCondition(NegationCondition $condition)
-	{
-		return sprintf('<table class="kb-negation-condition kb-condition evaluation-%s"><tr><th>NOT</th><td>%s</td></tr></table>',
-			$this->evaluatedValue($condition),
-			$this->formatCondition($condition->condition));
+			$content = sprintf('<table>%s</table>', implode("\n", $content));
+		}
+
+		return sprintf('
+			<table class="kb-complex-condition kb-condition evaluation-%s">
+				<tr>
+					<th>%s</th>
+					<td>%s</td>
+				</tr>
+			</table>',
+				$this->evaluatedValue($condition),
+				$keyword,
+				$content);
 	}
 
 	private function formatFactCondition(FactCondition $condition)
