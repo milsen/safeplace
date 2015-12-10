@@ -261,9 +261,9 @@ class KnowledgeBaseReader
 			}
 		}
 
-		if ($checklist_item->title === null) {
-			$this->logError("KnowledgeBaseReader::parseChecklistItem: "
-				. "'checklist_item' node on line " . $node->getLineNo()
+		if ($building->title === null) {
+			$this->logError("KnowledgeBaseReader::parseBuilding: "
+				. "'building' node on line " . $node->getLineNo()
 				. " is missing a 'title' element",
 				E_USER_WARNING);
 		}
