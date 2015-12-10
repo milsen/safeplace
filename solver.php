@@ -398,45 +398,6 @@ class Maybe extends TruthState
 	}
 }
 
-class KnowledgeDomain
-{
-	public $values;
-
-	public function __construct()
-	{
-		$this->values = new Map(function() {
-			return new Set();
-		});
-	}
-
-	static public function deduceFromState(KnowledgeState $state)
-	{
-		$domain = new self();
-
-		// Obtain all the FactConditions from the rules that test
-		// or conclude some value.
-		foreach ($state->rules as $rule)
-		{
-			$fact_conditions = array_filter_type('FactCondition',
-				array_flatten($rule->condition->asArray()));
-
-			foreach ($fact_conditions as $condition)
-				$domain->values[$condition->name]->push($condition->value);
-
-			foreach ($rule->consequences as $fact_name => $value)
-				$domain->values[$fact_name]->push($value);
-		}
-
-		// Obtain all the possible answers from the questions
-		foreach ($state->questions as $question)
-			foreach ($question->options as $option)
-				foreach ($option->consequences as $fact_name => $value)
-					$domain->values[$fact_name]->push($value);
-
-		return $domain;
-	}
-}
-
 /**
  * Een knowledge base op een bepaald moment. Via KnowledgeState::apply kunnen er
  * nieuwe feiten aan de state toegevoegd worden (en wordt het stieken een nieuwe

@@ -82,7 +82,6 @@ foreach ($state->buildings as $building)
 			->push($building);
 
 $template = new Template('templates/analyse.phtml');
-$template->domain = KnowledgeDomain::deduceFromState($state);
 $template->kb = $state;
 $template->checklist = $checklist;
 $template->stats = $stats;

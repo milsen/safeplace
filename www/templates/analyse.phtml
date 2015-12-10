@@ -80,30 +80,6 @@ function red_if_zero($value) {
 		</table>
 		<?php endforeach ?>
 
-		<section id="info-domain">
-			<h2>Domain</h2>
-			<table class="domain-analysis analysis-table">
-				<thead>
-					<th>Fact name</th>
-					<th>Possible values</th>
-				</thead>
-				<tbody>
-				<?php foreach ($domain->values as $key => $values): ?>
-					<tr>
-						<th><?=$this->html($key)?></th>
-						<td>
-							<ul>
-							<?php foreach ($values as $value): ?>
-								<li><?=$this->html($value)?></li>
-							<?php endforeach ?>
-							</ul>
-						</td>
-					</tr>
-				<?php endforeach ?>
-				</tbody>
-			</table>
-		</section>
-
 		<section id="info-rules"> 
 			<h2>Rules</h2>
 
