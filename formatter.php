@@ -105,10 +105,15 @@ class HTMLFormatter
 
 	private function formatFactCondition(FactCondition $condition)
 	{
-		return sprintf('<table class="kb-fact-condition kb-condition evaluation-%s"><tr><td>%s</td><th>=</th><td>%s</td></tr></table>',
-			$this->evaluatedValue($condition),
-			$this->escape($condition->name),
-			$this->escape($condition->value));
+		return sprintf('
+			<table class="kb-fact-condition kb-condition evaluation-%s">
+				<tr>
+					<td>%s</td><th>=</th><td>%s</td>
+				</tr>
+			</table>',
+				$this->evaluatedValue($condition),
+				$this->escape($condition->name),
+				$this->escape($condition->value));
 	}
 
 	private function evaluatedValue(Condition $condition)
