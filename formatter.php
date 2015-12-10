@@ -34,7 +34,7 @@ class HTMLFormatter
 				$this->formatConsequence($rule->consequences));
 	}
 
-	public function formatConsequence(array $consequences)
+	private function formatConsequence(array $consequences)
 	{
 		$rows = array();
 
@@ -45,7 +45,7 @@ class HTMLFormatter
 		return sprintf('<table class="kb-consequence">%s</table>', implode("\n", $rows));
 	}
 
-	public function formatCondition(Condition $condition)
+	private function formatCondition(Condition $condition)
 	{
 		switch (get_class($condition))
 		{
@@ -66,14 +66,14 @@ class HTMLFormatter
 		}
 	}
 
-	protected function formatUnknownCondition(Condition $condition)
+	private function formatUnknownCondition(Condition $condition)
 	{
 		return sprintf('<pre class="evaluation-%s">%s</pre>',
 			$this->evaluatedValue($condition),
 			$this->escape(strval($condition)));
 	}
 
-	protected function formatWhenAllCondition(WhenAllCondition $condition)
+	private function formatWhenAllCondition(WhenAllCondition $condition)
 	{
 		return sprintf('<table class="kb-when-all-condition kb-condition evaluation-%s"><tr><th>AND</th><td><table>%s</table></td></tr></table>',
 			$this->evaluatedValue($condition),
@@ -83,7 +83,7 @@ class HTMLFormatter
 					iterator_to_array($condition->conditions))));
 	}
 
-	protected function formatWhenAnyCondition(WhenAnyCondition $condition)
+	private function formatWhenAnyCondition(WhenAnyCondition $condition)
 	{
 		return sprintf('<table class="kb-when-any-condition kb-condition evaluation-%s"><tr><th>OR</th><td><table>%s</table></td></tr></table>',
 			$this->evaluatedValue($condition),
@@ -93,14 +93,14 @@ class HTMLFormatter
 					iterator_to_array($condition->conditions))));
 	}
 
-	protected function formatNegationCondition(NegationCondition $condition)
+	private function formatNegationCondition(NegationCondition $condition)
 	{
 		return sprintf('<table class="kb-negation-condition kb-condition evaluation-%s"><tr><th>NOT</th><td>%s</td></tr></table>',
 			$this->evaluatedValue($condition),
 			$this->formatCondition($condition->condition));
 	}
 
-	protected function formatFactCondition(FactCondition $condition)
+	private function formatFactCondition(FactCondition $condition)
 	{
 		return sprintf('<table class="kb-fact-condition kb-condition evaluation-%s"><tr><td>%s</td><th>=</th><td>%s</td></tr></table>',
 			$this->evaluatedValue($condition),
@@ -108,7 +108,7 @@ class HTMLFormatter
 			$this->escape($condition->value));
 	}
 
-	protected function evaluatedValue(Condition $condition)
+	private function evaluatedValue(Condition $condition)
 	{
 		if (!$this->state)
 			return 'unknown';
@@ -128,7 +128,7 @@ class HTMLFormatter
 			return 'undefined';
 	}
 
-	protected function escape($text)
+	private function escape($text)
 	{
 		return htmlspecialchars($text, ENT_COMPAT, 'UTF-8');
 	}
