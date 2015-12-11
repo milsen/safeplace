@@ -2,11 +2,26 @@
 
 class HTMLFormatter
 {
-	protected $state;
+	private $state;
 
-	public function __construct(KnowledgeState $state = null)
+	private $checklist;
+
+	public function __construct(KnowledgeState $state, Checklist $checklist)
 	{
 		$this->state = $state;
+
+		$this->checklist = $checklist;
+	}
+
+	public function formatRules()
+	{
+		$rule_table = '';
+
+		foreach ($this->state->rules as $rule) {
+			$rule_table .= sprintf('<section>%s</section>', $this->formatRule($rule));
+		}
+
+		return $rule_table;
 	}
 
 	public function formatRule(Rule $rule)

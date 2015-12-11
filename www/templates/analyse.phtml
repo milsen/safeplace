@@ -82,12 +82,7 @@ function red_if_zero($value) {
 
 		<section id="info-rules"> 
 			<h2>Rules</h2>
-
-			<?php foreach ($kb->rules as $rule): ?>
-			<section>
-				<?php $formatter = new HTMLFormatter(); echo $formatter->formatRule($rule)?>
-			</section>
-			<?php endforeach ?>
+			<?php $formatter = new HTMLFormatter($kb,$checklist); echo $formatter->formatRules()?>
 		</section>
 		<footer>
 			<p>Source code available on <a href="https://github.com/jelmervdl/kennissysteem">Github</a>.</p>
