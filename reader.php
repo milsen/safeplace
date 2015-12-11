@@ -233,6 +233,8 @@ class KnowledgeBaseReader
 	{
 		$building = new Building();
 
+		$building->line_number = $node->getLineNo();
+
 		$building->name = $node->getAttribute('name');
 
 		$building->value = $node->getAttribute('value');
@@ -281,6 +283,8 @@ class KnowledgeBaseReader
 	private function parseChecklistItem($node)
 	{
 		$checklist_item = new ChecklistItem();
+
+		$checklist_item->line_number = $node->getLineNo();
 
 		$checklist_item->name = $node->getAttribute('name');
 
