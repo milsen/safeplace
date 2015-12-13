@@ -24,7 +24,7 @@ class HTMLFormatter
 		return $rule_table;
 	}
 
-	public function formatRule(Rule $rule)
+	private function formatRule(Rule $rule)
 	{
 		return sprintf('
 			<table class="kb-rule">
@@ -129,6 +129,85 @@ class HTMLFormatter
 				$this->evaluatedValue($condition),
 				$this->escape($condition->name),
 				$this->escape($condition->value));
+	}
+
+	public function formatBuildings()
+	{
+		$building_table = '';
+
+		foreach ($this->state->buildings as $building) {
+			$building_table .= sprintf('<section>%s</section>', $this->formatBuilding($building));
+		}
+
+		return $building_table;
+	}
+
+	private function formatBuilding(Building $building)
+	{
+		return sprintf('
+			<table class="kb-building">
+				<tr>
+					<th class="kb-building-title">
+						%s
+						<span class="line-number">line %d</span>
+					</th>
+				</tr>
+				<tr>
+					<th class="kb-building-title">
+						<span class="name-value-pair">%s</span>
+					</th>
+				</tr>
+				<tr>
+					<td>%s</td>
+				</tr>
+			</table>',
+				$this->escape($building->title),
+				$building->line_number,
+				$this->formatFactCondition(
+					new FactCondition($building->name,$building->value)),
+				$this->formatChecklistItems($building->risks));
+	}
+
+	private function formatChecklistItems($risks)
+	{
+		$checklist_item_table = '';
+
+		foreach ($risks as $risk) {
+			foreach ($this->checklist as $checklist_item) {
+				if ($checklist_item->name == $risk) {
+					$checklist_item_table .= sprintf('<tr><td>%s</td></tr>',
+						$this->formatChecklistItem($checklist_item));
+					break;
+				}
+			}
+		}
+
+		return $checklist_item_table;
+	}
+
+	private function formatChecklistItem($checklist_item)
+	{
+		return sprintf('
+			<table class="kb-checklist-item">
+				<tr>
+					<th colspan="2" class="kb-checklist-item-header">
+						%s
+						<span class="line-number">line %d</span>
+					</th>
+				</tr>
+				<tr>
+					<th>Q</th>
+					<td>%s</td>
+				</tr>
+				<tr>
+					<th>A</th>
+					<td>%s</td>
+				</tr>
+			</table>',
+				$this->escape($checklist_item->name),
+				$checklist_item->line_number,
+				$this->escape($checklist_item->description),
+				$this->escape($checklist_item->advice));
 	}
 
 	private function evaluatedValue(Condition $condition)

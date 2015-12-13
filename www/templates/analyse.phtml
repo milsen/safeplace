@@ -84,6 +84,12 @@ function red_if_zero($value) {
 			<h2>Rules</h2>
 			<?php $formatter = new HTMLFormatter($kb,$checklist); echo $formatter->formatRules()?>
 		</section>
+
+		<section id="info-buildings">
+			<h2>Buildings</h2>
+			<?php echo $formatter->formatBuildings()?>
+		</section>
+
 		<footer>
 			<p>Source code available on <a href="https://github.com/jelmervdl/kennissysteem">Github</a>.</p>
 		</footer>

@@ -253,29 +253,52 @@ form > div > label {
 	border-collapse: collapse;
 }
 
-.kb-rule table {
+.kb-rule table,
+.kb-checklist-item-header,
+.kb-building .kb-fact-condition {
 	border: 2px solid rgba(0, 0, 0, 0.3);
 }
 
+.kb-building {
+	margin-bottom: 1em;
+	border: 2px solid #ccc;
+	border-collapse: collapse;
+    width: 100%;
+}
+
+.kb-building-title .name-value-pair {
+	float: right;
+}
+
+.kb-checklist-item {
+    border: 2px solid rgba(0, 0, 0, 0.3);
+    width: 100%;
+}
+
+.kb-building table:hover,
 .kb-rule table:hover {
 	border-color: #000;
 }
 
+.kb-building > tbody > tr > th,
 .kb-rule > tbody > tr > th {
 	text-align: left;
 }
 
+.kb-building th,
+.kb-building td,
 .kb-rule th,
 .kb-rule td {
 	padding: 2px;
 }
 
-
+.kb-building table th,
 .kb-rule table th {
 	background: rgba(0, 0, 0, 0.3);
 	font-weight: bold;
 }
 
+.kb-building .line-number,
 .kb-rule .line-number {
 	float: right;
 	color: #333;
