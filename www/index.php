@@ -1,3 +1,5 @@
+<meta name=viewport content='width=700'>
+<!--used for  alignment. This information should be placed elsewhere.-->
 <?php
 
 include '../util.php';
