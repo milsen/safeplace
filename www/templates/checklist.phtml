@@ -1,13 +1,13 @@
-<section>
-	<div class="checklist">
+<section class="checklist">
+	<div class="checklist_box">
 		<ol class="checklist_item">
 			<form method="post">
 			<?php $i = 0; ?>
 			<?php foreach ($checklist as $checklist_item): ?>
 			<li>
-					<label>
-						<?=$state->substitute_variables($checklist_item->description, ['Template', 'html'])?>
-						<div class="checklist item">
+				<label>
+					<?=$state->substitute_variables($checklist_item->description, ['Template', 'html'])?>
+					<div class="checklist item">
 						<p>
 						Chance that this will happen:
 						</p>
@@ -41,8 +41,8 @@
 							</p>
 						</div>
 						<?php $i++; ?>
-					</label>
-				</div>
+					</div>
+				</label>
 				<hr />
 			</li>
 			<?php endforeach ?>

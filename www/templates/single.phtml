@@ -1,58 +1,74 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Inference engine</title>
+		<title>SafePlace</title>
 		<link rel="stylesheet" href="webfrontend.css">
 	</head>
-	<body id="kennisbanken">
-		<nav class="site-nav">
-			<!-- what should come here? -->
-		</nav>
+	<body>
 		<header>
-			<h1>Inference engine</h1>
 		</header>
+		<div class="single-content">
+			<div class="single-box">
+			</div>
 
-		<?php if ($errors): ?>
-		<section class="status-update">
-			<p>The following errors occurred:</p>
-			<ul>
-				<?php foreach ($errors as $error): ?>
-				<li>
-					<b><?=$this->attr(sprintf('%s, line %d: ',$error->file,$error->line))?></b>
-					<?=$this->html($error->message)?>
-				</li>
-				<?php endforeach ?>
-			</ul>
-		</section>
-		<?php endif ?>
+			<section class="upload-knowledge-base-form">
+				<form method="post" enctype="multipart/form-data">
+					<div class="single-menu">
+						<ul>
+							<li>
+								<button  class="button run" type="submit" name="action" value="run">START</button>
+							</li>
+							<li>
+								<button class="button analyse" type="submit" name="action" value="analyse">ANALYSEER</button>
+							</li>
+							<li>
+								<button  class="button download" type="submit" name="action" value="download">DOWNLOAD</button>
+							</li>
+								<?php if (current_kb() == MODIFIED_KB): ?>
+									<li>
+									<button class="button reset" type="submit" name="action" value="reset">RESET</button>
+									</li>
+								<?php else: ?>
+									<li>
+									<a class="button upload" href="#chooseFile">UPLOAD</a>
+									</li>
+									<div id="chooseFile" class="modal">
+										<div class="modal-dialog">
+    											<div class="modal-content">
+      												<div class="head">
+        												<a href="#" class="closebtn">x</a>
+   													     <h2 class="modal-title">Kies bestand</h2>
+      												</div>
+  												<div class="container">
+													<input type="file" name="knowledgebase" id="input-knowledgebase">
 
-		<section class="upload-knowledge-base-form">
-			<?php if (current_kb() == DEFAULT_KB): ?>
-				<h1>Currently using the default database.</h1>
-			<?php elseif (current_kb() == MODIFIED_KB): ?>
-				<h1>Currently using a non-default database, last modified <?=date("d-m-Y, H:i:s.", filemtime(MODIFIED_KB))?></h1>
-			<?php else: ?>
-				<h1>A knowledge base error occurred. Please contact the system administrator.</h1>
+												<button  class="uploadSubmit" type="submit" name="action" value="upload">UPLOAD</button>
+												</div>
+    											</div>
+										</div>
+									</div>
+								<?php endif ?>
+						</ul>
+					</div>
+				</form>
+			</section>
+			<?php if ($errors): ?>
+			<section class="status-update">
+				<p>The following errors occurred:</p>
+				<ul>
+					<?php foreach ($errors as $error): ?>
+					<li>
+						<b><?=$this->attr(sprintf('%s, line %d: ',$error->file,$error->line))?></b>
+						<?=$this->html($error->message)?>
+					</li>
+					<?php endforeach ?>
+				</ul>
+			</section>
 			<?php endif ?>
-			<form method="post" enctype="multipart/form-data">
-				<div class="controls">
-					<button type="submit" name="action" value="run">Run</button>
-					<button type="submit" name="action" value="analyse">Analyse</button>
-					<button type="submit" name="action" value="download">Download</button>
-				</div>
-				<div>
-					<label for="input-knowledgebase">Knowledge base XML file:</label>
-					<input type="file" name="knowledgebase" id="input-knowledgebase">
-				</div>
-				<div class="controls">
-					<button type="submit" name="action" value="upload">Upload</button>
-					<button type="submit" name="action" value="reset">Reset to Default</button>
-				</div>
-			</form>
-		</section>
 
+		</div>
 		<footer>
-			<p>Source code available on <a href="https://github.com/jelmervdl/kennissysteem">Github</a>.</p>
+			<p>Source code available on <a href="https://github.com/milsen/safeplace">Github</a>.</p>
 		</footer>
 
 		<script>

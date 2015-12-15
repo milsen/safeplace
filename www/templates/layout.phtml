@@ -6,14 +6,18 @@
 	</head>
 	<body id="webfrontend">
 		<nav class="site-nav">
-			<a href="<?=$this->attr($_SERVER['REQUEST_URI'])?>">Start over</a>
-			<a href="analyse.php">Analyse</a>
-			<a href="index.php">Upload</a>
+			<ul>
+				<li>
+					<a class="nav-home" href="index.php"> </a>
+				</li>
+				<li>
+					<a class="nav-retry" href="<?=$this->attr($_SERVER['REQUEST_URI'])?>">OPNIEUW</a>
+				</li>
+				<li>
+					<a class="nav-analyse" href="analyse.php">ANALYSEER</a>
+				</li>
+			</ul>
 		</nav>
-		<header>
-			<h1><?=$this->html($state->title)?></h1>
-			<p><?=$state->description?></p>
-		</header>
 		<div>
 			<form method="post">
 				<input type="hidden" name="state" value="<?=_encode($state) ?>">
