@@ -2,7 +2,7 @@
 
 // define the file names of the default and modified databases
 define('DEFAULT_KB','./default-kb.xml');
-define('MODIFIED_KB','./modified_kb/modified-kb.xml');
+define('MODIFIED_KB','./user_content/modified-kb.xml');
 
 assert_options(ASSERT_BAIL, true);
 
