@@ -45,23 +45,12 @@ class WebFrontend
 			// display the conclusion
 			if (isset($_POST['radioGroup'])) {
 
-				foreach ($_POST['radioGroup'] as $i => $checklist_answer) {
-
-					// the first radio group always concerns
-					// the risk factor, set it
-					if ($i % 2 == 0) {
-						$this->checklist->elem((int)($i/2))->setRiskFactor($checklist_answer);
-
-					} else {
-						// the second radio group always
-						// concerns the potential injury,
-						// set it
-						$this->checklist->elem((int)($i/2))->setPotentialInjury($checklist_answer);
-					}
-				}
+				$this->setChecklistAttributes($_POST['radioGroup']);
 
 				$this->checklist->removeBySecurityLevel(ChecklistItem::C);
+
 				$this->checklist->sortBySecurityLevel();
+
 				$page->content = $this->display('templates/completed.phtml');
 
 			} else {
@@ -149,6 +138,29 @@ class WebFrontend
 				if (KnowledgeState::is_variable($building->value)) {
 					$this->state->goalStack->push(KnowledgeState::variable_name($building->value));
 				}
+			}
+		}
+	}
+
+	/**
+	 * Set the $risk_factor and $potential_injury of $this->checklist using
+	 * the given $checklist_answers.
+	 *
+	 * @param $checklist_answers array in which two following fields contain
+	 * the $risk_factor and $potential_injury of one ChecklistItem
+	 */
+	private function setChecklistAttributes($checklist_answers)
+	{
+		foreach ($checklist_answers as $i => $checklist_answer) {
+			// two radio groups for one ChecklistItem
+			$checklist_item = $this->checklist->elem((int)($i/2));
+
+			// the first radio group concerns the risk factor,
+			// the second one always concerns the potential injury
+			if ($i % 2 == 0) {
+				$checklist_item->setRiskFactor($checklist_answer);
+			} else {
+				$checklist_item->setPotentialInjury($checklist_answer);
 			}
 		}
 	}
