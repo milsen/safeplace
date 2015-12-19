@@ -90,6 +90,52 @@ class Checklist extends Set
 			);
 		});
 	}
+
+	/**
+	 * Create an array, a list of rows, that can be used for fputcsv() to
+	 * produce a csv-file containing all ChecklistItems of this Checklist.
+	 * It includes a header that can be filled out by a user that wants to
+	 * perform a risk inventory.
+	 *
+	 * @return array of arrays (rows) to be used for fputcsv()
+	 */
+	public function asCsvArray() {
+
+		// header of table
+		$csv = array (
+			array('Safeplace Risico Inventarisatie'),
+			array('pkt11.ikhoefgeen.nl'),
+			array(''),
+			array('Locatie:'),
+			array('Contactpersoon:'),
+			array('Adres:'),
+			array(''),
+			array('Inventarisatiedatum:'),
+			array('Uitgevoerd door:'),
+			array(''),
+			array(
+				'Urgentie',
+				// 'Itemnaam',
+				'Itemvraag',
+				'Advies',
+				'Actie/Opmerking',
+				'Streefdatum',
+				'Verantwoordelijk'
+			)
+		);
+
+		// one row for each ChecklistItems
+		foreach ($this as $checklist_item) {
+			$csv[] = array(
+				$checklist_item->getSecurityLevel(),
+				// $checklist_item->name,
+				$checklist_item->description,
+				$checklist_item->advice
+			);
+		}
+
+		return $csv;
+	}
 }
 
 /**
