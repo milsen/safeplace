@@ -79,15 +79,15 @@ pre {
 }
 
 .nav-home {
-	background:url("../images/logo.png");
+	background:url("./images/logo.png");
 }
 
 .nav-retry {
-	background:url("../images/Grun.png");
+	/* background:url("./images/Grun.png"); */
 }
 
 .nav-analyse {
-	background:url("../images/Granalyse.png");
+	/* background:url("./images/Granalyse.png"); */
 }
 body > header {
 	width: 100%;
@@ -401,7 +401,7 @@ body > section {
 .single-box {
 	height: 350px;
 	width: 100%;
-	background-image: url("../images/header.png");
+	background-image: url("./images/header.png");
 	background-width: 100%;
 	background-size: 65% auto;
     	background-repeat: no-repeat;
@@ -460,45 +460,45 @@ body > section {
 }
 
 .run {
- 	background:url("../images/run-128.png");
+	background:url("./images/run-128.png");
 }
 
 .run:hover {
- 	background:url("../images/Grun-128.png");
+	background:url("./images/Grun-128.png");
 }
 
 .analyse {
- 	background:url("../images/find-128.png");
+	background:url("./images/find-128.png");
 }
 
 .analyse:hover {
- 	background:url("../images/Gfind-128.png");
+	background:url("./images/Gfind-128.png");
 }
 
 .download {
-	background:url("../images/download-128.png");
+	background:url("./images/download-128.png");
 }
 
 .download:hover {
-	background:url("../images/Gdownload-128.png");
+	background:url("./images/Gdownload-128.png");
 }
 
 .reset {
- 	background:url("../images/cross-128.png");
+	background:url("./images/cross-128.png");
 }
 
 .reset:hover {
- 	background:url("../images/Gcross-128.png");
+	background:url("./images/Gcross-128.png");
 }
 
 .upload {
  	display: block;
-	background:url("../images/upload-128.png");
+	background:url("./images/upload-128.png");
 }
 
 .upload:hover {
 	color: #6dd26c;
-	background:url("../images/Gupload-128.png");
+	background:url("./images/Gupload-128.png");
 }
 
 .uploadSubmit { /*button in the dialog*/
