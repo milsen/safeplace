@@ -39,6 +39,24 @@ class WebFrontend
 	{
 		try
 		{
+			// if the user wants to downlaod the checklist, let him
+			if (isset($_POST['action']) &&
+				$_POST['action'] == 'download_checklist') {
+
+				$csv_file = $this->prepareCsvChecklist();
+
+				$filename = date("d-m-Y_H-i-s") . '.csv';
+
+				header('Content-Type: text/csv');
+				header(
+					'Content-Disposition: attachment; ' .
+					'filename=safeplace_checklist_' .
+					$filename
+				);
+				echo $csv_file;
+				exit;
+			}
+
 			$page = new Template('templates/layout.phtml');
 
 			// if a checklist was filled out, we process it and
@@ -163,6 +181,29 @@ class WebFrontend
 				$checklist_item->setPotentialInjury($checklist_answer);
 			}
 		}
+	}
+
+	/**
+	 * Create a csv-file in the stream 'php://output' using asCsvArray() of
+	 * $this->checklist and return the stream's contents.
+	 *
+	 * @return string csv-file that was created from $this->checklist
+	 */
+	private function prepareCsvChecklist()
+	{
+		$csv = $this->checklist->asCsvArray();
+
+		$csv_file = fopen('php://output', 'w');
+
+		ob_start();
+
+		foreach ($csv as $row) {
+			fputcsv($csv_file, $row);
+		}
+
+		fclose($csv_file);
+
+		return ob_get_clean();
 	}
 }
 
