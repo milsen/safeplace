@@ -339,14 +339,6 @@ class Template
 	}
 }
 
-function simplify(Condition $condition)
-{
-	while (($simplified = $condition->simplify()) != $condition)
-		$condition = $simplified;
-
-	return $condition;
-}
-
 // return the file name of the currently used database
 function current_kb()
 {
