@@ -1,10 +1,14 @@
-**This is a work in progress. The development has barely begun.**
+Hosted on <http://pkt11.ikhoefgeen.nl/>.
 
 # What is this?
-This is a knowledge system giving advice for the design of buildings. It is
-based on the regulations for the safety of buildings in the Netherlands and
-includes a graphical user interface that makes it easy to use for users with
-little computer experience.
+This is a knowledge system helping prevention workers to perform a risk
+inventory. Based on the user's answers to several questions, it categorizes the
+building that the user is concerned with and creates a checklist of possible
+risks that could be of concern.
+The system includes the possiblity to use your own xml-knowledge base (to change
+the questions, inferences and checklists), a way to download the
+created checklist and a graphical user interface that makes it easy to use for
+users with little computer experience.
 
 The system is built for the course "Knowledge Technology Practical".
 
@@ -15,7 +19,7 @@ guideline. They are in no way guaranteed to be in accord with the law.
 # Acknowledgements
 This knowledge system is based on
 [this project](https://github.com/jelmervdl/kennissysteem), whose author gave us
-the permission to use his work. All credit for the implementation of the actual
+the permission to use his work. Most credit for the implementation of the actual
 inference mechanism, including the possibility to encode knowledge in XML files,
 goes to him. Take a look at his work!
 
