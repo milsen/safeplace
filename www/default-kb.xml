@@ -27,16 +27,6 @@
     If none of the building-clauses match, the system won't know what to print
     and not show the goal at all.
     -->
-    <building name="chemical-plant" value="Yes">
-        <title>Chemical Plant</title>
-        <risk name="hand-burn"></risk>
-        <risk name="watery-eyes"></risk>
-    </building>
-
-    <building name="elementary-school" value="Yes">
-        <title>Elementary School</title>
-        <risk name="fall-through-window"></risk>
-    </building>
 
     <!--
     These checklist_items have a name that corresponds to the name of a risk in
@@ -45,33 +35,6 @@
 
     Different buildings can have the same risk.
     -->
-    <checklist_item name="hand-burn">
-        <description>
-            Could a person burn his/her hand with a Bunsen brenner?
-        </description>
-        <advice>
-            Enforce regulations such that people working with laboratory tools
-            have to wear fire-proof gloves.
-        </advice>
-    </checklist_item>
-
-    <checklist_item name="watery-eyes">
-        <description>
-            Could a person get watery eyes because of a chemical gas?
-        </description>
-        <advice>
-            Keep all dangerous chemicals in a seperate locked room.
-        </advice>
-    </checklist_item>
-
-    <checklist_item name="fall-through-window">
-        <description>
-            Could a child fall through a window?
-        </description>
-        <advice>
-            Erect barriers such that children cannot reach the windows.
-        </advice>
-    </checklist_item>
 
     <!--
     These rule cases are pretty self explaining. The description is more for the
@@ -98,15 +61,6 @@
     <then>-clause, the same consequences. Which one is first tried depends on
     which facts from the <if>-clause are higher on the goal stack.
     -->
-    <rule>
-        <description></description>
-        <if>
-            <fact name="children">to5</fact>
-        </if>
-        <then>
-            <fact name="elementary-school">Yes</fact>
-        </then>
-    </rule>
 
     <!--
     And finally, to get user input, you can ask questions. Each question has its
@@ -119,51 +73,5 @@
     guaranteed to be derived before the question is printed, so use those
     sparsely and know what you are doing.
     -->
-    <question>
-        <description>
-            Are there children that regularly visit the building? In which age
-            group are they?
-        </description>
-        <option>
-            <description>0-5</description>
-            <then>
-                <fact name="children">to5</fact>
-            </then>
-        </option>
-        <option>
-            <description>5-10</description>
-            <then>
-                <fact name="children">to10</fact>
-            </then>
-        </option>
-        <option>
-            <description>10-15</description>
-            <then>
-                <fact name="children">to15</fact>
-            </then>
-        </option>
-        <option>
-            <description>No children</description>
-            <then>
-                <fact name="children">No</fact>
-            </then>
-        </option>
-    </question>
-
-    <question>
-        <description>Are there a lot of chemicals in the building?</description>
-        <option>
-            <description>Yes</description>
-            <then>
-                <fact name="chemical-plant">Yes</fact>
-            </then>
-        </option>
-        <option>
-            <description>No</description>
-            <then>
-                <fact name="chemical-plant">No</fact>
-            </then>
-        </option>
-    </question>
 
 </knowledge>
