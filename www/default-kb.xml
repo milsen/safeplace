@@ -96,6 +96,32 @@
         "Verbranding: Kind heeft toegang tot lucifers/aansteker" (Groepsruimte, Keuken/Kantoor)
     -->
 
+    <!--
+        Remove duplicate checklist items that differ only slightly (in grammar or meaning):
+        "[Overig/Vloer/]Ondergrond: Kind glijdt uit [...]"
+        "Raam: Kind raakt verstrikt in [...] koordjes [...] raamdecoratie"
+        "Deur: Kind valt door glas in [...] deur"
+        "Verwarming: Kind komt met hand klem te zitten tussen [...] radiator"
+        "Verlichting: Lamp wordt stuk[...]gegooid en glas valt naar beneden"
+        "Elek[...]tra: Kind komt in contact met elektriciteit"
+        "Muur: Kind bezeert zich aan [...] oneffenheid"
+        "Giftige Stoffen: Kind eet sigaretten[...]of medicijnen uit tas[...]"
+        "[Overig/Buitenruimte/]Giftige Stoffen: Kind drinkt van schoonmaakmiddel[...]"
+        "[Overig/]Giftige Stoffen: Kind eet van giftige plant [...]"
+        "Giftige Stoffen: Kind eet sigaretten of medicijnen uit tas[...]"
+        "[Binnenberging/]Verbranding: Kind verbrandt zich aan warmwater[...]kraan"
+        "[Overig/]Verbranding: [...] Kind krijgt hete thee over zich heen"
+        "[Sanitair Volwassenen/]Giftige Stoffen: Kind drinkt van schoonmaakmiddel"
+        "[Sanitair Volwassenen/]Giftige Stoffen: Kind eet van toiletblokje"
+        "[Sanitair Volwassenen/]Overig: Kind snuffelt in afvalbakje"
+        "Overig: Kind snijdt zich aan [een mes/]kantoorartikelen"
+        "Omheining: Kind [...] rent de straat op"
+        "Overig: Kind rent tegen/botst [...] een [object/]obstakel[...]"
+        "Overig: Kind [opent vuilnisemmer/]snuffelt in afvalbakje"
+        "Trap: Kind valt [van de zijkant] van de trap af"
+        "[Binnenberging/Buitenberging/]Meubilair: Kast valt om en kind komt onder de kast terecht"
+    -->
+
     <!-- Entree-->
     <building name="Entree" value="Yes">
         <title>Entree</title>
@@ -104,28 +130,28 @@
         <risk name="Trap: Kind struikelt over een kapotte trede"></risk>
         <risk name="Trap: Kind glijdt uit op een gladde trede"></risk>
         <risk name="Trap: Kind raakt bekneld tussen de treden v/d trap"></risk>
-        <risk name="Trap: Kind valt van de trap af"></risk>
-        <risk name="Trap: Kind van de zijkant van de trap"></risk>
+        <risk name="Trap: Kind valt (van de zijkant) van de trap af"></risk>
         <risk name="Trap: Kind raakt bekneld tussen de spijlen v/d balustrade"></risk>
-        <risk name="Vloer: Kind struikelt over oneffenheid"></risk>
-        <risk name="Vloer: Kind glijdt uit over de natte vloer"></risk>
-        <risk name="Vloer: Kind glijdt uit"></risk>
-        <risk name="Muur: Kind bezeert zich aan een oneffenheid"></risk>
+        <risk name="Ondergrond: Kind struikelt over oneffenheid"></risk>
+        <risk name="Ondergrond: Kind glijdt uit over gladde/natte ondergrond"></risk>
+        <risk name="Muur: Kind bezeert zich aan oneffenheid"></risk>
         <risk name="Garderobe: Kind botst tegen kapstokhaak"></risk>
+        <!-- Deur missing compared to Groepsruimte -->
         <risk name="Deur: Kind krijgt zijn vingers tussen de deur"></risk>
-        <risk name="Deur: Kind valt door glas in de deur"></risk>
+        <risk name="Deur: Kind valt door glas in deur"></risk>
         <risk name="Raam: Kind valt door ruit"></risk>
         <risk name="Raam: Kind valt uit open raam"></risk>
-        <risk name="Raam: Kind raakt verstrikt in de koordjes v/d raamdecoratie"></risk>
+        <risk name="Raam: Kind raakt verstrikt in koordjes v/d raamdecoratie"></risk>
         <risk name="Verwarming: Kind verbrandt zich aan hete radiator/buizen"></risk>
         <risk name="Verwarming: Kind botst of valt tegen radiator"></risk>
-        <risk name="Verwarming: Kind komt met hand klem te zitten tussen de radiator"></risk>
+        <risk name="Verwarming: Kind komt met hand klem te zitten tussen radiator"></risk>
         <risk name="Verlichting: Kind struikelt door onvoldoende licht"></risk>
         <risk name="Verlichting: Lamp wordt stukgegooid en glas valt naar beneden"></risk>
+        <!-- Elektra missing compared to Groepsruimte -->
         <risk name="Elektra: Kind komt in contact met elektriciteit"></risk>
         <risk name="Giftige Stoffen: Kind drinkt van schoonmaakmiddel"></risk>
         <risk name="Giftige Stoffen: Kind eet van giftige plant"></risk>
-        <risk name="Giftige Stoffen: Kind eet sigarettenof medicijnen uit tas leidster"></risk>
+        <risk name="Giftige Stoffen: Kind eet sigaretten of medicijnen uit tas"></risk>
         <risk name="Giftige Stoffen: Kind eet muizengif"></risk>
         <risk name="Overig: Kind stopt kleine voorwerpen in de mond"></risk>
         <risk name="Overig: Kind struikelt over buggy"></risk>
@@ -135,25 +161,26 @@
     <!-- Groepsruimte-->
     <building name="Groepsruimte" value="Yes">
         <title>Groepsruimte</title>
-        <risk name="Vloer: Kind struikelt over oneffenheid"></risk>
-        <risk name="Vloer: Kind glijdt uit over gladde vloer"></risk>
+        <risk name="Ondergrond: Kind struikelt over oneffenheid"></risk>
+        <risk name="Ondergrond: Kind glijdt uit over gladde/natte ondergrond"></risk>
         <risk name="Muur: Kind bezeert zich aan oneffenheid"></risk>
         <risk name="Deur: Kind botst tegen de deur"></risk>
         <risk name="Deur: Kind valt door glas in deur"></risk>
         <risk name="Deur: Kind krijgt zijn vingers tussen de deur"></risk>
         <risk name="Raam: Kind valt door ruit"></risk>
         <risk name="Raam: Kind valt uit open raam"></risk>
-        <risk name="Raam: Kind raakt verstrikt in koordjes raamdecoratie"></risk>
+        <risk name="Raam: Kind raakt verstrikt in koordjes v/d raamdecoratie"></risk>
         <risk name="Verwarming: Kind verbrandt zich aan hete radiator/buizen"></risk>
         <risk name="Verwarming: Kind botst of valt tegen radiator"></risk>
         <risk name="Verwarming: Kind komt met hand klem te zitten tussen radiator"></risk>
         <risk name="Verlichting: Kind struikelt door onvoldoende licht"></risk>
-        <risk name="Verlichting: Lamp wordt stuk gegooid en glas valt naar beneden"></risk>
-        <risk name="Electra: Kind komt in contact met elektriciteit"></risk>
-        <risk name="Electra: Kind trekt aan elektr. Snoer, krijgt apparaat op zich"></risk>
+        <risk name="Verlichting: Lamp wordt stukgegooid en glas valt naar beneden"></risk>
+        <risk name="Elektra: Kind komt in contact met elektriciteit"></risk>
+        <risk name="Elektra: Kind trekt aan elektr. Snoer, krijgt apparaat op zich"></risk>
         <risk name="Giftige Stoffen: Kind drinkt van schoonmaakmiddel"></risk>
         <risk name="Giftige Stoffen: Kind eet van giftige plant"></risk>
         <risk name="Giftige Stoffen: Kind eet sigaretten of medicijnen uit tas"></risk>
+        <!-- general meubilair -->
         <risk name="Meubilair: Kind stoot zich tegen meubilair"></risk>
         <risk name="Meubilair: Kind krijgt splinter in vinger"></risk>
         <risk name="Meubilair: Kind valt tijdens het in of uit stoel klimmen"></risk>
@@ -171,9 +198,9 @@
         <risk name="Speelgoed: Kind krijgt poppenhuis op zich"></risk>
         <risk name="Verbranding: Kind heeft toegang tot lucifers/aansteker"></risk>
         <risk name="Verbranding: Kind verbrandt zich aan warmwaterkraan"></risk>
-        <risk name="Verbranding: Thee van de leidster komt over kind heen"></risk>
+        <risk name="Verbranding: Kind krijgt hete thee over zich heen"></risk>
         <risk name="Overig: Kinderen botst tegen elkaar"></risk>
-        <risk name="Overig: Kind botst tegen object"></risk>
+        <risk name="Overig: Kind rent tegen een obstakel"></risk>
         <risk name="Overig: Kind wordt door huisdier gebeten"></risk>
         <risk name="Overig: Kind stikt in stukje eten"></risk>
     </building>
@@ -181,6 +208,7 @@
     <!-- Sanitair Kinderen-->
     <building name="Sanitair Kinderen" value="Yes">
         <title>Sanitair Kinderen</title>
+        <!-- aankleedtafel-->
         <risk name="Meubilair: Kind draait zich van de aankleedtafel af"></risk>
         <risk name="Meubilair: Kind rolt aan de achterkant van de aankleedtafel af"></risk>
         <risk name="Meubilair: Kind stoot zich aan (scherpe) hoek van de aankleedtafel"></risk>
@@ -190,14 +218,19 @@
         <risk name="Meubilair: Kind komt in hoogte verstelbare aankleedtafel bekneld te zitten"></risk>
         <risk name="Meubilair: Kind valt van trapje van aankleedtafel"></risk>
         <risk name="Meubilair: Kind klautert zonder toezicht op aankleedtafel"></risk>
-        <risk name="Overig: Kind glijdt uit over een natte vloer"></risk>
-        <risk name="Overig: Kind brandt zich aan heet water"></risk>
+        <risk name="Ondergrond: Kind glijdt uit over gladde/natte ondergrond"></risk>
+        <risk name="Verbranding: Kind verbrandt zich aan warmwaterkraan"></risk>
         <risk name="Overig: Kind stopt kleine voorwerpen in de mond"></risk>
-        <risk name="Overig: Kind heeft toegang tot lotions, alcohol of schoonmaakmiddelen"></risk>
+        <risk name="Giftige Stoffen: Kind drinkt van schoonmaakmiddel"></risk>
+        <risk name="Giftige Stoffen: Kind heeft toegang tot lotions of alcohol"></risk>
         <risk name="Overig: Kind snuffelt in afvalbakje"></risk>
-        <risk name="Sanitair Volwassenen: Kind drinkt van schoonmaakmiddelen"></risk>
-        <risk name="Sanitair Volwassenen: Kind eet van toiletblokje"></risk>
-        <risk name="Sanitair Volwassenen: Kind snuffelt in afvalbakje"></risk>
+    </building>
+
+    <building name="Sanitair Volwassenen" value="Yes">
+        <title>Sanitair Volwassenen</title>
+        <risk name="Giftige Stoffen: Kind drinkt van schoonmaakmiddel"></risk>
+        <risk name="Giftige Stoffen: Kind eet van toiletblokje"></risk>
+        <risk name="Overig: Kind snuffelt in afvalbakje"></risk>
     </building>
 
     <!-- Keuken/Kantoor-->
@@ -208,16 +241,14 @@
         <risk name="Verbranding: Kind brandt zich aan oven"></risk>
         <risk name="Verbranding: Kind loopt brandworden op door de waterkoker over zich heen te trekken"></risk>
         <risk name="Verbranding: Kind heeft toegang tot lucifers/aansteker"></risk>
-        <risk name="Verbranding: Kind brandt zich aan heet water"></risk>
+        <risk name="Verbranding: Kind verbrandt zich aan warmwaterkraan"></risk>
         <risk name="Verbranding: Kind krijgt hete thee over zich heen"></risk>
-        <risk name="Overig: Kind snijdt zich aan een mes"></risk>
-        <risk name="Overig: Kind drinkt van schoonmaakmiddel"></risk>
-        <risk name="Overig: Kind glijdt uit over gladde vloer"></risk>
-        <risk name="Overig: Kind opent vuilnisemmer"></risk>
+        <risk name="Ondergrond: Kind glijdt uit over gladde/natte ondergrond"></risk>
         <risk name="Overig: Kind trekt plastic zak over het hoofd"></risk>
-        <risk name="Giftige Stoffen: Kind eet medicijnen uit tas medewerker"></risk>
-        <risk name="Giftige Stoffen: Kind eet sigaretten op"></risk>
-        <risk name="Giftige Stoffen: Kind eet toner van kopieermachine op"></risk>
+        <risk name="Giftige Stoffen: Kind drinkt van schoonmaakmiddel"></risk>
+        <risk name="Giftige Stoffen: Kind eet sigaretten of medicijnen uit tas"></risk>
+        <risk name="Giftige Stoffen: Kind eet toner van kopieermachine op"></risk> <!-- in the kitchen...?-->
+        <risk name="Overig: Kind snuffelt in afvalbakje"></risk>
         <risk name="Overig: Kind stopt kleine voorwerpen in de mond"></risk>
         <risk name="Overig: Kind snijdt zich aan kantoorartikelen"></risk>
     </building>
@@ -225,17 +256,16 @@
     <!-- Bergruimte-->
     <building name="Bergruimte" value="Yes">
         <title>Bergruimte</title>
-        <risk name="Binnenberging: Kind drinkt van schoonmaakmiddelen/kan bij giftige stoffen"></risk>
+        <risk name="Giftige Stoffen: Kind drinkt van schoonmaakmiddel"></risk>
         <risk name="Binnenberging: Kind krijgt giftige stoffen binnen omdat voedsel naast gevaarlijke stoffen wordt opgeborgen"></risk>
         <risk name="Binnenberging: Kind klimt in wasdroger/machine"></risk>
-        <risk name="Binnenberging: Kind verbrandt zich aan heet water"></risk>
+        <risk name="Verbranding: Kind verbrandt zich aan warmwaterkraan"></risk>
         <risk name="Binnenberging: Kind verbrandt zich aan de cv-ketel"></risk>
         <risk name="Binnenberging: Kind bezeert zich aan opgeslagen speelgoed/materiaal"></risk>
         <risk name="Binnenberging: Kinder bezeert zich aan gereedschap"></risk>
-        <risk name="Binnenberging: Kast valt om en kind komt onder kast terecht"></risk>
+        <risk name="Meubilair: Kast valt om en kind komt onder de kast terecht"></risk>
         <risk name="Buitenberging: Kind bezeert zich aan opgeslagen speelgoed/materiaal"></risk>
         <risk name="Buitenberging: Kind bezeert zich aan gereedschap"></risk>
-        <risk name="Buitenberging: Kast valt om en kind komt onder kast terecht"></risk>
     </building>
 
     <!-- Buitenruimte-->
@@ -257,7 +287,6 @@
         <risk name="Speeltoestel: Kind snijdt zich aan zwerfvuil in de zandbak"></risk>
         <risk name="Speeltoestel: Kind stoot zich tegen rand van de zandbak"></risk>
         <risk name="Speeltoestel: Kind botst tegen veerwip"></risk>
-        <risk name="Omheining: Kind rent al spelend de straat op"></risk>
         <risk name="Omheining: Kind doet poortje van het hek open en rent de straat op"></risk>
         <risk name="Omheining: Het hek blijft openstaan en kind loopt de straat op"></risk>
         <risk name="Omheining: Kind bezeert zich aan omheining"></risk>
@@ -266,15 +295,15 @@
         <risk name="Omheining: Kind klimt op de omheining en valt"></risk>
         <risk name="Omheining: Kind klimt over de omheining"></risk>
         <risk name="Ondergrond: Kind struikelt over een boomwortel"></risk>
-        <risk name="Ondergrond: Kind struikelt over een oneffenheid"></risk>
-        <risk name="Ondergrond: Kind glijdt uit over natte plek"></risk>
+        <risk name="Ondergrond: Kind struikelt over oneffenheid"></risk>
+        <risk name="Ondergrond: Kind glijdt uit over gladde/natte ondergrond"></risk>
         <risk name="Overig: Kind rent tegen een obstakel"></risk>
         <risk name="Overig: Kind botst tegen een fiets"></risk>
         <risk name="Overig: Kind bezeert zich aan zwerfvuil"></risk>
         <risk name="Overig: Kind wordt omver gelopen"></risk>
         <risk name="Overig: Kind verbrandt zich in de zon"></risk>
-        <risk name="Overig: Kind eet van giftige plant of struik"></risk>
-        <risk name="Overig: Kind raakt te water"></risk>
+        <risk name="Giftige Stoffen: Kind eet van giftige plant"></risk>
+        <risk name="Overig: Kind raakt te water"></risk> <!-- ??? -->
         <risk name="Omgeving: Kind moet oversteken tussen geparkeerde auto's"></risk>
         <risk name="Omgeving: Kind rent de weg op als het wordt opgehaald"></risk>
         <risk name="Omgeving: Kind raakt betrokken bij ongeval bij een uitstapje buiten de deur"></risk>
@@ -315,16 +344,9 @@
         <advice></advice>
     </checklist_item>
 
-    <checklist_item name="Trap: Kind valt van de trap af">
+    <checklist_item name="Trap: Kind valt (van de zijkant) van de trap af">
         <description>
-            Trap: Kind valt van de trap af
-        </description>
-        <advice></advice>
-    </checklist_item>
-
-    <checklist_item name="Trap: Kind van de zijkant van de trap">
-        <description>
-            Trap: Kind van de zijkant van de trap
+            Trap: Kind valt (van de zijkant) van de trap af
         </description>
         <advice></advice>
     </checklist_item>
@@ -336,30 +358,23 @@
         <advice></advice>
     </checklist_item>
 
-    <checklist_item name="Vloer: Kind struikelt over oneffenheid">
+    <checklist_item name="Ondergrond: Kind struikelt over oneffenheid">
         <description>
-            Vloer: Kind struikelt over oneffenheid
+            Ondergrond: Kind struikelt over oneffenheid
         </description>
         <advice></advice>
     </checklist_item>
 
-    <checklist_item name="Vloer: Kind glijdt uit over de natte vloer">
+    <checklist_item name="Ondergrond: Kind glijdt uit over gladde/natte ondergrond">
         <description>
-            Vloer: Kind glijdt uit over de natte vloer
+            Ondergrond: Kind glijdt uit over gladde/natte ondergrond
         </description>
         <advice></advice>
     </checklist_item>
 
-    <checklist_item name="Vloer: Kind glijdt uit">
+    <checklist_item name="Muur: Kind bezeert zich aan oneffenheid">
         <description>
-            Vloer: Kind glijdt uit
-        </description>
-        <advice></advice>
-    </checklist_item>
-
-    <checklist_item name="Muur: Kind bezeert zich aan een oneffenheid">
-        <description>
-            Muur: Kind bezeert zich aan een oneffenheid
+            Muur: Kind bezeert zich aan oneffenheid
         </description>
         <advice></advice>
     </checklist_item>
@@ -378,13 +393,6 @@
         <advice></advice>
     </checklist_item>
 
-    <checklist_item name="Deur: Kind valt door glas in de deur">
-        <description>
-            Deur: Kind valt door glas in de deur
-        </description>
-        <advice></advice>
-    </checklist_item>
-
     <checklist_item name="Raam: Kind valt door ruit">
         <description>
             Raam: Kind valt door ruit
@@ -399,9 +407,9 @@
         <advice></advice>
     </checklist_item>
 
-    <checklist_item name="Raam: Kind raakt verstrikt in de koordjes v/d raamdecoratie">
+    <checklist_item name="Raam: Kind raakt verstrikt in koordjes v/d raamdecoratie">
         <description>
-            Raam: Kind raakt verstrikt in de koordjes v/d raamdecoratie
+            Raam: Kind raakt verstrikt in koordjes v/d raamdecoratie
         </description>
         <advice></advice>
     </checklist_item>
@@ -416,13 +424,6 @@
     <checklist_item name="Verwarming: Kind botst of valt tegen radiator">
         <description>
             Verwarming: Kind botst of valt tegen radiator
-        </description>
-        <advice></advice>
-    </checklist_item>
-
-    <checklist_item name="Verwarming: Kind komt met hand klem te zitten tussen de radiator">
-        <description>
-            Verwarming: Kind komt met hand klem te zitten tussen de radiator
         </description>
         <advice></advice>
     </checklist_item>
@@ -462,13 +463,6 @@
         <advice></advice>
     </checklist_item>
 
-    <checklist_item name="Giftige Stoffen: Kind eet sigarettenof medicijnen uit tas leidster">
-        <description>
-            Giftige Stoffen: Kind eet sigarettenof medicijnen uit tas leidster
-        </description>
-        <advice></advice>
-    </checklist_item>
-
     <checklist_item name="Giftige Stoffen: Kind eet muizengif">
         <description>
             Giftige Stoffen: Kind eet muizengif
@@ -497,20 +491,6 @@
         <advice></advice>
     </checklist_item>
 
-    <checklist_item name="Vloer: Kind glijdt uit over gladde vloer">
-        <description>
-            Vloer: Kind glijdt uit over gladde vloer
-        </description>
-        <advice></advice>
-    </checklist_item>
-
-    <checklist_item name="Muur: Kind bezeert zich aan oneffenheid">
-        <description>
-            Muur: Kind bezeert zich aan oneffenheid
-        </description>
-        <advice></advice>
-    </checklist_item>
-
     <checklist_item name="Deur: Kind botst tegen de deur">
         <description>
             Deur: Kind botst tegen de deur
@@ -525,13 +505,6 @@
         <advice></advice>
     </checklist_item>
 
-    <checklist_item name="Raam: Kind raakt verstrikt in koordjes raamdecoratie">
-        <description>
-            Raam: Kind raakt verstrikt in koordjes raamdecoratie
-        </description>
-        <advice></advice>
-    </checklist_item>
-
     <checklist_item name="Verwarming: Kind komt met hand klem te zitten tussen radiator">
         <description>
             Verwarming: Kind komt met hand klem te zitten tussen radiator
@@ -539,23 +512,9 @@
         <advice></advice>
     </checklist_item>
 
-    <checklist_item name="Verlichting: Lamp wordt stuk gegooid en glas valt naar beneden">
+    <checklist_item name="Elektra: Kind trekt aan elektr. Snoer, krijgt apparaat op zich">
         <description>
-            Verlichting: Lamp wordt stuk gegooid en glas valt naar beneden
-        </description>
-        <advice></advice>
-    </checklist_item>
-
-    <checklist_item name="Electra: Kind komt in contact met elektriciteit">
-        <description>
-            Electra: Kind komt in contact met elektriciteit
-        </description>
-        <advice></advice>
-    </checklist_item>
-
-    <checklist_item name="Electra: Kind trekt aan elektr. Snoer, krijgt apparaat op zich">
-        <description>
-            Electra: Kind trekt aan elektr. Snoer, krijgt apparaat op zich
+            Elektra: Kind trekt aan elektr. Snoer, krijgt apparaat op zich
         </description>
         <advice></advice>
     </checklist_item>
@@ -686,23 +645,9 @@
         <advice></advice>
     </checklist_item>
 
-    <checklist_item name="Verbranding: Thee van de leidster komt over kind heen">
-        <description>
-            Verbranding: Thee van de leidster komt over kind heen
-        </description>
-        <advice></advice>
-    </checklist_item>
-
     <checklist_item name="Overig: Kinderen botst tegen elkaar">
         <description>
             Overig: Kinderen botst tegen elkaar
-        </description>
-        <advice></advice>
-    </checklist_item>
-
-    <checklist_item name="Overig: Kind botst tegen object">
-        <description>
-            Overig: Kind botst tegen object
         </description>
         <advice></advice>
     </checklist_item>
@@ -784,23 +729,9 @@
         <advice></advice>
     </checklist_item>
 
-    <checklist_item name="Overig: Kind glijdt uit over een natte vloer">
+    <checklist_item name="Giftige Stoffen: Kind heeft toegang tot lotions of alcohol">
         <description>
-            Overig: Kind glijdt uit over een natte vloer
-        </description>
-        <advice></advice>
-    </checklist_item>
-
-    <checklist_item name="Overig: Kind brandt zich aan heet water">
-        <description>
-            Overig: Kind brandt zich aan heet water
-        </description>
-        <advice></advice>
-    </checklist_item>
-
-    <checklist_item name="Overig: Kind heeft toegang tot lotions, alcohol of schoonmaakmiddelen">
-        <description>
-            Overig: Kind heeft toegang tot lotions, alcohol of schoonmaakmiddelen
+            Giftige Stoffen: Kind heeft toegang tot lotions of alcohol
         </description>
         <advice></advice>
     </checklist_item>
@@ -812,23 +743,9 @@
         <advice></advice>
     </checklist_item>
 
-    <checklist_item name="Sanitair Volwassenen: Kind drinkt van schoonmaakmiddelen">
+    <checklist_item name="Giftige Stoffen: Kind eet van toiletblokje">
         <description>
-            Sanitair Volwassenen: Kind drinkt van schoonmaakmiddelen
-        </description>
-        <advice></advice>
-    </checklist_item>
-
-    <checklist_item name="Sanitair Volwassenen: Kind eet van toiletblokje">
-        <description>
-            Sanitair Volwassenen: Kind eet van toiletblokje
-        </description>
-        <advice></advice>
-    </checklist_item>
-
-    <checklist_item name="Sanitair Volwassenen: Kind snuffelt in afvalbakje">
-        <description>
-            Sanitair Volwassenen: Kind snuffelt in afvalbakje
+            Giftige Stoffen: Kind eet van toiletblokje
         </description>
         <advice></advice>
     </checklist_item>
@@ -861,13 +778,6 @@
         <advice></advice>
     </checklist_item>
 
-    <checklist_item name="Verbranding: Kind brandt zich aan heet water">
-        <description>
-            Verbranding: Kind brandt zich aan heet water
-        </description>
-        <advice></advice>
-    </checklist_item>
-
     <checklist_item name="Verbranding: Kind krijgt hete thee over zich heen">
         <description>
             Verbranding: Kind krijgt hete thee over zich heen
@@ -875,51 +785,9 @@
         <advice></advice>
     </checklist_item>
 
-    <checklist_item name="Overig: Kind snijdt zich aan een mes">
-        <description>
-            Overig: Kind snijdt zich aan een mes
-        </description>
-        <advice></advice>
-    </checklist_item>
-
-    <checklist_item name="Overig: Kind drinkt van schoonmaakmiddel">
-        <description>
-            Overig: Kind drinkt van schoonmaakmiddel
-        </description>
-        <advice></advice>
-    </checklist_item>
-
-    <checklist_item name="Overig: Kind glijdt uit over gladde vloer">
-        <description>
-            Overig: Kind glijdt uit over gladde vloer
-        </description>
-        <advice></advice>
-    </checklist_item>
-
-    <checklist_item name="Overig: Kind opent vuilnisemmer">
-        <description>
-            Overig: Kind opent vuilnisemmer
-        </description>
-        <advice></advice>
-    </checklist_item>
-
     <checklist_item name="Overig: Kind trekt plastic zak over het hoofd">
         <description>
             Overig: Kind trekt plastic zak over het hoofd
-        </description>
-        <advice></advice>
-    </checklist_item>
-
-    <checklist_item name="Giftige Stoffen: Kind eet medicijnen uit tas medewerker">
-        <description>
-            Giftige Stoffen: Kind eet medicijnen uit tas medewerker
-        </description>
-        <advice></advice>
-    </checklist_item>
-
-    <checklist_item name="Giftige Stoffen: Kind eet sigaretten op">
-        <description>
-            Giftige Stoffen: Kind eet sigaretten op
         </description>
         <advice></advice>
     </checklist_item>
@@ -938,13 +806,6 @@
         <advice></advice>
     </checklist_item>
 
-    <checklist_item name="Binnenberging: Kind drinkt van schoonmaakmiddelen/kan bij giftige stoffen">
-        <description>
-            Binnenberging: Kind drinkt van schoonmaakmiddelen/kan bij giftige stoffen
-        </description>
-        <advice></advice>
-    </checklist_item>
-
     <checklist_item name="Binnenberging: Kind krijgt giftige stoffen binnen omdat voedsel naast gevaarlijke stoffen wordt opgeborgen">
         <description>
             Binnenberging: Kind krijgt giftige stoffen binnen omdat voedsel naast gevaarlijke stoffen wordt opgeborgen
@@ -955,13 +816,6 @@
     <checklist_item name="Binnenberging: Kind klimt in wasdroger/machine">
         <description>
             Binnenberging: Kind klimt in wasdroger/machine
-        </description>
-        <advice></advice>
-    </checklist_item>
-
-    <checklist_item name="Binnenberging: Kind verbrandt zich aan heet water">
-        <description>
-            Binnenberging: Kind verbrandt zich aan heet water
         </description>
         <advice></advice>
     </checklist_item>
@@ -987,13 +841,6 @@
         <advice></advice>
     </checklist_item>
 
-    <checklist_item name="Binnenberging: Kast valt om en kind komt onder kast terecht">
-        <description>
-            Binnenberging: Kast valt om en kind komt onder kast terecht
-        </description>
-        <advice></advice>
-    </checklist_item>
-
     <checklist_item name="Buitenberging: Kind bezeert zich aan opgeslagen speelgoed/materiaal">
         <description>
             Buitenberging: Kind bezeert zich aan opgeslagen speelgoed/materiaal
@@ -1004,13 +851,6 @@
     <checklist_item name="Buitenberging: Kind bezeert zich aan gereedschap">
         <description>
             Buitenberging: Kind bezeert zich aan gereedschap
-        </description>
-        <advice></advice>
-    </checklist_item>
-
-    <checklist_item name="Buitenberging: Kast valt om en kind komt onder kast terecht">
-        <description>
-            Buitenberging: Kast valt om en kind komt onder kast terecht
         </description>
         <advice></advice>
     </checklist_item>
@@ -1127,13 +967,6 @@
         <advice></advice>
     </checklist_item>
 
-    <checklist_item name="Omheining: Kind rent al spelend de straat op">
-        <description>
-            Omheining: Kind rent al spelend de straat op
-        </description>
-        <advice></advice>
-    </checklist_item>
-
     <checklist_item name="Omheining: Kind doet poortje van het hek open en rent de straat op">
         <description>
             Omheining: Kind doet poortje van het hek open en rent de straat op
@@ -1190,20 +1023,6 @@
         <advice></advice>
     </checklist_item>
 
-    <checklist_item name="Ondergrond: Kind struikelt over een oneffenheid">
-        <description>
-            Ondergrond: Kind struikelt over een oneffenheid
-        </description>
-        <advice></advice>
-    </checklist_item>
-
-    <checklist_item name="Ondergrond: Kind glijdt uit over natte plek">
-        <description>
-            Ondergrond: Kind glijdt uit over natte plek
-        </description>
-        <advice></advice>
-    </checklist_item>
-
     <checklist_item name="Overig: Kind rent tegen een obstakel">
         <description>
             Overig: Kind rent tegen een obstakel
@@ -1235,13 +1054,6 @@
     <checklist_item name="Overig: Kind verbrandt zich in de zon">
         <description>
             Overig: Kind verbrandt zich in de zon
-        </description>
-        <advice></advice>
-    </checklist_item>
-
-    <checklist_item name="Overig: Kind eet van giftige plant of struik">
-        <description>
-            Overig: Kind eet van giftige plant of struik
         </description>
         <advice></advice>
     </checklist_item>
