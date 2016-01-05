@@ -79,20 +79,6 @@ class Question
 	}
 }
 
-class AskedQuestion extends Question
-{
-	public $skippable;
-
-	public function __construct(Question $question, $skippable)
-	{
-		$this->description = $question->description;
-
-		$this->options = $question->options;
-
-		$this->skippable = $skippable;
-	}
-}
-
 /**
  * Een mogelijk antwoord op een Question.
  *
@@ -546,7 +532,7 @@ class Solver
 	 * stack.
 	 *
 	 * @param KnowledgeState $knowledge begin-state
-	 * @return AskedQuestion | null
+	 * @return Question | null
 	 */
 	public function solveAll(KnowledgeState $state)
 	{
@@ -559,7 +545,7 @@ class Solver
 
 			// Oh, dat resulteerde in een vraag. Stel hem (of geef hem terug om 
 			// de interface hem te laten stellen eigenlijk.)
-			if ($result instanceof AskedQuestion)
+			if ($result instanceof Question)
 			{
 				return $result;
 			}
@@ -639,7 +625,7 @@ class Solver
 	 *
 	 * @param KnowledgeState $state huidige knowledge state
 	 * @param string goal naam van het fact dat wordt afgeleid
-	 * @return TruthState | AskedQuestion
+	 * @return TruthState | Question
 	 */
 	public function solve(KnowledgeState $state, $goal)
 	{
@@ -679,16 +665,11 @@ class Solver
 		{
 			$question = iterator_first($relevant_questions);
 
-			// deze vraag is alleen over te slaan als er nog regels open staan om dit feit
-			// af te leiden of als er alternatieve vragen naast deze (of eerder gestelde,
-			// vandaar $n++) zijn.
-			$skippable = iterator_count($relevant_questions) - 1;
-
 			// haal de vraag hoe dan ook uit de mogelijk te stellen vragen. Het heeft geen zin
 			// om hem twee keer te stellen.
 			$state->questions->remove($question);
 
-			return new AskedQuestion($question, $skippable);
+			return $question;
 		}
 
 		// We have no idea how to solve this. No longer our problem!

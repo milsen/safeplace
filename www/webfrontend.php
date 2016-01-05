@@ -81,7 +81,7 @@ class WebFrontend
 
 				$step = $this->solver->solveAll($this->state);
 
-				if ($step instanceof AskedQuestion) {
+				if ($step instanceof Question) {
 					$this->question = $step;
 					$page->content = $this->display('templates/question.phtml');
 				} else {

@@ -11,14 +11,6 @@
 				</label>
 			</li>
 			<?php endforeach ?>
-			<?php if($question->skippable): ?>
-			<li class="skip-option">
-				<label>
-					<input type="radio" name="answer" value="<?=_encode(array())?>">
-					I don't know
-				</label>
-			</li>
-			<?php endif ?>
 		</ol>
 
 		<button type="submit">Continue…</button>
