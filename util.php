@@ -227,6 +227,20 @@ class Stack extends SplStack implements Serializable
 		foreach (unserialize($data) as $item)
 			$this->unshift($item);
 	}
+
+	public function reverse()
+	{
+		$this->rewind();
+		$s = array();
+
+		while (!$this->isEmpty()) {
+			$s[] = $this->pop();
+		}
+
+		foreach ($s as $item) {
+			$this->push($item);
+		}
+	}
 }
 
 class Template
