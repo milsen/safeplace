@@ -74,8 +74,286 @@
     sparsely and know what you are doing.
     -->
 
+    <question>
+        <description>
+            Are there children that regularly visit the building?
+        </description>
+        <option>
+            <description>Yes</description>
+            <then>
+                <fact name="children">Yes</fact>
+            </then>
+        </option>
+        <option>
+            <description>No</description>
+            <then>
+                <fact name="children">No</fact>
+            </then>
+        </option>
+    </question>
+
+    <!-- Age Groups {{{ -->
+    <question>
+        <description>
+            How old are the children that visit the building?
+        </description>
+        <option>
+            <description>0-2</description>
+            <then>
+                <fact name="child-age">0-2</fact>
+            </then>
+        </option>
+        <option>
+            <description>0-4</description>
+            <then>
+                <fact name="child-age">0-4</fact>
+            </then>
+        </option>
+        <option>
+            <description>0-12</description>
+            <then>
+                <fact name="child-age">0-12</fact>
+            </then>
+        </option>
+        <option>
+            <description>2-4</description>
+            <then>
+                <fact name="child-age">2-4</fact>
+            </then>
+        </option>
+        <option>
+            <description>2-12</description>
+            <then>
+                <fact name="child-age">2-12</fact>
+            </then>
+        </option>
+        <option>
+            <description>4-12</description>
+            <then>
+                <fact name="child-age">4-12</fact>
+            </then>
+        </option>
+        <option>
+            <description>Older than 2</description>
+            <then>
+                <fact name="child-age">2+</fact>
+            </then>
+        </option>
+        <option>
+            <description>Older than 4</description>
+            <then>
+                <fact name="child-age">4+</fact>
+            </then>
+        </option>
+        <option>
+            <description>Older than 12</description>
+            <then>
+                <fact name="child-age">12+</fact>
+            </then>
+        </option>
+        <option>
+            <description>Any age</description>
+            <then>
+                <fact name="child-age">0+</fact>
+            </then>
+        </option>
+    </question>
+
     <!--
-        Risico Inventarisatie
+         Specify age group of children:
+         0-2  babies
+         2-4  small-children
+         4-12 medium-children
+         12+  big-children
+         0-12 non-autonomous-children
+    -->
+    <rule>
+        <description>Babies (between the age of 0-2) visit the
+            building.</description>
+        <if>
+            <and>
+                <fact name="children">Yes</fact>
+                <or>
+                    <fact name="child-age">0-2</fact>
+                    <fact name="child-age">0-4</fact>
+                    <fact name="child-age">0-12</fact>
+                    <fact name="child-age">0+</fact>
+                </or>
+            </and>
+        </if>
+        <then>
+            <fact name="babies">Yes</fact>
+        </then>
+    </rule>
+
+    <rule>
+        <description></description>
+        <if>
+            <or>
+                <fact name="children">No</fact>
+                <fact name="child-age">2-4</fact>
+                <fact name="child-age">2-12</fact>
+                <fact name="child-age">4-12</fact>
+                <fact name="child-age">2+</fact>
+                <fact name="child-age">4+</fact>
+                <fact name="child-age">12+</fact>
+            </or>
+        </if>
+        <then>
+            <fact name="babies">No</fact>
+        </then>
+    </rule>
+
+    <rule>
+        <description>Small children (between age of 2-4) visit the
+            building.</description>
+        <if>
+            <and>
+                <fact name="children">Yes</fact>
+                <or>
+                    <fact name="child-age">0-4</fact>
+                    <fact name="child-age">0-12</fact>
+                    <fact name="child-age">2-4</fact>
+                    <fact name="child-age">2-12</fact>
+                    <fact name="child-age">0+</fact>
+                    <fact name="child-age">2+</fact>
+                </or>
+            </and>
+        </if>
+        <then>
+            <fact name="small-children">Yes</fact>
+        </then>
+    </rule>
+
+    <rule>
+        <description></description>
+        <if>
+            <or>
+                <fact name="children">No</fact>
+                <fact name="child-age">0-2</fact>
+                <fact name="child-age">2-12</fact>
+                <fact name="child-age">4-12</fact>
+                <fact name="child-age">4+</fact>
+                <fact name="child-age">12+</fact>
+            </or>
+        </if>
+        <then>
+            <fact name="small-children">No</fact>
+        </then>
+    </rule>
+
+    <rule>
+        <description>Medium children (between age of 4-12) visit the
+            building.</description>
+        <if>
+            <and>
+                <fact name="children">Yes</fact>
+                <or>
+                    <fact name="child-age">0-12</fact>
+                    <fact name="child-age">2-12</fact>
+                    <fact name="child-age">4-12</fact>
+                    <fact name="child-age">0+</fact>
+                    <fact name="child-age">2+</fact>
+                    <fact name="child-age">4+</fact>
+                </or>
+            </and>
+        </if>
+        <then>
+            <fact name="medium-children">Yes</fact>
+        </then>
+    </rule>
+
+    <rule>
+        <description></description>
+        <if>
+            <or>
+                <fact name="children">No</fact>
+                <fact name="child-age">0-2</fact>
+                <fact name="child-age">0-4</fact>
+                <fact name="child-age">2-4</fact>
+                <fact name="child-age">12+</fact>
+            </or>
+        </if>
+        <then>
+            <fact name="medium-children">No</fact>
+        </then>
+    </rule>
+
+    <rule>
+        <description>Big children (older than 12) visit the
+            building.</description>
+        <if>
+            <and>
+                <fact name="children">Yes</fact>
+                <or>
+                    <fact name="child-age">0+</fact>
+                    <fact name="child-age">2+</fact>
+                    <fact name="child-age">4+</fact>
+                    <fact name="child-age">12+</fact>
+                </or>
+            </and>
+        </if>
+        <then>
+            <fact name="big-children">Yes</fact>
+        </then>
+    </rule>
+
+    <rule>
+        <description></description>
+        <if>
+            <or>
+                <fact name="children">No</fact>
+                <fact name="child-age">0-2</fact>
+                <fact name="child-age">0-4</fact>
+                <fact name="child-age">0-12</fact>
+                <fact name="child-age">2-4</fact>
+                <fact name="child-age">2-12</fact>
+                <fact name="child-age">4-12</fact>
+            </or>
+        </if>
+        <then>
+            <fact name="big-children">No</fact>
+        </then>
+    </rule>
+
+    <rule>
+        <description>Non-autonomous children (younger than 12) visit the
+            building.</description>
+        <if>
+            <and>
+                <fact name="children">Yes</fact>
+                <or>
+                    <fact name="babies">Yes</fact>
+                    <fact name="small-children">Yes</fact>
+                    <fact name="medium-children">Yes</fact>
+                </or>
+            </and>
+        </if>
+        <then>
+            <fact name="non-autonomous-children">Yes</fact>
+        </then>
+    </rule>
+
+    <rule>
+        <description></description>
+        <if>
+            <or>
+                <fact name="children">No</fact>
+                <and>
+                    <fact name="babies">No</fact>
+                    <fact name="small-children">No</fact>
+                    <fact name="medium-children">No</fact>
+                </and>
+            </or>
+        </if>
+        <then>
+            <fact name="non-autonomous-children">No</fact>
+        </then>
+    </rule>
+    <!-- }}} -->
+
+    <!--
+        Risico Inventarisatie {{{
         Veiligheid
         Peuterspeelzaal Scheemda (Mrz 14)
     -->
@@ -118,8 +396,10 @@
         "Overig: Kind [opent vuilnisemmer/]snuffelt in afvalbakje"
         "Trap: Kind valt [van de zijkant] van de trap af"
         "[Binnenberging/Buitenberging/]Meubilair: Kast valt om en kind komt onder de kast terecht"
+        }}}
     -->
 
+    <!-- Buildings {{{ -->
     <!-- Groepsruimte-->
     <building name="Groepsruimte" value="Yes">
         <title>Groepsruimte</title>
@@ -325,7 +605,767 @@
         <risk name="Omgeving: Kind rent de weg op als het wordt opgehaald"></risk>
         <risk name="Omgeving: Kind raakt betrokken bij ongeval bij een uitstapje buiten de deur"></risk>
     </building>
+    <!-- }}} -->
 
+    <!-- Rules {{{ -->
+    <!-- No children -->
+    <rule>
+        <description>No children, no advice from this knowledge base.</description>
+        <if>
+            <fact name="children">No</fact>
+        </if>
+        <then>
+            <fact name="Groepsruimte">No</fact>
+            <fact name="Meerdere Verdiepingen">No</fact>
+            <fact name="Raam">No</fact>
+            <fact name="Speelgoed">No</fact>
+            <fact name="Sanitair">No</fact>
+            <fact name="Ankleedtafel">No</fact>
+            <fact name="Eetruimte">No</fact>
+            <fact name="Keuken/Kantoor">No</fact>
+            <fact name="Binnenberging">No</fact>
+            <fact name="Buitenberging">No</fact>
+            <fact name="Buitenruimte">No</fact>
+            <fact name="Speeltoestel">No</fact>
+            <fact name="Omheining">No</fact>
+            <fact name="Omgeving">No</fact>
+        </then>
+    </rule>
+
+    <!-- Groepsruimte -->
+    <rule>
+        <description></description>
+        <if>
+            <fact name="children">Yes</fact>
+        </if>
+        <then>
+            <fact name="Groepsruimte">Yes</fact>
+        </then>
+    </rule>
+
+
+    <!-- Meerdere Verdiepingen -->
+    <rule>
+        <description>If it is a multistory building and children have access to
+            the stairs, the stair-risks may be important.</description>
+        <if>
+            <and>
+                <fact name="multistory">Yes</fact>
+                <fact name="children-access-to-stairs">Yes</fact>
+            </and>
+        </if>
+        <then>
+            <fact name="Meerdere Verdiepingen">Yes</fact>
+        </then>
+    </rule>
+
+    <rule>
+        <description></description>
+        <if>
+            <or>
+                <fact name="multistory">No</fact>
+                <fact name="children-access-to-stairs">No</fact>
+            </or>
+        </if>
+        <then>
+            <fact name="Meerdere Verdiepingen">No</fact>
+        </then>
+    </rule>
+
+    <!-- Raam -->
+    <rule>
+        <description></description>
+        <if>
+            <and>
+                <fact name="windows">Yes</fact>
+                <fact name="windows-below-1m">Yes</fact>
+                <fact name="windows-fallable">Yes</fact>
+            </and>
+        </if>
+        <then>
+            <fact name="Raam">Yes</fact>
+        </then>
+    </rule>
+
+    <rule>
+        <description></description>
+        <if>
+            <or>
+                <fact name="windows">No</fact>
+                <fact name="windows-below-1m">No</fact>
+                <fact name="windows-fallable">No</fact>
+            </or>
+        </if>
+        <then>
+            <fact name="Raam">No</fact>
+        </then>
+    </rule>
+
+    <!-- Speelgoed -->
+    <rule>
+        <description></description>
+        <if>
+            <and>
+                <fact name="non-autonomous-children">Yes</fact>
+                <fact name="explicit-Speelgoed">Yes</fact>
+            </and>
+        </if>
+        <then>
+            <fact name="Speelgoed">Yes</fact>
+        </then>
+    </rule>
+
+    <rule>
+        <description></description>
+        <if>
+            <or>
+                <fact name="non-autonomous-children">No</fact>
+                <fact name="explicit-Speelgoed">No</fact>
+            </or>
+        </if>
+        <then>
+            <fact name="Speelgoed">No</fact>
+        </then>
+    </rule>
+
+    <!-- Sanitair and Ankleedtafel -->
+    <rule>
+        <description></description>
+        <if>
+            <or>
+                <fact name="sanitair-adults">Yes</fact>
+                <fact name="sanitair-children">Yes</fact>
+            </or>
+        </if>
+        <then>
+            <fact name="Sanitair">Yes</fact>
+        </then>
+    </rule>
+
+    <rule>
+        <description></description>
+        <if>
+            <and>
+                <fact name="sanitair-adults">No</fact>
+                <fact name="sanitair-children">No</fact>
+            </and>
+        </if>
+        <then>
+            <fact name="Sanitair">No</fact>
+        </then>
+    </rule>
+
+    <rule>
+        <description>If there are sanitary rooms and small children visit the
+            building, ask for Ankleedtafel.</description>
+        <if>
+            <and>
+                <or>
+                    <fact name="babies">Yes</fact>
+                    <fact name="small-children">Yes</fact>
+                </or>
+                <fact name="Sanitair">Yes</fact>
+                <fact name="explicit-Ankleedtafel">Yes</fact>
+            </and>
+        </if>
+        <then>
+            <fact name="Ankleedtafel">Yes</fact>
+        </then>
+    </rule>
+
+    <rule>
+        <description></description>
+        <if>
+            <or>
+                <and>
+                    <fact name="babies">No</fact>
+                    <fact name="small-children">No</fact>
+                </and>
+                <fact name="Sanitair">No</fact>
+                <fact name="explicit-Ankleedtafel">No</fact>
+            </or>
+        </if>
+        <then>
+            <fact name="Ankleedtafel">No</fact>
+        </then>
+    </rule>
+
+    <!-- Eetruimte and Keuken/Kantoor -->
+    <rule>
+        <description></description>
+        <if>
+            <and>
+                <fact name="non-autonomous-children">Yes</fact>
+                <fact name="children-eating">Yes</fact>
+            </and>
+        </if>
+        <then>
+            <fact name="Eetruimte">Yes</fact>
+        </then>
+    </rule>
+
+    <rule>
+        <description></description>
+        <if>
+            <or>
+                <fact name="non-autonomous-children">No</fact>
+                <fact name="children-eating">No</fact>
+            </or>
+        </if>
+        <then>
+            <fact name="Eetruimte">No</fact>
+        </then>
+    </rule>
+
+    <rule>
+        <description></description>
+        <if>
+            <and>
+                <or>
+                    <fact name="children-eating">Yes</fact>
+                    <fact name="adults-eating">Yes</fact>
+                </or>
+                <fact name="explicit-Keuken/Kantoor">Yes</fact>
+            </and>
+        </if>
+        <then>
+            <fact name="Keuken/Kantoor">Yes</fact>
+        </then>
+    </rule>
+
+    <rule>
+        <description></description>
+        <if>
+            <or>
+                <and>
+                    <fact name="children-eating">No</fact>
+                    <fact name="adults-eating">No</fact>
+                </and>
+                <fact name="explicit-Keuken/Kantoor">No</fact>
+            </or>
+        </if>
+        <then>
+            <fact name="Keuken/Kantoor">No</fact>
+        </then>
+    </rule>
+
+    <!-- Binnenberging -->
+    <rule>
+        <description></description>
+        <if>
+            <and>
+                <fact name="berging">Yes</fact>
+                <fact name="explicit-Binnenberging">Yes</fact>
+            </and>
+        </if>
+        <then>
+            <fact name="Binnenberging">Yes</fact>
+        </then>
+    </rule>
+
+    <rule>
+        <description></description>
+        <if>
+            <or>
+                <fact name="berging">No</fact>
+                <fact name="explicit-Binnenberging">No</fact>
+            </or>
+        </if>
+        <then>
+            <fact name="Binnenberging">No</fact>
+        </then>
+    </rule>
+
+    <!-- Buitenberging -->
+    <rule>
+        <description></description>
+        <if>
+            <and>
+                <fact name="Buitenruimte">Yes</fact>
+                <fact name="berging">Yes</fact>
+                <fact name="explicit-Buitenberging">Yes</fact>
+            </and>
+        </if>
+        <then>
+            <fact name="Buitenberging">Yes</fact>
+        </then>
+    </rule>
+
+    <rule>
+        <description></description>
+        <if>
+            <or>
+                <fact name="Buitenruimte">No</fact>
+                <fact name="berging">No</fact>
+                <fact name="explicit-Buitenberging">No</fact>
+            </or>
+        </if>
+        <then>
+            <fact name="Buitenberging">No</fact>
+        </then>
+    </rule>
+
+    <!-- Buitenruimte -->
+
+    <!-- Speeltoestel -->
+    <rule>
+        <description></description>
+        <if>
+            <and>
+                <fact name="Buitenruimte">Yes</fact>
+                <fact name="explicit-Speeltoestel">Yes</fact>
+            </and>
+        </if>
+        <then>
+            <fact name="Speeltoestel">Yes</fact>
+        </then>
+    </rule>
+
+    <rule>
+        <description></description>
+        <if>
+            <or>
+                <fact name="Buitenruimte">No</fact>
+                <fact name="explicit-Speeltoestel">No</fact>
+            </or>
+        </if>
+        <then>
+            <fact name="Speeltoestel">No</fact>
+        </then>
+    </rule>
+
+    <!-- Omheining -->
+    <rule>
+        <description></description>
+        <if>
+            <and>
+                <fact name="Buitenruimte">Yes</fact>
+                <fact name="explicit-Omheining">Yes</fact>
+            </and>
+        </if>
+        <then>
+            <fact name="Omheining">Yes</fact>
+        </then>
+    </rule>
+
+    <rule>
+        <description></description>
+        <if>
+            <or>
+                <fact name="Buitenruimte">No</fact>
+                <fact name="explicit-Omheining">No</fact>
+            </or>
+        </if>
+        <then>
+            <fact name="Omheining">No</fact>
+        </then>
+    </rule>
+
+    <!-- Omgeving -->
+    <rule>
+        <description></description>
+        <if>
+            <or>
+                <fact name="trips-with-children">Yes</fact>
+                <fact name="children-arrive-or-leave">Yes</fact>
+            </or>
+        </if>
+        <then>
+            <fact name="Omgeving">Yes</fact>
+        </then>
+    </rule>
+
+    <rule>
+        <description></description>
+        <if>
+            <and>
+                <fact name="trips-with-children">No</fact>
+                <fact name="children-arrive-or-leave">No</fact>
+            </and>
+        </if>
+        <then>
+            <fact name="Omgeving">No</fact>
+        </then>
+    </rule>
+    <!-- }}} -->
+
+    <!-- Questions {{{ -->
+    <!-- Meerdere Verdiepingen -->
+    <question>
+        <description>
+            Does the building have multiple stories?
+        </description>
+        <option>
+            <description>Yes</description>
+            <then>
+                <fact name="multistory">Yes</fact>
+            </then>
+        </option>
+        <option>
+            <description>No</description>
+            <then>
+                <fact name="multistory">No</fact>
+            </then>
+        </option>
+    </question>
+
+    <question>
+        <description>
+            Do children have access to any stairs?
+        </description>
+        <option>
+            <description>Yes</description>
+            <then>
+                <fact name="children-access-to-stairs">Yes</fact>
+            </then>
+        </option>
+        <option>
+            <description>No</description>
+            <then>
+                <fact name="children-access-to-stairs">No</fact>
+            </then>
+        </option>
+    </question>
+
+    <!-- Raam -->
+    <question>
+        <description>
+            Does the building have windows in rooms accessible to children?
+        </description>
+        <option>
+            <description>Yes</description>
+            <then>
+                <fact name="windows">Yes</fact>
+            </then>
+        </option>
+        <option>
+            <description>No</description>
+            <then>
+                <fact name="windows">No</fact>
+            </then>
+        </option>
+    </question>
+
+    <question>
+        <description>
+            Are the lowest windows more or less than 1m above the ground?
+        </description>
+        <option>
+            <description>Less than 1m</description>
+            <then>
+                <fact name="windows-below-1m">Yes</fact>
+            </then>
+        </option>
+        <option>
+            <description>More than 1m</description>
+            <then>
+                <fact name="windows-below-1m">No</fact>
+            </then>
+        </option>
+    </question>
+
+    <question>
+        <description>
+            Is it possible to fall through the window because the glass is thin,
+            the windows are sometimes left open and/or there are no bars in
+            front of it?
+        </description>
+        <option>
+            <description>Yes</description>
+            <then>
+                <fact name="windows-fallable">Yes</fact>
+            </then>
+        </option>
+        <option>
+            <description>No</description>
+            <then>
+                <fact name="windows-fallable">No</fact>
+            </then>
+        </option>
+    </question>
+
+    <!-- Speelgoed -->
+    <question>
+        <description>
+            Are children playing with toys in the building?
+        </description>
+        <option>
+            <description>Yes</description>
+            <then>
+                <fact name="explicit-Speelgoed">Yes</fact>
+            </then>
+        </option>
+        <option>
+            <description>No</description>
+            <then>
+                <fact name="explicit-Speelgoed">No</fact>
+            </then>
+        </option>
+    </question>
+
+    <!-- Sanitair and Ankleedtafel -->
+    <question>
+        <description>
+            Does the building have sanitary facilities for adults?
+        </description>
+        <option>
+            <description>Yes</description>
+            <then>
+                <fact name="sanitair-adults">Yes</fact>
+            </then>
+        </option>
+        <option>
+            <description>No</description>
+            <then>
+                <fact name="sanitair-adults">No</fact>
+            </then>
+        </option>
+    </question>
+
+    <question>
+        <description>
+            Does the building have sanitary facilities for children?
+        </description>
+        <option>
+            <description>Yes</description>
+            <then>
+                <fact name="sanitair-children">Yes</fact>
+            </then>
+        </option>
+        <option>
+            <description>No</description>
+            <then>
+                <fact name="sanitair-children">No</fact>
+            </then>
+        </option>
+    </question>
+
+    <question>
+        <description>
+            Do the sanitary facilities have diaper-changing tables?
+        </description>
+        <option>
+            <description>Yes</description>
+            <then>
+                <fact name="explicit-Ankleedtafel">Yes</fact>
+            </then>
+        </option>
+        <option>
+            <description>No</description>
+            <then>
+                <fact name="explicit-Ankleedtafel">No</fact>
+            </then>
+        </option>
+    </question>
+
+    <!-- Eetruimte and Keuken/Kantoor -->
+    <question>
+        <description>
+            Are children eating in the building?
+        </description>
+        <option>
+            <description>Yes</description>
+            <then>
+                <fact name="children-eating">Yes</fact>
+            </then>
+        </option>
+        <option>
+            <description>No</description>
+            <then>
+                <fact name="children-eating">No</fact>
+            </then>
+        </option>
+    </question>
+
+    <question>
+        <description>
+            Are adults eating in the building?
+        </description>
+        <option>
+            <description>Yes</description>
+            <then>
+                <fact name="adults-eating">Yes</fact>
+            </then>
+        </option>
+        <option>
+            <description>No</description>
+            <then>
+                <fact name="adults-eating">No</fact>
+            </then>
+        </option>
+    </question>
+
+    <question>
+        <description>
+            Are meals prepared in the building?
+        </description>
+        <option>
+            <description>Yes</description>
+            <then>
+                <fact name="explicit-Keuken/Kantoor">Yes</fact>
+            </then>
+        </option>
+        <option>
+            <description>No</description>
+            <then>
+                <fact name="explicit-Keuken/Kantoor">No</fact>
+            </then>
+        </option>
+    </question>
+
+    <!-- Berging -->
+    <question>
+        <description>
+            Does the building have specific rooms for storing toys, tools or cleaning equipment?
+        </description>
+        <option>
+            <description>Yes</description>
+            <then>
+                <fact name="berging">Yes</fact>
+            </then>
+        </option>
+        <option>
+            <description>No</description>
+            <then>
+                <fact name="berging">No</fact>
+            </then>
+        </option>
+    </question>
+
+    <question>
+        <description>
+            Does the building have rooms/huts for storing toys or tools outside?
+        </description>
+        <option>
+            <description>Yes</description>
+            <then>
+                <fact name="explicit-Buitenberging">Yes</fact>
+            </then>
+        </option>
+        <option>
+            <description>No</description>
+            <then>
+                <fact name="explicit-Buitenberging">No</fact>
+            </then>
+        </option>
+    </question>
+
+    <question>
+        <description>
+            Does the building have rooms for storing toys or tools inside?
+        </description>
+        <option>
+            <description>Yes</description>
+            <then>
+                <fact name="explicit-Binnenberging">Yes</fact>
+            </then>
+        </option>
+        <option>
+            <description>No</description>
+            <then>
+                <fact name="explicit-Binnenberging">No</fact>
+            </then>
+        </option>
+    </question>
+
+    <!-- Buitenruimte -->
+    <question>
+        <description>
+            Does the building have an outer area that children have access to?
+        </description>
+        <option>
+            <description>Yes</description>
+            <then>
+                <fact name="Buitenruimte">Yes</fact>
+            </then>
+        </option>
+        <option>
+            <description>No</description>
+            <then>
+                <fact name="Buitenruimte">No</fact>
+            </then>
+        </option>
+    </question>
+
+    <!-- Speeltoetsel -->
+    <question>
+        <description>
+            Are playground structures in the outside area, e.g. swings or a sandbox?
+        </description>
+        <option>
+            <description>Yes</description>
+            <then>
+                <fact name="explicit-Speeltoestel">Yes</fact>
+            </then>
+        </option>
+        <option>
+            <description>No</description>
+            <then>
+                <fact name="explicit-Speeltoestel">No</fact>
+            </then>
+        </option>
+    </question>
+
+    <!-- Omheining -->
+    <question>
+        <description>
+            Is there a fence around the outer area?
+            <!-- TODO if there isnt that's bad right? -->
+        </description>
+        <option>
+            <description>Yes</description>
+            <then>
+                <fact name="explicit-Omheining">Yes</fact>
+            </then>
+        </option>
+        <option>
+            <description>No</description>
+            <then>
+                <fact name="explicit-Omheining">No</fact>
+            </then>
+        </option>
+    </question>
+
+    <!-- Omgeving -->
+    <question>
+        <description>
+            Are trips with children starting or ending at the location in question?
+        </description>
+        <option>
+            <description>Yes</description>
+            <then>
+                <fact name="trips-with-children">Yes</fact>
+            </then>
+        </option>
+        <option>
+            <description>No</description>
+            <then>
+                <fact name="trips-with-children">No</fact>
+            </then>
+        </option>
+    </question>
+
+    <question>
+        <description>
+            Do children come to the building or leave the building without one
+            of their guardians (e.g. do they go to the building after school)?
+        </description>
+        <option>
+            <description>Yes</description>
+            <then>
+                <fact name="children-arrive-or-leave">Yes</fact>
+            </then>
+        </option>
+        <option>
+            <description>No</description>
+            <then>
+                <fact name="children-arrive-or-leave">No</fact>
+            </then>
+        </option>
+    </question>
+    <!-- }}} -->
+
+    <!-- Checklist Items {{{ -->
     <checklist_item name="Trap: Kind valt doordat het niet bij de trapleuning kan">
         <description>
             Trap: Kind valt doordat het niet bij de trapleuning kan
@@ -1081,5 +2121,6 @@
         </description>
         <advice></advice>
     </checklist_item>
+    <!-- }}} -->
 
 </knowledge>
