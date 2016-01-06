@@ -1,54 +1,87 @@
-<section class="checklist">
-	<div class="checklist_box">
-		<ol class="checklist_item">
-			<form method="post">
-			<?php $i = 0; ?>
-			<?php foreach ($checklist as $checklist_item): ?>
-			<li>
-				<label>
-					<?=$state->substitute_variables($checklist_item->description, ['Template', 'html'])?>
-					<div class="checklist item">
-						<p>
-						Chance that this will happen:
-						</p>
-						<div class="checklist option">
+<?php if ($deduced_buildings->isEmpty()): ?>
+	<section class="building-information">
+		<h1>
+			Failure to Categorize Building
+		</h1>
+		<div class="text">
+			It was not possible to determine the type of building
+			that you are concerned with on the basis of your answers
+			and the given knowledge base. <br>
+			Please remember that the Safeplace Default knowledge
+			base is only concerned with the safety of children.
+			Similarly, a custom knowledge base may have a different
+			focus than what you are looking for.
+		</div>
+	</section>
+<?php else: ?>
+	<section class="building-information">
+		<h1>
+			Safeplace Checklist
+		</h1>
+		<div class="text">
+			Safeplace categorized the building you are concerned
+			with as follows:
+			<ul>
+				<?php foreach ($deduced_buildings as $building): ?>
+					<li><?php echo $building->title ?></li>
+				<?php endforeach ?>
+			</ul>
+			Please fill out the following checklist to complete the
+			risk inventory.
+		</div>
+	</section>
+	<section class="checklist">
+		<div class="checklist_box">
+			<ol class="checklist_item">
+				<form method="post">
+					<?php $i = 0; ?>
+					<?php foreach ($checklist as $checklist_item): ?>
+					<li>
+					<label>
+						<?=$state->substitute_variables($checklist_item->description, ['Template', 'html'])?>
+						<div class="checklist item">
 							<p>
-							<?php echo'<input type="radio" name="radioGroup['.$i.']"
-							value="'.ChecklistItem::GREAT.'">'?>
-							<p class="textR">Great</p>
-							<?php echo'<input type="radio" name="radioGroup['.$i.']"
-							value="'.ChecklistItem::SMALL.'">'?>
-							<p class="textY">Small</p>
-							<?php echo'<input type="radio" name="radioGroup['.$i.']"
-							value="'.ChecklistItem::NEGLIGIBLE.'" checked="checked" >'?>
-							<p class="textG">Negligible</p>
+							Chance that this will happen:
 							</p>
-						</div>
-						<?php $i++; ?>
+							<div class="checklist option">
+								<p>
+								<?php echo'<input type="radio" name="radioGroup['.$i.']"
+								value="'.ChecklistItem::GREAT.'">'?>
+								<p class="textR">Great</p>
+								<?php echo'<input type="radio" name="radioGroup['.$i.']"
+								value="'.ChecklistItem::SMALL.'">'?>
+								<p class="textY">Small</p>
+								<?php echo'<input type="radio" name="radioGroup['.$i.']"
+								value="'.ChecklistItem::NEGLIGIBLE.'" checked="checked" >'?>
+								<p class="textG">Negligible</p>
+								</p>
+							</div>
+							<?php $i++; ?>
 
-						<br />
-						<p>
-						The potential injury of this risk:
-						</p>
-						<div class="checklist option">
+							<br />
 							<p>
-							<?php echo'<input type="radio" name="radioGroup['.$i.']"
-							value="'.ChecklistItem::GREAT.'">'?>
-							<p class="textR">Great</p>
-							<?php echo'<input type="radio" name="radioGroup['.$i.']"
-							value="'.ChecklistItem::SMALL.'" checked="checked" >'?>
-							<p class="textG">Small</p>
+							The potential injury of this risk:
 							</p>
+							<div class="checklist option">
+								<p>
+								<?php echo'<input type="radio" name="radioGroup['.$i.']"
+								value="'.ChecklistItem::GREAT.'">'?>
+								<p class="textR">Great</p>
+								<?php echo'<input type="radio" name="radioGroup['.$i.']"
+								value="'.ChecklistItem::SMALL.'" checked="checked" >'?>
+								<p class="textG">Small</p>
+								</p>
+							</div>
+							<?php $i++; ?>
 						</div>
-						<?php $i++; ?>
-					</div>
-				</label>
-				<hr />
-			</li>
-			<?php endforeach ?>
-			</form>
-		</ol>
-		<button type="submit">Continue</button>
-	</div>
-</section>
+					</label>
+					<hr />
+					</li>
+					<?php endforeach ?>
+				</form>
+			</ol>
+			<button type="submit">Continue</button>
+		</div>
+	</section>
+<?php endif ?>
 

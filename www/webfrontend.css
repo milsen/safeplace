@@ -144,6 +144,38 @@ table {
 	width: 200px;
 }
 
+/* Information about the deduced buildings above the checklist */
+.building-information {
+	max-width: 600px;
+	margin: 0 auto;
+	border-radius: 7px;
+	padding: 10px;
+	margin-top: 100px;
+	background-color: #eeeeee;
+}
+
+.building-information h1,
+.building-information div.text {
+	background-color: #fefefe;
+	border-radius: 7px;
+	padding: 5px;
+	color: #000;
+}
+
+.building-information h1 {
+	margin: 5px;
+}
+
+.building-information div.text {
+	margin: 10px 5px 5px 5px;
+}
+
+.building-information ul {
+	margin: 0px 5px 0px 0px;
+	padding: 5px;
+	list-style: circle inside;
+}
+
 .completed {
 	max-width: 900px;
 	margin: 0 auto;
