@@ -1,12 +1,14 @@
 <section class="completed">
 	<h2>Safety Assessment</h2>
-	<dl>
-	<?php foreach ($checklist as $checklist_item): ?>
-		<dt><?=$checklist_item->description?></dt>
-		<dt><?=$checklist_item->getSecurityLevel()?></dt>
-		<dt><?=$checklist_item->advice?></dt>
-	<?php endforeach ?>
-	</dl>
-	<button class="button download_checklist" type="submit" name="action"
-		value="download_checklist">Download Checklist</button>
+	<div class="completed-box">
+		<dl>
+		<?php foreach ($checklist as $checklist_item): ?>
+			<dt><?=$checklist_item->description?></dt>
+			<dt><?=$checklist_item->getSecurityLevel()?></dt>
+			<dt><?=$checklist_item->advice?></dt>
+		<?php endforeach ?>
+		</dl>
+		<button class="completed_download" type="submit" name="action"
+			value="download_checklist">DOWNLOAD CHECKLIST</button>
+	</div>
 </section>

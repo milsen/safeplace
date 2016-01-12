@@ -222,6 +222,18 @@ dt {
 .completed {
 	max-width: 900px;
 	margin: 0 auto;
+	padding-top: 100px;
+	color: #6cca6c;
+	text-align: center;
+}
+
+.completed-box {
+	max-width: 600px;
+	margin: 0 auto;
+	padding: 5px 10px 30px;
+	background-color: #eee;
+	border-radius: 7px;
+	text-align: center;
 }
 
 .completed dt {
@@ -232,6 +244,19 @@ dt {
 	margin: 0 1em 2em 1em;
 	padding: 0 1em;
 	border-left: 1px solid silver;
+}
+
+.completed_download { /*button in the dialog*/
+	color: #fff;
+	background-color: #6dd96d;
+	border: 0;
+	margin-top: 13px;
+	padding: 10px;
+	cursor: pointer;
+}
+
+.completed_download:hover {
+  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.2);
 }
 
 .checklist{
