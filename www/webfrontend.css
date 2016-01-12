@@ -268,7 +268,6 @@ dt {
 	background-color: #fefefe;
 	border-radius: 7px;
 	padding: 10px;
-	margin-top: 80px;
 }
 
 .checklist label {
@@ -305,7 +304,7 @@ dt {
 	border-radius: 3px;
 }
 
-.checklist hr {
+hr {
 	border:none;
 	border-top:1px dashed #ddd;
 	height:4px;

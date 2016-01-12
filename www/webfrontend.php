@@ -39,7 +39,7 @@ class WebFrontend
 	{
 		try
 		{
-			// if the user wants to downlaod the checklist, let him
+			// if the user wants to download the checklist, let him
 			if (isset($_POST['action']) &&
 				$_POST['action'] == 'download_checklist') {
 
