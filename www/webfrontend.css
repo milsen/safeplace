@@ -219,12 +219,17 @@ dt {
 	list-style: circle inside;
 }
 
+/* Stylesheet for completed.phtml */
 .completed {
 	max-width: 900px;
 	margin: 0 auto;
 	padding-top: 100px;
+}
+
+.completed h1 {
 	color: #6cca6c;
 	text-align: center;
+	font-size: 2em;
 }
 
 .completed-box {
@@ -236,14 +241,44 @@ dt {
 	text-align: center;
 }
 
-.completed dt {
-	font-size: 1.2em;
+.completed-box > table {
+	margin: 10px;
+	padding: 15px;
+	background-color: #fefefe;
+	border-radius: 7px;
+	text-align: left;
+	border: 1px solid black;
 }
 
-.completed dd {
-	margin: 0 1em 2em 1em;
-	padding: 0 1em;
-	border-left: 1px solid silver;
+.completed-box tr,
+.completed-box td {
+	border: 1px solid black;
+	padding: 15px;
+}
+
+.completed-box .security_level {
+	font-weight: bold;
+}
+
+/* These colors partially correspond to .checklist .text* */
+.completed-box .A1 {
+	background-color: #ff3333;
+}
+
+.completed-box .A2 {
+	background-color: #ff6932;
+}
+
+.completed-box .B1 {
+	background-color: #ffa500;
+}
+
+.completed-box .B2 {
+	background-color: #ffdd00;
+}
+
+.completed-box .description {
+    font-weight: bold;
 }
 
 .completed_download { /*button in the dialog*/
@@ -314,15 +349,13 @@ hr {
 	color: #22ad22;
 }
 
-
 .checklist .textR{
 	color: #ff3333;
 }
 
 .checklist .textY{
-	color: orange;
+	color: #ffa500;
 }
-
 
 .question {
 	max-width: 600px;
