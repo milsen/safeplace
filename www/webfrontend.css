@@ -294,6 +294,7 @@ dt {
   box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.2);
 }
 
+/* Checklist in checklist.phtml */
 .checklist{
 	max-width: 600px;
 	margin: 0 auto;
@@ -303,10 +304,6 @@ dt {
 	background-color: #fefefe;
 	border-radius: 7px;
 	padding: 10px;
-}
-
-.checklist label {
-	color: #6cca6c;
 }
 
 .checklist ol {
@@ -319,24 +316,40 @@ dt {
 	color: #6cca6c;
 }
 
-.checklist p {
-	margin: 0px;
-	padding: 0px;
-	display: inline-block;
-	font-size: 0.85em;
-	color: #000;
-}
-
+/* The whole table for one checklist item */
 .checklist .item {
+	width: 100%;
 	margin: 10px;
 	padding: 10px;
 	background-color: #eeeeee;
 	border-radius: 7px;
 }
 
-.checklist .option{
+.checklist tr {
+	width: 100%;
+	display: table-row;
+}
+
+/* For all table fields */
+.checklist th ,
+.checklist .option {
+	width: 45%;
+	display: inline-block;
+	padding: 0px 25px 0px 0px;
+	font-size: 0.85em;
+	font-weight: normal;
+}
+
+/* For checklist option table fields */
+.checklist .option {
 	background-color: #fefefe;
 	border-radius: 3px;
+}
+
+/* For checklist option text */
+.checklist p {
+	margin: 0px;
+	display: inline-block;
 }
 
 hr {

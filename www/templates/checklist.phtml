@@ -32,19 +32,19 @@
 	</section>
 	<section class="checklist">
 		<div class="checklist_box">
-			<ol class="checklist_item">
+			<ol>
 				<form method="post">
 					<?php $i = 0; ?>
 					<?php foreach ($checklist as $checklist_item): ?>
 					<li>
-					<label>
 						<?=$state->substitute_variables($checklist_item->description, ['Template', 'html'])?>
-						<div class="checklist item">
-							<p>
-							Chance that this will happen:
-							</p>
-							<div class="checklist option">
-								<p>
+						<table class="checklist item">
+							<tr>
+								<th>Chance that	this will happen:</th>
+								<th>The potential injury of this risk:</th>
+							</tr>
+							<tr>
+								<td class="checklist option">
 								<?php echo'<input type="radio" name="radioGroup['.$i.']"
 								value="'.ChecklistItem::GREAT.'">'?>
 								<p class="textR">Great</p>
@@ -54,27 +54,20 @@
 								<?php echo'<input type="radio" name="radioGroup['.$i.']"
 								value="'.ChecklistItem::NEGLIGIBLE.'" checked="checked" >'?>
 								<p class="textG">Negligible</p>
-								</p>
-							</div>
-							<?php $i++; ?>
+								</td>
+								<?php $i++; ?>
 
-							<br />
-							<p>
-							The potential injury of this risk:
-							</p>
-							<div class="checklist option">
-								<p>
+								<td class="checklist option">
 								<?php echo'<input type="radio" name="radioGroup['.$i.']"
 								value="'.ChecklistItem::GREAT.'">'?>
 								<p class="textR">Great</p>
 								<?php echo'<input type="radio" name="radioGroup['.$i.']"
 								value="'.ChecklistItem::SMALL.'" checked="checked" >'?>
 								<p class="textG">Small</p>
-								</p>
-							</div>
-							<?php $i++; ?>
-						</div>
-					</label>
+								</td>
+								<?php $i++; ?>
+							</tr>
+						</table>
 					<hr />
 					</li>
 					<?php endforeach ?>
