@@ -157,6 +157,7 @@ class WebFrontend
 					$this->state->goalStack->push(KnowledgeState::variable_name($building->value));
 				}
 			}
+			$this->state->goalStack->reverse();
 		}
 	}
 

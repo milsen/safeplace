@@ -27,16 +27,6 @@
     If none of the building-clauses match, the system won't know what to print
     and not show the goal at all.
     -->
-    <building name="chemical-plant" value="Yes">
-        <title>Chemical Plant</title>
-        <risk name="hand-burn"></risk>
-        <risk name="watery-eyes"></risk>
-    </building>
-
-    <building name="elementary-school" value="Yes">
-        <title>Elementary School</title>
-        <risk name="fall-through-window"></risk>
-    </building>
 
     <!--
     These checklist_items have a name that corresponds to the name of a risk in
@@ -45,33 +35,6 @@
 
     Different buildings can have the same risk.
     -->
-    <checklist_item name="hand-burn">
-        <description>
-            Could a person burn his/her hand with a Bunsen brenner?
-        </description>
-        <advice>
-            Enforce regulations such that people working with laboratory tools
-            have to wear fire-proof gloves.
-        </advice>
-    </checklist_item>
-
-    <checklist_item name="watery-eyes">
-        <description>
-            Could a person get watery eyes because of a chemical gas?
-        </description>
-        <advice>
-            Keep all dangerous chemicals in a seperate locked room.
-        </advice>
-    </checklist_item>
-
-    <checklist_item name="fall-through-window">
-        <description>
-            Could a child fall through a window?
-        </description>
-        <advice>
-            Erect barriers such that children cannot reach the windows.
-        </advice>
-    </checklist_item>
 
     <!--
     These rule cases are pretty self explaining. The description is more for the
@@ -98,15 +61,6 @@
     <then>-clause, the same consequences. Which one is first tried depends on
     which facts from the <if>-clause are higher on the goal stack.
     -->
-    <rule>
-        <description></description>
-        <if>
-            <fact name="children">to5</fact>
-        </if>
-        <then>
-            <fact name="elementary-school">Yes</fact>
-        </then>
-    </rule>
 
     <!--
     And finally, to get user input, you can ask questions. Each question has its
@@ -119,51 +73,2270 @@
     guaranteed to be derived before the question is printed, so use those
     sparsely and know what you are doing.
     -->
+
     <question>
         <description>
-            Are there children that regularly visit the building? In which age
-            group are they?
+            Are there children that regularly visit the building?
         </description>
         <option>
-            <description>0-5</description>
+            <description>Yes</description>
             <then>
-                <fact name="children">to5</fact>
+                <fact name="children">Yes</fact>
             </then>
         </option>
         <option>
-            <description>5-10</description>
-            <then>
-                <fact name="children">to10</fact>
-            </then>
-        </option>
-        <option>
-            <description>10-15</description>
-            <then>
-                <fact name="children">to15</fact>
-            </then>
-        </option>
-        <option>
-            <description>No children</description>
+            <description>No</description>
             <then>
                 <fact name="children">No</fact>
             </then>
         </option>
     </question>
 
+    <!-- Age Groups {{{ -->
     <question>
-        <description>Are there a lot of chemicals in the building?</description>
+        <description>
+            How old are the children that visit the building?
+        </description>
+        <option>
+            <description>0-2</description>
+            <then>
+                <fact name="child-age">0-2</fact>
+            </then>
+        </option>
+        <option>
+            <description>0-4</description>
+            <then>
+                <fact name="child-age">0-4</fact>
+            </then>
+        </option>
+        <option>
+            <description>0-12</description>
+            <then>
+                <fact name="child-age">0-12</fact>
+            </then>
+        </option>
+        <option>
+            <description>2-4</description>
+            <then>
+                <fact name="child-age">2-4</fact>
+            </then>
+        </option>
+        <option>
+            <description>2-12</description>
+            <then>
+                <fact name="child-age">2-12</fact>
+            </then>
+        </option>
+        <option>
+            <description>4-12</description>
+            <then>
+                <fact name="child-age">4-12</fact>
+            </then>
+        </option>
+        <option>
+            <description>Older than 2</description>
+            <then>
+                <fact name="child-age">2+</fact>
+            </then>
+        </option>
+        <option>
+            <description>Older than 4</description>
+            <then>
+                <fact name="child-age">4+</fact>
+            </then>
+        </option>
+        <option>
+            <description>Older than 12</description>
+            <then>
+                <fact name="child-age">12+</fact>
+            </then>
+        </option>
+        <option>
+            <description>Any age</description>
+            <then>
+                <fact name="child-age">0+</fact>
+            </then>
+        </option>
+    </question>
+
+    <!--
+         Specify age group of children:
+         0-2  babies
+         2-4  small-children
+         4-12 medium-children
+         12+  big-children
+         0-12 non-autonomous-children
+    -->
+    <rule>
+        <description>Babies (between the age of 0-2) visit the
+            building.</description>
+        <if>
+            <and>
+                <fact name="children">Yes</fact>
+                <or>
+                    <fact name="child-age">0-2</fact>
+                    <fact name="child-age">0-4</fact>
+                    <fact name="child-age">0-12</fact>
+                    <fact name="child-age">0+</fact>
+                </or>
+            </and>
+        </if>
+        <then>
+            <fact name="babies">Yes</fact>
+        </then>
+    </rule>
+
+    <rule>
+        <description></description>
+        <if>
+            <or>
+                <fact name="children">No</fact>
+                <fact name="child-age">2-4</fact>
+                <fact name="child-age">2-12</fact>
+                <fact name="child-age">4-12</fact>
+                <fact name="child-age">2+</fact>
+                <fact name="child-age">4+</fact>
+                <fact name="child-age">12+</fact>
+            </or>
+        </if>
+        <then>
+            <fact name="babies">No</fact>
+        </then>
+    </rule>
+
+    <rule>
+        <description>Small children (between age of 2-4) visit the
+            building.</description>
+        <if>
+            <and>
+                <fact name="children">Yes</fact>
+                <or>
+                    <fact name="child-age">0-4</fact>
+                    <fact name="child-age">0-12</fact>
+                    <fact name="child-age">2-4</fact>
+                    <fact name="child-age">2-12</fact>
+                    <fact name="child-age">0+</fact>
+                    <fact name="child-age">2+</fact>
+                </or>
+            </and>
+        </if>
+        <then>
+            <fact name="small-children">Yes</fact>
+        </then>
+    </rule>
+
+    <rule>
+        <description></description>
+        <if>
+            <or>
+                <fact name="children">No</fact>
+                <fact name="child-age">0-2</fact>
+                <fact name="child-age">2-12</fact>
+                <fact name="child-age">4-12</fact>
+                <fact name="child-age">4+</fact>
+                <fact name="child-age">12+</fact>
+            </or>
+        </if>
+        <then>
+            <fact name="small-children">No</fact>
+        </then>
+    </rule>
+
+    <rule>
+        <description>Medium children (between age of 4-12) visit the
+            building.</description>
+        <if>
+            <and>
+                <fact name="children">Yes</fact>
+                <or>
+                    <fact name="child-age">0-12</fact>
+                    <fact name="child-age">2-12</fact>
+                    <fact name="child-age">4-12</fact>
+                    <fact name="child-age">0+</fact>
+                    <fact name="child-age">2+</fact>
+                    <fact name="child-age">4+</fact>
+                </or>
+            </and>
+        </if>
+        <then>
+            <fact name="medium-children">Yes</fact>
+        </then>
+    </rule>
+
+    <rule>
+        <description></description>
+        <if>
+            <or>
+                <fact name="children">No</fact>
+                <fact name="child-age">0-2</fact>
+                <fact name="child-age">0-4</fact>
+                <fact name="child-age">2-4</fact>
+                <fact name="child-age">12+</fact>
+            </or>
+        </if>
+        <then>
+            <fact name="medium-children">No</fact>
+        </then>
+    </rule>
+
+    <rule>
+        <description>Big children (older than 12) visit the
+            building.</description>
+        <if>
+            <and>
+                <fact name="children">Yes</fact>
+                <or>
+                    <fact name="child-age">0+</fact>
+                    <fact name="child-age">2+</fact>
+                    <fact name="child-age">4+</fact>
+                    <fact name="child-age">12+</fact>
+                </or>
+            </and>
+        </if>
+        <then>
+            <fact name="big-children">Yes</fact>
+        </then>
+    </rule>
+
+    <rule>
+        <description></description>
+        <if>
+            <or>
+                <fact name="children">No</fact>
+                <fact name="child-age">0-2</fact>
+                <fact name="child-age">0-4</fact>
+                <fact name="child-age">0-12</fact>
+                <fact name="child-age">2-4</fact>
+                <fact name="child-age">2-12</fact>
+                <fact name="child-age">4-12</fact>
+            </or>
+        </if>
+        <then>
+            <fact name="big-children">No</fact>
+        </then>
+    </rule>
+
+    <rule>
+        <description>Non-autonomous children (younger than 12) visit the
+            building.</description>
+        <if>
+            <and>
+                <fact name="children">Yes</fact>
+                <or>
+                    <fact name="babies">Yes</fact>
+                    <fact name="small-children">Yes</fact>
+                    <fact name="medium-children">Yes</fact>
+                </or>
+            </and>
+        </if>
+        <then>
+            <fact name="non-autonomous-children">Yes</fact>
+        </then>
+    </rule>
+
+    <rule>
+        <description></description>
+        <if>
+            <or>
+                <fact name="children">No</fact>
+                <and>
+                    <fact name="babies">No</fact>
+                    <fact name="small-children">No</fact>
+                    <fact name="medium-children">No</fact>
+                </and>
+            </or>
+        </if>
+        <then>
+            <fact name="non-autonomous-children">No</fact>
+        </then>
+    </rule>
+    <!-- }}} -->
+
+    <!--
+        Risico Inventarisatie {{{
+        Veiligheid
+        Peuterspeelzaal Scheemda (Mrz 14)
+    -->
+
+    <!--
+        Some checklist_items in the Excel-sheets had the same sub-location and
+        description (but a different building). Their multiple occurences were deleted:
+        "Overig: Kind stopt kleine voorwerpen in de mond" (Entree, Sanitair, Keuken/Kantoor)
+        "Deur: Kind krijgt zijn vingers tussen de deur" (Groepsruimte, Entree)
+        "Raam: Kind valt door ruit" (Groepsruimte, Entree)
+        "Raam: Kind valt uit open raam" (Groepsruimte, Entree)
+        "Verwarming: Kind verbrandt zich aan hete radiator/buizen" (Groepsruimte, Entree)
+        "Verwarming: Kind botst of valt tegen radiator" (Groepsruimte, Entree)
+        "Verlichting: Kind struikelt door onvoldoende licht" (Groepsruimte, Entree)
+        "Giftige Stoffen: Kind drinkt van schoonmaakmiddel" (Groepsruimte, Entree)
+        "Giftige Stoffen: Kind eet van giftige plant" (Groepsruimte, Entree)
+        "Vloer: Kind struikelt over oneffenheid" (Groepsruimte, Entree)
+        "Verbranding: Kind heeft toegang tot lucifers/aansteker" (Groepsruimte, Keuken/Kantoor)
+
+        Remove duplicate checklist items that differ only slightly (in grammar or meaning):
+        "[Overig/Vloer/]Ondergrond: Kind glijdt uit [...]"
+        "Raam: Kind raakt verstrikt in [...] koordjes [...] raamdecoratie"
+        "Deur: Kind valt door glas in [...] deur"
+        "Verwarming: Kind komt met hand klem te zitten tussen [...] radiator"
+        "Verlichting: Lamp wordt stuk[...]gegooid en glas valt naar beneden"
+        "Elek[...]tra: Kind komt in contact met elektriciteit"
+        "Muur: Kind bezeert zich aan [...] oneffenheid"
+        "Giftige Stoffen: Kind eet sigaretten[...]of medicijnen uit tas[...]"
+        "[Overig/Buitenruimte/]Giftige Stoffen: Kind drinkt van schoonmaakmiddel[...]"
+        "[Overig/]Giftige Stoffen: Kind eet van giftige plant [...]"
+        "Giftige Stoffen: Kind eet sigaretten of medicijnen uit tas[...]"
+        "[Binnenberging/]Verbranding: Kind verbrandt zich aan warmwater[...]kraan"
+        "[Overig/]Verbranding: [...] Kind krijgt hete thee over zich heen"
+        "[Sanitair Volwassenen/]Giftige Stoffen: Kind drinkt van schoonmaakmiddel"
+        "[Sanitair Volwassenen/]Giftige Stoffen: Kind eet van toiletblokje"
+        "[Sanitair Volwassenen/]Overig: Kind snuffelt in afvalbakje"
+        "Overig: Kind snijdt zich aan [een mes/]kantoorartikelen"
+        "Omheining: Kind [...] rent de straat op"
+        "Overig: Kind rent tegen/botst [...] een [object/]obstakel[...]"
+        "Overig: Kind [opent vuilnisemmer/]snuffelt in afvalbakje"
+        "Trap: Kind valt [van de zijkant] van de trap af"
+        "[Binnenberging/Buitenberging/]Meubilair: Kast valt om en kind komt onder de kast terecht"
+        }}}
+    -->
+
+    <!-- Buildings {{{ -->
+    <!-- Groepsruimte-->
+    <building name="Groepsruimte" value="Yes">
+        <title>Group Rooms</title>
+        <risk name="Ondergrond: Kind struikelt over oneffenheid"></risk>
+        <risk name="Ondergrond: Kind glijdt uit over gladde/natte ondergrond"></risk>
+        <risk name="Muur: Kind bezeert zich aan oneffenheid"></risk>
+        <risk name="Deur: Kind botst tegen de deur"></risk>
+        <risk name="Deur: Kind valt door glas in deur"></risk>
+        <risk name="Deur: Kind krijgt zijn vingers tussen de deur"></risk>
+        <risk name="Garderobe: Kind botst tegen kapstokhaak"></risk>
+        <risk name="Verwarming: Kind verbrandt zich aan hete radiator/buizen"></risk>
+        <risk name="Verwarming: Kind botst of valt tegen radiator"></risk>
+        <risk name="Verwarming: Kind komt met hand klem te zitten tussen radiator"></risk>
+        <risk name="Verlichting: Kind struikelt door onvoldoende licht"></risk>
+        <risk name="Verlichting: Lamp wordt stukgegooid en glas valt naar beneden"></risk>
+        <risk name="Elektra: Kind komt in contact met elektriciteit"></risk>
+        <risk name="Elektra: Kind trekt aan elektr. snoer, krijgt apparaat op zich"></risk>
+        <risk name="Giftige Stoffen: Kind eet van giftige plant"></risk>
+        <risk name="Giftige Stoffen: Kind eet sigaretten of medicijnen uit tas"></risk>
+        <!-- general meubilair -->
+        <risk name="Meubilair: Kind stoot zich tegen meubilair"></risk>
+        <risk name="Meubilair: Kind krijgt splinter in vinger"></risk>
+        <risk name="Meubilair: Kind valt tijdens het in of uit stoel klimmen"></risk>
+        <risk name="Meubilair: Kind valt uit een hoge stoel"></risk>
+        <risk name="Meubilair: Kind valt met hoge stoel en al om doordat het zich afzet tegen de tafel"></risk>
+        <risk name="Meubilair: Kast valt om en kind komt onder de kast terecht"></risk>
+        <risk name="Meubilair: Decorstuk valt op kind"></risk>
+        <risk name="Raam: Kind raakt verstrikt in koordjes v/d raamdecoratie"></risk>
+        <risk name="Verbranding: Kind heeft toegang tot lucifers/aansteker"></risk>
+        <risk name="Overig: Kind botst tegen een ander kind"></risk>
+        <risk name="Overig: Kind rent tegen een obstakel"></risk>
+        <risk name="Overig: Kind stopt kleine voorwerpen in de mond"></risk>
+        <risk name="Overig: Kind struikelt over buggy"></risk>
+        <risk name="Overig: Kind rent ongezien naar buiten"></risk>
+        <risk name="Overig: Kind wordt door huisdier gebeten"></risk>
+    </building>
+
+    <!-- Meerdere Verdiepingen-->
+    <building name="Meerdere Verdiepingen" value="Yes">
+        <title>Multiple Stories</title>
+        <risk name="Trap: Kind valt doordat het niet bij de trapleuning kan"></risk>
+        <risk name="Trap: Kind valt doordat de trapleuning niet goed vast zit"></risk>
+        <risk name="Trap: Kind struikelt over een kapotte trede"></risk>
+        <risk name="Trap: Kind glijdt uit op een gladde trede"></risk>
+        <risk name="Trap: Kind raakt bekneld tussen de treden v/d trap"></risk>
+        <risk name="Trap: Kind valt (van de zijkant) van de trap af"></risk>
+        <risk name="Trap: Kind raakt bekneld tussen de spijlen v/d balustrade"></risk>
+    </building>
+
+    <!-- Raam-->
+    <building name="Raam" value="Yes">
+        <title>Windows</title>
+        <risk name="Raam: Kind valt door ruit"></risk>
+        <risk name="Raam: Kind valt uit open raam"></risk>
+    </building>
+
+    <!-- Speelgoed-->
+    <building name="Speelgoed" value="Yes">
+        <title>Toys</title>
+        <risk name="Speelgoed: Kind zit met voet tussen wiel kinderfiets"></risk>
+        <risk name="Speelgoed: Kind wordt door een fietsend kind omver gereden"></risk>
+        <risk name="Speelgoed: Kind stopt kraaltjes/ander klein speelgoed in de mond"></risk>
+        <risk name="Speelgoed: Speengedeelte wordt van speen afgebeten en kind krijgt deze achter in de keel"></risk>
+        <risk name="Speelgoed: Kind krijgt koordjes om de nek"></risk>
+        <risk name="Speelgoed: Kind verwondt zich aan scherp speelgoed of splinters aan speelgoed"></risk>
+        <risk name="Speelgoed: Kind of leidster struikelt over speelgoed"></risk>
+        <risk name="Speelgoed: Kind krijgt poppenhuis op zich"></risk>
+    </building>
+
+    <!-- Sanitair -->
+    <!-- voor Kinderen of Volwassenen -->
+    <building name="Sanitair" value="Yes">
+        <title>Sanitary Facilities</title>
+        <risk name="Ondergrond: Kind glijdt uit over gladde/natte ondergrond"></risk>
+        <risk name="Verbranding: Kind verbrandt zich aan warmwaterkraan"></risk>
+        <risk name="Giftige Stoffen: Kind drinkt van schoonmaakmiddel"></risk>
+        <risk name="Giftige Stoffen: Kind heeft toegang tot lotions of alcohol"></risk>
+        <risk name="Giftige Stoffen: Kind eet van toiletblokje"></risk>
+        <risk name="Overig: Kind stopt kleine voorwerpen in de mond"></risk>
+        <risk name="Overig: Kind snuffelt in afvalbakje"></risk>
+    </building>
+
+    <!-- Ankleedtafel-->
+    <building name="Ankleedtafel" value="Yes">
+        <title>Changing Table</title>
+        <risk name="Ankleedtafel: Kind draait zich van de aankleedtafel af"></risk>
+        <risk name="Ankleedtafel: Kind rolt aan de achterkant van de aankleedtafel af"></risk>
+        <risk name="Ankleedtafel: Kind stoot zich aan (scherpe) hoek van de aankleedtafel"></risk>
+        <risk name="Ankleedtafel: De aankleedtafel is niet stabiel en valt om"></risk>
+        <risk name="Ankleedtafel: De aankleedtafel is niet stevig en stort in"></risk>
+        <risk name="Ankleedtafel: Een opklapbare aankleedtafel klapt tijdens gebruik in"></risk>
+        <risk name="Ankleedtafel: Kind komt in hoogte verstelbare aankleedtafel bekneld te zitten"></risk>
+        <risk name="Ankleedtafel: Kind valt van trapje van aankleedtafel"></risk>
+        <risk name="Ankleedtafel: Kind klautert zonder toezicht op aankleedtafel"></risk>
+    </building>
+
+    <!-- Eetruimte -->
+    <!-- only items related to eating, not nec. to eating rooms -->
+    <building name="Eetruimte" value="Yes">
+        <title>Eating Rooms</title>
+        <risk name="Verbranding: Kind krijgt hete thee over zich heen"></risk>
+        <risk name="Overig: Kind stikt in stukje eten"></risk>
+        <risk name="Overig: Kind snijdt zich aan kantoorartikelen"></risk>
+    </building>
+
+    <!-- Keuken/Kantoor-->
+    <building name="Keuken/Kantoor" value="Yes">
+        <title>Kitchen/Canteen</title>
+        <risk name="Verbranding: Kind brandt zich aan kookplaat"></risk>
+        <risk name="Verbranding: Kind trekt pan van het fornuis"></risk>
+        <risk name="Verbranding: Kind brandt zich aan oven"></risk>
+        <risk name="Verbranding: Kind loopt brandworden op door de waterkoker over zich heen te trekken"></risk>
+        <risk name="Verbranding: Kind heeft toegang tot lucifers/aansteker"></risk>
+        <risk name="Verbranding: Kind verbrandt zich aan warmwaterkraan"></risk>
+        <risk name="Verbranding: Kind krijgt hete thee over zich heen"></risk>
+        <risk name="Ondergrond: Kind glijdt uit over gladde/natte ondergrond"></risk>
+        <risk name="Giftige Stoffen: Kind drinkt van schoonmaakmiddel"></risk>
+        <risk name="Giftige Stoffen: Kind eet sigaretten of medicijnen uit tas"></risk>
+        <risk name="Giftige Stoffen: Kind krijgt giftige stoffen binnen omdat voedsel
+            naast gevaarlijke stoffen wordt opgeborgen"></risk>
+        <!-- <risk name="Giftige Stoffen: Kind eet toner van kopieermachine op"></risk> -->
+        <risk name="Overig: Kind snuffelt in afvalbakje"></risk>
+        <risk name="Overig: Kind trekt plastic zak over het hoofd"></risk>
+        <risk name="Overig: Kind stopt kleine voorwerpen in de mond"></risk>
+        <risk name="Overig: Kind snijdt zich aan kantoorartikelen"></risk>
+    </building>
+
+    <!-- Binnenberging-->
+    <building name="Binnenberging" value="Yes">
+        <title>Inside Storage</title>
+        <risk name="Giftige Stoffen: Kind eet muizengif"></risk>
+        <risk name="Giftige Stoffen: Kind drinkt van schoonmaakmiddel"></risk>
+        <risk name="Giftige Stoffen: Kind krijgt giftige stoffen binnen omdat voedsel naast gevaarlijke stoffen wordt opgeborgen"></risk>
+        <risk name="Meubilair: Kast valt om en kind komt onder de kast terecht"></risk>
+        <risk name="Verbranding: Kind verbrandt zich aan warmwaterkraan"></risk>
+        <risk name="Berging: Kind klimt in wasdroger/machine"></risk>
+        <risk name="Berging: Kind verbrandt zich aan de cv-ketel"></risk>
+        <risk name="Berging: Kind bezeert zich aan opgeslagen speelgoed/materiaal"></risk>
+        <risk name="Berging: Kind bezeert zich aan gereedschap"></risk>
+    </building>
+
+    <!-- Buitenberging -->
+    <building name="Buitenberging" value="Yes">
+        <title>Outside Storage</title>
+        <risk name="Giftige Stoffen: Kind eet muizengif"></risk>
+        <risk name="Meubilair: Kast valt om en kind komt onder de kast terecht"></risk>
+        <risk name="Berging: Kind bezeert zich aan opgeslagen speelgoed/materiaal"></risk>
+        <risk name="Berging: Kind bezeert zich aan gereedschap"></risk>
+    </building>
+
+    <!-- Buitenruimte-->
+    <building name="Buitenruimte" value="Yes">
+        <title>Outside Area</title>
+        <risk name="Ondergrond: Kind struikelt over een boomwortel"></risk>
+        <risk name="Ondergrond: Kind struikelt over oneffenheid"></risk>
+        <risk name="Ondergrond: Kind glijdt uit over gladde/natte ondergrond"></risk>
+        <risk name="Overig: Kind rent tegen een obstakel"></risk>
+        <risk name="Overig: Kind botst tegen een ander kind"></risk>
+        <risk name="Overig: Kind wordt omver gelopen"></risk>
+        <risk name="Overig: Kind verbrandt zich in de zon"></risk>
+        <risk name="Overig: Kind bezeert zich aan zwerfvuil"></risk>
+        <risk name="Overig: Kind raakt te water"></risk>
+        <risk name="Giftige Stoffen: Kind eet van giftige plant"></risk>
+    </building>
+
+    <!-- Speeltoestel-->
+    <building name="Speeltoestel" value="Yes">
+        <title>Playground</title>
+        <risk name="Speeltoestel: Kind valt van toestel"></risk>
+        <risk name="Speeltoestel: Kind valt door defect materiaal"></risk>
+        <risk name="Speeltoestel: Kind komt met nek klem te zitten traptreden"></risk>
+        <risk name="Speeltoestel: Kind verwondt zich aan scherpe randen"></risk>
+        <risk name="Speeltoestel: Vinger komt klem te zitten bij schommel"></risk>
+        <risk name="Speeltoestel: Kind raakt bekneld tussen veerwip"></risk>
+        <risk name="Speeltoestel: Kind valt van de veerwip door defect materiaal"></risk>
+        <risk name="Speeltoestel: Kind blijft met koordje/ketting hangen"></risk>
+        <risk name="Speeltoestel: Kind krijgt splinter in hand"></risk>
+        <risk name="Speeltoestel: Kind struikelt over speeltoestel"></risk>
+        <risk name="Speeltoestel: Kind botst tegen een speeltoestel"></risk>
+        <risk name="Speeltoestel: Kind botst tegen ander kind op schommel"></risk>
+        <risk name="Speeltoestel: Vinger van kind komt klem in holle buis"></risk>
+        <risk name="Speeltoestel: Kind snijdt zich aan zwerfvuil in de zandbak"></risk>
+        <risk name="Speeltoestel: Kind stoot zich tegen rand van de zandbak"></risk>
+        <risk name="Speeltoestel: Kind botst tegen veerwip"></risk>
+    </building>
+
+    <!-- Omheining-->
+    <building name="Omheining" value="Yes">
+        <title>Fencing</title>
+        <risk name="Omheining: Kind doet poortje van het hek open en rent de straat op"></risk>
+        <risk name="Omheining: Het hek blijft openstaan en kind loopt de straat op"></risk>
+        <risk name="Omheining: Kind bezeert zich aan omheining"></risk>
+        <risk name="Omheining: Kind kruipt onder de omheining en komt klem te zitten"></risk>
+        <risk name="Omheining: Kind kruipt tussen de spijlen en komt klem te zitten"></risk>
+        <risk name="Omheining: Kind klimt op de omheining en valt"></risk>
+        <risk name="Omheining: Kind klimt over de omheining"></risk>
+    </building>
+
+    <!-- Omgeving -->
+    <building name="Omgeving" value="Yes">
+        <title>Environment</title>
+        <risk name="Omgeving: Kind moet oversteken tussen geparkeerde autos"></risk>
+        <risk name="Omgeving: Kind rent de weg op als het wordt opgehaald"></risk>
+        <risk name="Omgeving: Kind raakt betrokken bij ongeval bij een uitstapje buiten de deur"></risk>
+    </building>
+    <!-- }}} -->
+
+    <!-- Rules {{{ -->
+    <!-- No children -->
+    <rule>
+        <description>No children, no advice from this knowledge base.</description>
+        <if>
+            <fact name="children">No</fact>
+        </if>
+        <then>
+            <fact name="Groepsruimte">No</fact>
+            <fact name="Meerdere Verdiepingen">No</fact>
+            <fact name="Raam">No</fact>
+            <fact name="Speelgoed">No</fact>
+            <fact name="Sanitair">No</fact>
+            <fact name="Ankleedtafel">No</fact>
+            <fact name="Eetruimte">No</fact>
+            <fact name="Keuken/Kantoor">No</fact>
+            <fact name="Binnenberging">No</fact>
+            <fact name="Buitenberging">No</fact>
+            <fact name="Buitenruimte">No</fact>
+            <fact name="Speeltoestel">No</fact>
+            <fact name="Omheining">No</fact>
+            <fact name="Omgeving">No</fact>
+        </then>
+    </rule>
+
+    <!-- Groepsruimte -->
+    <rule>
+        <description></description>
+        <if>
+            <fact name="children">Yes</fact>
+        </if>
+        <then>
+            <fact name="Groepsruimte">Yes</fact>
+        </then>
+    </rule>
+
+
+    <!-- Meerdere Verdiepingen -->
+    <rule>
+        <description>If it is a multistory building and children have access to
+            the stairs, the stair-risks may be important.</description>
+        <if>
+            <and>
+                <fact name="multistory">Yes</fact>
+                <fact name="children-access-to-stairs">Yes</fact>
+            </and>
+        </if>
+        <then>
+            <fact name="Meerdere Verdiepingen">Yes</fact>
+        </then>
+    </rule>
+
+    <rule>
+        <description></description>
+        <if>
+            <or>
+                <fact name="multistory">No</fact>
+                <fact name="children-access-to-stairs">No</fact>
+            </or>
+        </if>
+        <then>
+            <fact name="Meerdere Verdiepingen">No</fact>
+        </then>
+    </rule>
+
+    <!-- Raam -->
+    <rule>
+        <description></description>
+        <if>
+            <and>
+                <fact name="windows">Yes</fact>
+                <fact name="windows-below-1m">Yes</fact>
+                <fact name="windows-fallable">Yes</fact>
+            </and>
+        </if>
+        <then>
+            <fact name="Raam">Yes</fact>
+        </then>
+    </rule>
+
+    <rule>
+        <description></description>
+        <if>
+            <or>
+                <fact name="windows">No</fact>
+                <fact name="windows-below-1m">No</fact>
+                <fact name="windows-fallable">No</fact>
+            </or>
+        </if>
+        <then>
+            <fact name="Raam">No</fact>
+        </then>
+    </rule>
+
+    <!-- Speelgoed -->
+    <rule>
+        <description></description>
+        <if>
+            <and>
+                <fact name="non-autonomous-children">Yes</fact>
+                <fact name="explicit-Speelgoed">Yes</fact>
+            </and>
+        </if>
+        <then>
+            <fact name="Speelgoed">Yes</fact>
+        </then>
+    </rule>
+
+    <rule>
+        <description></description>
+        <if>
+            <or>
+                <fact name="non-autonomous-children">No</fact>
+                <fact name="explicit-Speelgoed">No</fact>
+            </or>
+        </if>
+        <then>
+            <fact name="Speelgoed">No</fact>
+        </then>
+    </rule>
+
+    <!-- Sanitair and Ankleedtafel -->
+    <rule>
+        <description></description>
+        <if>
+            <or>
+                <fact name="sanitair-adults">Yes</fact>
+                <fact name="sanitair-children">Yes</fact>
+            </or>
+        </if>
+        <then>
+            <fact name="Sanitair">Yes</fact>
+        </then>
+    </rule>
+
+    <rule>
+        <description></description>
+        <if>
+            <and>
+                <fact name="sanitair-adults">No</fact>
+                <fact name="sanitair-children">No</fact>
+            </and>
+        </if>
+        <then>
+            <fact name="Sanitair">No</fact>
+        </then>
+    </rule>
+
+    <rule>
+        <description>If there are sanitary rooms and small children visit the
+            building, ask for Ankleedtafel.</description>
+        <if>
+            <and>
+                <or>
+                    <fact name="babies">Yes</fact>
+                    <fact name="small-children">Yes</fact>
+                </or>
+                <fact name="Sanitair">Yes</fact>
+                <fact name="explicit-Ankleedtafel">Yes</fact>
+            </and>
+        </if>
+        <then>
+            <fact name="Ankleedtafel">Yes</fact>
+        </then>
+    </rule>
+
+    <rule>
+        <description></description>
+        <if>
+            <or>
+                <and>
+                    <fact name="babies">No</fact>
+                    <fact name="small-children">No</fact>
+                </and>
+                <fact name="Sanitair">No</fact>
+                <fact name="explicit-Ankleedtafel">No</fact>
+            </or>
+        </if>
+        <then>
+            <fact name="Ankleedtafel">No</fact>
+        </then>
+    </rule>
+
+    <!-- Eetruimte and Keuken/Kantoor -->
+    <rule>
+        <description></description>
+        <if>
+            <and>
+                <fact name="non-autonomous-children">Yes</fact>
+                <fact name="children-eating">Yes</fact>
+            </and>
+        </if>
+        <then>
+            <fact name="Eetruimte">Yes</fact>
+        </then>
+    </rule>
+
+    <rule>
+        <description></description>
+        <if>
+            <or>
+                <fact name="non-autonomous-children">No</fact>
+                <fact name="children-eating">No</fact>
+            </or>
+        </if>
+        <then>
+            <fact name="Eetruimte">No</fact>
+        </then>
+    </rule>
+
+    <rule>
+        <description></description>
+        <if>
+            <and>
+                <or>
+                    <fact name="children-eating">Yes</fact>
+                    <fact name="adults-eating">Yes</fact>
+                </or>
+                <fact name="explicit-Keuken/Kantoor">Yes</fact>
+            </and>
+        </if>
+        <then>
+            <fact name="Keuken/Kantoor">Yes</fact>
+        </then>
+    </rule>
+
+    <rule>
+        <description></description>
+        <if>
+            <or>
+                <and>
+                    <fact name="children-eating">No</fact>
+                    <fact name="adults-eating">No</fact>
+                </and>
+                <fact name="explicit-Keuken/Kantoor">No</fact>
+            </or>
+        </if>
+        <then>
+            <fact name="Keuken/Kantoor">No</fact>
+        </then>
+    </rule>
+
+    <!-- Binnenberging -->
+    <rule>
+        <description></description>
+        <if>
+            <and>
+                <fact name="berging">Yes</fact>
+                <fact name="explicit-Binnenberging">Yes</fact>
+            </and>
+        </if>
+        <then>
+            <fact name="Binnenberging">Yes</fact>
+        </then>
+    </rule>
+
+    <rule>
+        <description></description>
+        <if>
+            <or>
+                <fact name="berging">No</fact>
+                <fact name="explicit-Binnenberging">No</fact>
+            </or>
+        </if>
+        <then>
+            <fact name="Binnenberging">No</fact>
+        </then>
+    </rule>
+
+    <!-- Buitenberging -->
+    <rule>
+        <description></description>
+        <if>
+            <and>
+                <fact name="Buitenruimte">Yes</fact>
+                <fact name="berging">Yes</fact>
+                <fact name="explicit-Buitenberging">Yes</fact>
+            </and>
+        </if>
+        <then>
+            <fact name="Buitenberging">Yes</fact>
+        </then>
+    </rule>
+
+    <rule>
+        <description></description>
+        <if>
+            <or>
+                <fact name="Buitenruimte">No</fact>
+                <fact name="berging">No</fact>
+                <fact name="explicit-Buitenberging">No</fact>
+            </or>
+        </if>
+        <then>
+            <fact name="Buitenberging">No</fact>
+        </then>
+    </rule>
+
+    <!-- Buitenruimte -->
+
+    <!-- Speeltoestel -->
+    <rule>
+        <description></description>
+        <if>
+            <and>
+                <fact name="Buitenruimte">Yes</fact>
+                <fact name="explicit-Speeltoestel">Yes</fact>
+            </and>
+        </if>
+        <then>
+            <fact name="Speeltoestel">Yes</fact>
+        </then>
+    </rule>
+
+    <rule>
+        <description></description>
+        <if>
+            <or>
+                <fact name="Buitenruimte">No</fact>
+                <fact name="explicit-Speeltoestel">No</fact>
+            </or>
+        </if>
+        <then>
+            <fact name="Speeltoestel">No</fact>
+        </then>
+    </rule>
+
+    <!-- Omheining -->
+    <rule>
+        <description></description>
+        <if>
+            <and>
+                <fact name="Buitenruimte">Yes</fact>
+                <fact name="explicit-Omheining">Yes</fact>
+            </and>
+        </if>
+        <then>
+            <fact name="Omheining">Yes</fact>
+        </then>
+    </rule>
+
+    <rule>
+        <description></description>
+        <if>
+            <or>
+                <fact name="Buitenruimte">No</fact>
+                <fact name="explicit-Omheining">No</fact>
+            </or>
+        </if>
+        <then>
+            <fact name="Omheining">No</fact>
+        </then>
+    </rule>
+
+    <!-- Omgeving -->
+    <rule>
+        <description></description>
+        <if>
+            <or>
+                <fact name="trips-with-children">Yes</fact>
+                <fact name="children-arrive-or-leave">Yes</fact>
+            </or>
+        </if>
+        <then>
+            <fact name="Omgeving">Yes</fact>
+        </then>
+    </rule>
+
+    <rule>
+        <description></description>
+        <if>
+            <and>
+                <fact name="trips-with-children">No</fact>
+                <fact name="children-arrive-or-leave">No</fact>
+            </and>
+        </if>
+        <then>
+            <fact name="Omgeving">No</fact>
+        </then>
+    </rule>
+    <!-- }}} -->
+
+    <!-- Questions {{{ -->
+    <!-- Meerdere Verdiepingen -->
+    <question>
+        <description>
+            Does the building have multiple stories?
+        </description>
         <option>
             <description>Yes</description>
             <then>
-                <fact name="chemical-plant">Yes</fact>
+                <fact name="multistory">Yes</fact>
             </then>
         </option>
         <option>
             <description>No</description>
             <then>
-                <fact name="chemical-plant">No</fact>
+                <fact name="multistory">No</fact>
             </then>
         </option>
     </question>
+
+    <question>
+        <description>
+            Do children have access to any stairs?
+        </description>
+        <option>
+            <description>Yes</description>
+            <then>
+                <fact name="children-access-to-stairs">Yes</fact>
+            </then>
+        </option>
+        <option>
+            <description>No</description>
+            <then>
+                <fact name="children-access-to-stairs">No</fact>
+            </then>
+        </option>
+    </question>
+
+    <!-- Raam -->
+    <question>
+        <description>
+            Does the building have windows in rooms accessible to children?
+        </description>
+        <option>
+            <description>Yes</description>
+            <then>
+                <fact name="windows">Yes</fact>
+            </then>
+        </option>
+        <option>
+            <description>No</description>
+            <then>
+                <fact name="windows">No</fact>
+            </then>
+        </option>
+    </question>
+
+    <question>
+        <description>
+            Are the lowest windows more or less than 1m above the ground?
+        </description>
+        <option>
+            <description>Less than 1m</description>
+            <then>
+                <fact name="windows-below-1m">Yes</fact>
+            </then>
+        </option>
+        <option>
+            <description>More than 1m</description>
+            <then>
+                <fact name="windows-below-1m">No</fact>
+            </then>
+        </option>
+    </question>
+
+    <question>
+        <description>
+            Is it possible to fall through the window because the glass is thin,
+            the windows are sometimes left open and/or there are no bars in
+            front of it?
+        </description>
+        <option>
+            <description>Yes</description>
+            <then>
+                <fact name="windows-fallable">Yes</fact>
+            </then>
+        </option>
+        <option>
+            <description>No</description>
+            <then>
+                <fact name="windows-fallable">No</fact>
+            </then>
+        </option>
+    </question>
+
+    <!-- Speelgoed -->
+    <question>
+        <description>
+            Are children playing with toys in the building?
+        </description>
+        <option>
+            <description>Yes</description>
+            <then>
+                <fact name="explicit-Speelgoed">Yes</fact>
+            </then>
+        </option>
+        <option>
+            <description>No</description>
+            <then>
+                <fact name="explicit-Speelgoed">No</fact>
+            </then>
+        </option>
+    </question>
+
+    <!-- Sanitair and Ankleedtafel -->
+    <question>
+        <description>
+            Does the building have sanitary facilities for adults?
+        </description>
+        <option>
+            <description>Yes</description>
+            <then>
+                <fact name="sanitair-adults">Yes</fact>
+            </then>
+        </option>
+        <option>
+            <description>No</description>
+            <then>
+                <fact name="sanitair-adults">No</fact>
+            </then>
+        </option>
+    </question>
+
+    <question>
+        <description>
+            Does the building have sanitary facilities for children?
+        </description>
+        <option>
+            <description>Yes</description>
+            <then>
+                <fact name="sanitair-children">Yes</fact>
+            </then>
+        </option>
+        <option>
+            <description>No</description>
+            <then>
+                <fact name="sanitair-children">No</fact>
+            </then>
+        </option>
+    </question>
+
+    <question>
+        <description>
+            Do the sanitary facilities have diaper-changing tables?
+        </description>
+        <option>
+            <description>Yes</description>
+            <then>
+                <fact name="explicit-Ankleedtafel">Yes</fact>
+            </then>
+        </option>
+        <option>
+            <description>No</description>
+            <then>
+                <fact name="explicit-Ankleedtafel">No</fact>
+            </then>
+        </option>
+    </question>
+
+    <!-- Eetruimte and Keuken/Kantoor -->
+    <question>
+        <description>
+            Are children eating in the building?
+        </description>
+        <option>
+            <description>Yes</description>
+            <then>
+                <fact name="children-eating">Yes</fact>
+            </then>
+        </option>
+        <option>
+            <description>No</description>
+            <then>
+                <fact name="children-eating">No</fact>
+            </then>
+        </option>
+    </question>
+
+    <question>
+        <description>
+            Are adults eating in the building?
+        </description>
+        <option>
+            <description>Yes</description>
+            <then>
+                <fact name="adults-eating">Yes</fact>
+            </then>
+        </option>
+        <option>
+            <description>No</description>
+            <then>
+                <fact name="adults-eating">No</fact>
+            </then>
+        </option>
+    </question>
+
+    <question>
+        <description>
+            Are meals prepared in the building?
+        </description>
+        <option>
+            <description>Yes</description>
+            <then>
+                <fact name="explicit-Keuken/Kantoor">Yes</fact>
+            </then>
+        </option>
+        <option>
+            <description>No</description>
+            <then>
+                <fact name="explicit-Keuken/Kantoor">No</fact>
+            </then>
+        </option>
+    </question>
+
+    <!-- Berging -->
+    <question>
+        <description>
+            Does the building have specific rooms for storing toys, tools or cleaning equipment?
+        </description>
+        <option>
+            <description>Yes</description>
+            <then>
+                <fact name="berging">Yes</fact>
+            </then>
+        </option>
+        <option>
+            <description>No</description>
+            <then>
+                <fact name="berging">No</fact>
+            </then>
+        </option>
+    </question>
+
+    <question>
+        <description>
+            Does the building have rooms/huts for storing toys or tools outside?
+        </description>
+        <option>
+            <description>Yes</description>
+            <then>
+                <fact name="explicit-Buitenberging">Yes</fact>
+            </then>
+        </option>
+        <option>
+            <description>No</description>
+            <then>
+                <fact name="explicit-Buitenberging">No</fact>
+            </then>
+        </option>
+    </question>
+
+    <question>
+        <description>
+            Does the building have rooms for storing toys or tools inside?
+        </description>
+        <option>
+            <description>Yes</description>
+            <then>
+                <fact name="explicit-Binnenberging">Yes</fact>
+            </then>
+        </option>
+        <option>
+            <description>No</description>
+            <then>
+                <fact name="explicit-Binnenberging">No</fact>
+            </then>
+        </option>
+    </question>
+
+    <!-- Buitenruimte -->
+    <question>
+        <description>
+            Does the building have an outer area that children have access to?
+        </description>
+        <option>
+            <description>Yes</description>
+            <then>
+                <fact name="Buitenruimte">Yes</fact>
+            </then>
+        </option>
+        <option>
+            <description>No</description>
+            <then>
+                <fact name="Buitenruimte">No</fact>
+            </then>
+        </option>
+    </question>
+
+    <!-- Speeltoetsel -->
+    <question>
+        <description>
+            Are playground structures in the outside area, e.g. swings or a sandbox?
+        </description>
+        <option>
+            <description>Yes</description>
+            <then>
+                <fact name="explicit-Speeltoestel">Yes</fact>
+            </then>
+        </option>
+        <option>
+            <description>No</description>
+            <then>
+                <fact name="explicit-Speeltoestel">No</fact>
+            </then>
+        </option>
+    </question>
+
+    <!-- Omheining -->
+    <question>
+        <description>
+            Is there a fence around the outer area?
+            <!-- TODO if there isnt that's bad right? -->
+        </description>
+        <option>
+            <description>Yes</description>
+            <then>
+                <fact name="explicit-Omheining">Yes</fact>
+            </then>
+        </option>
+        <option>
+            <description>No</description>
+            <then>
+                <fact name="explicit-Omheining">No</fact>
+            </then>
+        </option>
+    </question>
+
+    <!-- Omgeving -->
+    <question>
+        <description>
+            Are trips with children starting or ending at the location in question?
+        </description>
+        <option>
+            <description>Yes</description>
+            <then>
+                <fact name="trips-with-children">Yes</fact>
+            </then>
+        </option>
+        <option>
+            <description>No</description>
+            <then>
+                <fact name="trips-with-children">No</fact>
+            </then>
+        </option>
+    </question>
+
+    <question>
+        <description>
+            Do children come to the building or leave the building without one
+            of their guardians (e.g. do they go to the building after school)?
+        </description>
+        <option>
+            <description>Yes</description>
+            <then>
+                <fact name="children-arrive-or-leave">Yes</fact>
+            </then>
+        </option>
+        <option>
+            <description>No</description>
+            <then>
+                <fact name="children-arrive-or-leave">No</fact>
+            </then>
+        </option>
+    </question>
+    <!-- }}} -->
+
+    <!-- Checklist Items {{{ -->
+    <checklist_item name="Trap: Kind valt doordat het niet bij de trapleuning kan">
+        <description>
+            Stairs: Child falls because it cannot reach the guardrail.
+        </description>
+        <advice>
+            Change the guardrail to the prescribed sizes.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Trap: Kind valt doordat de trapleuning niet goed vast zit">
+        <description>
+            Stairs: Child falls because the guardrail is not properly secured to the wall.
+        </description>
+        <advice>
+            Secure the guardrail properly.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Trap: Kind struikelt over een kapotte trede">
+        <description>
+            Stairs: Child falls over a broken step.
+        </description>
+        <advice>
+            Repair the step.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Trap: Kind glijdt uit op een gladde trede">
+        <description>
+            Stairs: Child slips over a slippery step.
+        </description>
+        <advice>
+            Place a rough strip on the steps/dry properly after cleaning/make sure children do not use the stairs unsupervised.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Trap: Kind raakt bekneld tussen de treden v/d trap">
+        <description>
+            Stairs: Child gets stuck between steps.
+        </description>
+        <advice>
+            Adjust stairs to prescribed sizes/make sure children do not use the stairs unsupervised.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Trap: Kind valt (van de zijkant) van de trap af">
+        <description>
+            Stairs: Child falls of (the side of) the stairs.
+        </description>
+        <advice>
+            Place a guardrail or side wall. Make sure children do not use the stairs unsupervised.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Trap: Kind raakt bekneld tussen de spijlen v/d balustrade">
+        <description>
+            Stairs: Child gets stuck between the balusters of the balustrade.
+        </description>
+        <advice>
+            If the space between balusters is larger than the allowed amount, adjust the spacing.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Ondergrond: Kind struikelt over oneffenheid">
+        <description>
+            Ground: Child trips over a rough patch.
+        </description>
+        <advice>
+            Make agreements to keep the ground clean. Get the ground fixed if necessary.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Ondergrond: Kind glijdt uit over gladde/natte ondergrond">
+        <description>
+            Ground: Child slips over wet/slippery surface.
+        </description>
+        <advice>
+            Do not mop the floor when children are around.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Muur: Kind bezeert zich aan oneffenheid">
+        <description>
+            Wall: Child hurts itself on a rough patch.
+        </description>
+        <advice>
+            Remove any pointy bits of the wall. If necessary, treat the wall.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Garderobe: Kind botst tegen kapstokhaak">
+        <description>
+            Wardrobe: Child bumps into a coat hanger.
+        </description>
+        <advice>
+            Cover the hangers with a sheet or buy hangers that can be turned the other way around.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Deur: Kind krijgt zijn vingers tussen de deur">
+        <description>
+            Door: Child gets fingers stuck between door.
+        </description>
+        <advice>
+            Install finger safety.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Raam: Kind valt door ruit">
+        <description>
+            Window: Child falls through a window.
+        </description>
+        <advice>
+            Make sure the window can only be opened by a limited amount (child safety lock). Make any windows at child height are difficult to reach (don't place any stools etc).
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Raam: Kind valt uit open raam">
+        <description>
+            Window: Child falls out of an open window.
+        </description>
+        <advice>
+            Make sure the window can only be opened by a limited amount (child safety lock). Make any windows at child height difficult to reach (don't place any stools etc).
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Raam: Kind raakt verstrikt in koordjes v/d raamdecoratie">
+        <description>
+            Window: Child gets entangled in cords of the window decor.
+        </description>
+        <advice>
+            Place the cords in such a way that children cannot get to it.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Verwarming: Kind verbrandt zich aan hete radiator/buizen">
+        <description>
+            Heating: Child burns itself on radiator (piping).
+        </description>
+        <advice>
+            Make sure children cannot reach radiators by placing furniture in front of the radiator or by placing sheets in front of them.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Verwarming: Kind botst of valt tegen radiator">
+        <description>
+            Heating: Child bumps into or falls onto radiator.
+        </description>
+        <advice>
+            Make sure there is enough room to walk. Make sure children cannot reach radiators by placing furniture in front of the radiator or by placing sheets in front of them.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Verlichting: Kind struikelt door onvoldoende licht">
+        <description>
+            Lighting: Child trips due to insufficient lighting.
+        </description>
+        <advice>
+            Replace broken light bulbs immediately.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Verlichting: Lamp wordt stukgegooid en glas valt naar beneden">
+        <description>
+            Lighting: A lamp gets broken by someone throwing something and glass comes down.
+        </description>
+        <advice>
+            Cover the light so that nothing can be thrown against it.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Elektra: Kind komt in contact met elektriciteit">
+        <description>
+            Electrics: A child gets into contact with electricity.
+        </description>
+        <advice>
+            Secure outlets or place outlets above the prescribed children's reach height.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Giftige Stoffen: Kind drinkt van schoonmaakmiddel">
+        <description>
+            Toxic substances: Child drinks a cleaning agent.
+        </description>
+        <advice>
+            Store cleaning agents out of reach of children.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Giftige Stoffen: Kind eet van giftige plant">
+        <description>
+            Toxic substances: Child eats from a poisonous plant.
+        </description>
+        <advice>
+            Do not keep plants at the building. Any poisonous outdoor plants need to be placed out of reach of children or removed.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Giftige Stoffen: Kind eet muizengif">
+        <description>
+            Toxic substances: Child eats rat poison.
+        </description>
+        <advice>
+            If rat poison has to be used make sure it is out of reach of children.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Overig: Kind stopt kleine voorwerpen in de mond">
+        <description>
+            Miscellaneous: Child puts small object into its mouth.
+        </description>
+        <advice>
+            Do not keep small objects lying around.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Overig: Kind struikelt over buggy">
+        <description>
+            Miscellaneous: Child trips over buggy.
+        </description>
+        <advice>
+            Make sure buggies are moved to the side and not left in the walking space.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Overig: Kind rent ongezien naar buiten">
+        <description>
+            Miscellaneous: Child runs outside unnoticed.
+        </description>
+        <advice>
+            Keep the door locked/accompany children when arriving and leaving/keep a close eye on children.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Deur: Kind botst tegen de deur">
+        <description>
+            Door: Child runs into the door.
+        </description>
+        <advice>
+            Create enough walking space and maintain said walking space.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Deur: Kind valt door glas in deur">
+        <description>
+            Door: Child falls through glass in door.
+        </description>
+        <advice>
+            Put safety foil on the glass.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Verwarming: Kind komt met hand klem te zitten tussen radiator">
+        <description>
+            Heating: Child gets its hand stuck in the radiator.
+        </description>
+        <advice>
+            Make the radiator inaccessible to children.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Elektra: Kind trekt aan elektr. snoer, krijgt apparaat op zich">
+        <description>
+            Electrics: Child pulls on electric wire, device falls onto child.
+        </description>
+        <advice>
+            Place water-boilers etc. in such a way that they are inaccessible to children, for instance behind the counter.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Giftige Stoffen: Kind eet sigaretten of medicijnen uit tas">
+        <description>
+            Toxic substances: Child eats cigarettes or medicines from cupboard or bag.
+        </description>
+        <advice>
+            Keep cigarettes and medicines out of reach of children.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Meubilair: Kind stoot zich tegen meubilair">
+        <description>
+            Furniture: Child runs into furniture.
+        </description>
+        <advice>
+            Create and maintain sufficient walking space.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Meubilair: Kind krijgt splinter in vinger">
+        <description>
+            Furniture: Child gets a splinter in a finger.
+        </description>
+        <advice>
+            Check furniture on a monthly basis, repair or remove/replace if necessary.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Meubilair: Kind valt tijdens het in of uit stoel klimmen">
+        <description>
+            Furniture: Child falls while trying to climb in or out of a chair.
+        </description>
+        <advice>
+            Accompany children trying to get in or out of chairs.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Meubilair: Kind valt uit een hoge stoel">
+        <description>
+            Furniture: Child falls out of high chair.
+        </description>
+        <advice>
+            Do not place highly active children in high chairs.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Meubilair: Kind valt met hoge stoel en al om doordat het zich afzet tegen de tafel">
+        <description>
+            Furniture: Child falls together with high chair because it pushed itself away from a table.
+        </description>
+        <advice>
+            Place chairs further from tables/get custom furniture.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Meubilair: Kast valt om en kind komt onder de kast terecht">
+        <description>
+            Furniture: Closet falls and traps child under it.
+        </description>
+        <advice>
+            Anchor closets to the floor.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Meubilair: Decorstuk valt op kind">
+        <description>
+            Furniture: Piece of decor falls onto a child.
+        </description>
+        <advice>
+            Check decor mothly. Repair or remove when necessary.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Speelgoed: Kind zit met voet tussen wiel kinderfiets">
+        <description>
+            Toys: Child gets foot stuck in childrens bike wheel.
+        </description>
+        <advice>
+            Do not use children's bikes in kindergarten.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Speelgoed: Kind wordt door een fietsend kind omver gereden">
+        <description>
+            Toys: Child gets run over by a biking child.
+        </description>
+        <advice>
+            Do not use children's bikes in kindergarten.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Speelgoed: Kind stopt kraaltjes/ander klein speelgoed in de mond">
+        <description>
+            Toys: Child puts beads/other small toys in their mouths.
+        </description>
+        <advice>
+            Do not leave things lying around. Make sure the supervisors are BHV certified.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Speelgoed: Speengedeelte wordt van speen afgebeten en kind krijgt deze achter in de keel">
+        <description>
+            Toys: The suckle of a pacifier gets bitten of and a child gets it into their throat.
+        </description>
+        <advice>
+            N/A
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Speelgoed: Kind krijgt koordjes om de nek">
+        <description>
+            Toys: Child gets small cords around its neck.
+        </description>
+        <advice>
+            All cords need to conform to the prescribed maximum length.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Speelgoed: Kind verwondt zich aan scherp speelgoed of splinters aan speelgoed">
+        <description>
+            Toys: Child hurts itself with a sharp toy or gets splinters from toy in its finger.
+        </description>
+        <advice>
+            Check the toys monthly, repair or remove toys when necessary.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Speelgoed: Kind of leidster struikelt over speelgoed">
+        <description>
+            Toys: Child or supervisor trips over toys.
+        </description>
+        <advice>
+            Agreement: Clean up toys when done with them.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Speelgoed: Kind krijgt poppenhuis op zich">
+        <description>
+            Toys: Child gets a dollhouse on top of them.
+        </description>
+        <advice>
+            N/A
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Verbranding: Kind heeft toegang tot lucifers/aansteker">
+        <description>
+            Burns: Child has access to matches/lighter.
+        </description>
+        <advice>
+            Make sure any matches/lighters are stored out of reach of children. If possible, remove matches and lighters from the premises.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Verbranding: Kind verbrandt zich aan warmwaterkraan">
+        <description>
+            Burns: Child burns itself using hot water.
+        </description>
+        <advice>
+            Make sure children can only use hot water when supervised. Use cold water or thermostatically regulated water in bathrooms.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Overig: Kind wordt door huisdier gebeten">
+        <description>
+            Miscellaneous: Child gets bitten by a pet.
+        </description>
+        <advice>
+            Disallow pets.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Overig: Kind stikt in stukje eten">
+        <description>
+            Miscellaneous: Child chokes on food.
+        </description>
+        <advice>
+            Make sure children eat calmly. Make sure all supervisors are BHV certified.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Ankleedtafel: Kind draait zich van de aankleedtafel af">
+        <description>
+            Changing table: Child turns away from the changing table.
+        </description>
+        <advice>
+            Place the table in such a way that there is a wall to one side. No child goes on the table unsupervised.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Ankleedtafel: Kind rolt aan de achterkant van de aankleedtafel af">
+        <description>
+            Changing table: Child rolls of the table backwards.
+        </description>
+        <advice>
+            Place the table in such a way that there is a wall to one side. No child goes on the table unsupervised.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Ankleedtafel: Kind stoot zich aan (scherpe) hoek van de aankleedtafel">
+        <description>
+            Changing table: Child hits a (sharp edge) on the table.
+        </description>
+        <advice>
+            Place corner protectors.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Ankleedtafel: De aankleedtafel is niet stabiel en valt om">
+        <description>
+            Changing table: The table is not stable and falls over.
+        </description>
+        <advice>
+            Buy a decent table.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Ankleedtafel: De aankleedtafel is niet stevig en stort in">
+        <description>
+            Changing table: The table is not stable and collapses.
+        </description>
+        <advice>
+            Buy a decent table.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Ankleedtafel: Een opklapbare aankleedtafel klapt tijdens gebruik in">
+        <description>
+            Changing table: A fold-able changing table folds while being used.
+        </description>
+        <advice>
+            Buy a decent table.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Ankleedtafel: Kind komt in hoogte verstelbare aankleedtafel bekneld te zitten">
+        <description>
+            Changing table: Child gets stuck in a height adjustable changing table.
+        </description>
+        <advice>
+            Set the height without children present. Children are only to on the table when supervised.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Ankleedtafel: Kind valt van trapje van aankleedtafel">
+        <description>
+            Changing table: Child falls from steps of table.
+        </description>
+        <advice>
+            Children are only to on the table when supervised. When not in use, fold up the steps.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Ankleedtafel: Kind klautert zonder toezicht op aankleedtafel">
+        <description>
+            Changing table: Child climbs onto table unsupervised.
+        </description>
+        <advice>
+            Fold up stairs so a child cannot get onto the table unsupervised.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Giftige Stoffen: Kind heeft toegang tot lotions of alcohol">
+        <description>
+            Toxic substances: Child has access to lotions or alcohol.
+        </description>
+        <advice>
+            Keep lotions and soaps etc. out of reach of children.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Overig: Kind snuffelt in afvalbakje">
+        <description>
+            Miscellaneous: Child is going through the trash.
+        </description>
+        <advice>
+            Use a bin with a cover, empty the bin daily.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Giftige Stoffen: Kind eet van toiletblokje">
+        <description>
+            Toxic substances: Child eats toilet block.
+        </description>
+        <advice>
+            Do not use a toilet block.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Verbranding: Kind brandt zich aan kookplaat">
+        <description>
+            Burns: Child burns itself on stove.
+        </description>
+        <advice>
+            Make sure children do not have access to any stoves. Try not to cook in the presence of children.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Verbranding: Kind trekt pan van het fornuis">
+        <description>
+            Burns: Child pulls pan from the stove.
+        </description>
+        <advice>
+            Try not to cook in the presence of children.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Verbranding: Kind brandt zich aan oven">
+        <description>
+            Burns: Child burns itself on an oven.
+        </description>
+        <advice>
+            Try not to cook in the presence of children, make sure children do not have access to any ovens.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Verbranding: Kind loopt brandworden op door de waterkoker over zich heen te trekken">
+        <description>
+            Burns: Child burns itself by pulling a water boiler onto itself.
+        </description>
+        <advice>
+            Place water boilers in such a way that children cannot reach it, e.g the back of a counter-top.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Verbranding: Kind krijgt hete thee over zich heen">
+        <description>
+            Burns: Child gets burned by hot tea.
+        </description>
+        <advice>
+            Place any cups of tea far away on the table. Do not drink tea with a child on your lap.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Overig: Kind trekt plastic zak over het hoofd">
+        <description>
+            Miscellaneous: Child pulls a plastic bag over its head.
+        </description>
+        <advice>
+            Keep plastic bags out of reach of children.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Giftige Stoffen: Kind eet toner van kopieermachine op">
+        <description>
+            Toxic substances: Child eats toner of a copier.
+        </description>
+        <advice>
+            Make sure children cannot get to copiers.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Overig: Kind snijdt zich aan kantoorartikelen">
+        <description>
+            Miscellaneous: Child cuts itself on office paraphernalia.
+        </description>
+        <advice>
+            Keep children away from office paraphernalia.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Giftige Stoffen: Kind krijgt giftige stoffen binnen omdat voedsel naast gevaarlijke stoffen wordt opgeborgen">
+        <description>
+            Toxic substances: Child ingests toxic substance because food is stored next to it.
+        </description>
+        <advice>
+            N/A
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Berging: Kind klimt in wasdroger/machine">
+        <description>
+            Storage: Child climbs into washer/drier.
+        </description>
+        <advice>
+            N/A
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Berging: Kind verbrandt zich aan de cv-ketel">
+        <description>
+            Storage: Child burns itself on boiler.
+        </description>
+        <advice>
+            Make sure children have no access to the boiler (usually these are in a separate room).
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Berging: Kind bezeert zich aan opgeslagen speelgoed/materiaal">
+        <description>
+            Storage: Child hurts itself on stored toys.
+        </description>
+        <advice>
+            Make sure the storage is clean and orderly.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Berging: Kind bezeert zich aan gereedschap">
+        <description>
+            Storage: Child hurts itself on tools.
+        </description>
+        <advice>
+            Store tools out of reach of children after usage.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Speeltoestel: Kind valt van toestel">
+        <description>
+            Playground: Child falls from a playset.
+        </description>
+        <advice>
+            Make sure the floor is made from a soft material like rubber tiles or grass.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Speeltoestel: Kind valt door defect materiaal">
+        <description>
+            Playground: Child falls due to defective material.
+        </description>
+        <advice>
+            Check material monthly, repair or replace when necessary.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Speeltoestel: Kind komt met nek klem te zitten traptreden">
+        <description>
+            Playground: Child gets neck stuck between steps.
+        </description>
+        <advice>
+            Steps need to be in accordance with prescribed distances.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Speeltoestel: Kind verwondt zich aan scherpe randen">
+        <description>
+            Playground: Child hurts itself on sharp edges.
+        </description>
+        <advice>
+            Check material monthly, repair or replace when necessary.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Speeltoestel: Vinger komt klem te zitten bij schommel">
+        <description>
+            Playground: Finger gets stuck in swingset.
+        </description>
+        <advice>
+            Place protection.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Speeltoestel: Kind raakt bekneld tussen veerwip">
+        <description>
+            Playground: Child gets stuck in the spring of a seesaw.
+        </description>
+        <advice>
+            N/A
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Speeltoestel: Kind valt van de veerwip door defect materiaal">
+        <description>
+            Playground: Child falls from seesaw due to faulty material.
+        </description>
+        <advice>
+            N/A
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Speeltoestel: Kind blijft met koordje/ketting hangen">
+        <description>
+            Playground: Child gets caught in a cord/necklace.
+        </description>
+        <advice>
+            Cords need to comply with maximum length prescriptions.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Speeltoestel: Kind krijgt splinter in hand">
+        <description>
+            Playground: Child gets a splinter in their hand.
+        </description>
+        <advice>
+            Check material monthly, repair or replace when necessary.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Speeltoestel: Kind struikelt over speeltoestel">
+        <description>
+            Playground: Child trips over playset.
+        </description>
+        <advice>
+            Create and maintain sufficient walking space.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Speeltoestel: Kind botst tegen een speeltoestel">
+        <description>
+            Playground: Child runs into a playset.
+        </description>
+        <advice>
+            Create and maintain sufficient walking space.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Speeltoestel: Kind botst tegen ander kind op schommel">
+        <description>
+            Playground: Child hits another child on swings.
+        </description>
+        <advice>
+            Make sure swings are only used under supervision.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Speeltoestel: Vinger van kind komt klem in holle buis">
+        <description>
+            Playground: Finger gets stuck in a hollow tube.
+        </description>
+        <advice>
+            If necessary cover up the hole.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Speeltoestel: Kind snijdt zich aan zwerfvuil in de zandbak">
+        <description>
+            Playground: Child cuts itself on stray trash in sandpit.
+        </description>
+        <advice>
+            Cover the sand when unused, check for trash daily, replace sand once a year.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Speeltoestel: Kind stoot zich tegen rand van de zandbak">
+        <description>
+            Playground: Child hits the edge of a sandpit.
+        </description>
+        <advice>
+            Create and maintain sufficient walking space, make sure the pit is smooth.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Speeltoestel: Kind botst tegen veerwip">
+        <description>
+            Playground: Child runs into a seesaw.
+        </description>
+        <advice>
+            N/A
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Omheining: Kind doet poortje van het hek open en rent de straat op">
+        <description>
+            Fencing: Child opens fence gate and runs into the street.
+        </description>
+        <advice>
+            Keep the fence locked.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Omheining: Het hek blijft openstaan en kind loopt de straat op">
+        <description>
+            Fencing: The fence gate is left open and a child walks into the street.
+        </description>
+        <advice>
+            Make sure the fence remains locked.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Omheining: Kind bezeert zich aan omheining">
+        <description>
+            Fencing: Child hurts itself on the fence.
+        </description>
+        <advice>
+            Check the fence monthly and repair it when needed.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Omheining: Kind kruipt onder de omheining en komt klem te zitten">
+        <description>
+            Fencing: Child tries to crawl under the fence and gets stuck.
+        </description>
+        <advice>
+            The space under a fence has to conform to prescribed heights.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Omheining: Kind kruipt tussen de spijlen en komt klem te zitten">
+        <description>
+            Fencing: Child tries to move between the bars of a fence and gets stuck.
+        </description>
+        <advice>
+            Bars need to conform to prescribed spacing.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Omheining: Kind klimt op de omheining en valt">
+        <description>
+            Fencing: Child climbs the fence and falls.
+        </description>
+        <advice>
+            Do not place any elevations near fences.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Omheining: Kind klimt over de omheining">
+        <description>
+            Fencing: Child climbs over the fence.
+        </description>
+        <advice>
+            Do not place elevations near fences.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Ondergrond: Kind struikelt over een boomwortel">
+        <description>
+            Ground: Child trips over a tree root.
+        </description>
+        <advice>
+            Remove the tree root/replace the tiles.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Overig: Kind rent tegen een obstakel">
+        <description>
+            Miscellaneous: Child runs into an obstacle.
+        </description>
+        <advice>
+            Create and maintain sufficient walking space.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Overig: Kind botst tegen een ander kind">
+        <description>
+            Miscellaneous: One child runs into another.
+        </description>
+        <advice>
+            Create and maintain sufficient walking space. Do not allow children to run.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Overig: Kind bezeert zich aan zwerfvuil">
+        <description>
+            Miscellaneous: Child hurts itself on stray trash.
+        </description>
+        <advice>
+            Check for trash daily and remove it.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Overig: Kind wordt omver gelopen">
+        <description>
+            Miscellaneous: A child is knocked down.
+        </description>
+        <advice>
+            Create and maintain walking space, make sure children play calmly.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Overig: Kind verbrandt zich in de zon">
+        <description>
+            Miscellaneous: Child gets burned playing in the sun.
+        </description>
+        <advice>
+            Have children put on sunscreen and don't let them play outside in the scorching sun.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Overig: Kind raakt te water">
+        <description>
+            Child falls into a body of water.
+        </description>
+        <advice>
+            Make sure the gate is closed and always supervise children.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Omgeving: Kind moet oversteken tussen geparkeerde autos">
+        <description>
+            Environment: Child has to cross the road between parked cars.
+        </description>
+        <advice>
+            Children only cross the road under supervision.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Omgeving: Kind rent de weg op als het wordt opgehaald">
+        <description>
+            Environment: Child runs onto the road when picked up.
+        </description>
+        <advice>
+            Children are supervised when leaving.
+        </advice>
+    </checklist_item>
+
+    <checklist_item name="Omgeving: Kind raakt betrokken bij ongeval bij een uitstapje buiten de deur">
+        <description>
+            Environment: Child gets involved in an accident during an outdoors trip.
+        </description>
+        <advice>
+            Transport the child using legally prescribed seats to the nearest hospital.
+        </advice>
+    </checklist_item>
+    <!-- }}} -->
 
 </knowledge>
