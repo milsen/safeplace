@@ -56,7 +56,7 @@ function red_if_zero($value) {
 	<div class="analysis">
 			<dl class="stats">
 				<h2><a class="anchor" name="stats">Statistics</a></h2>
-				<div class="analysis-rules">
+				<div class="analysis-box">
 				<dt>Number of rules: <?=count($kb->rules)?></dt>
 				<dt>Number of questions: <?=count($kb->questions)?></dt>
 				</div>
@@ -64,13 +64,8 @@ function red_if_zero($value) {
 
 			<hr />
 			<h2><a class="anchor" name="facts">Facts</a></h2>
-			<?php foreach ($stats as $fact): ?>
-			<p id="var_<?=$this->id($fact->name)?>">
-				<?=$this->html($fact->name)?>
-				<small>(<a href="webfrontend.php?goals=<?=urlencode($fact->name)?>">try to infer this fact</a>)</small>
-			</p>
-			<div class="analysis-rules">
-			<table class="fact-analysis analysis-table">
+			<div class="analysis-box">
+			<table class="analysis-table">
 				<thead>
 					<tr>
 						<th>Value</th>
@@ -80,26 +75,33 @@ function red_if_zero($value) {
 						<th><span class="hint" title="Rules that test for this value in their condition">Testing rules</span></th>
 					</tr>
 				</thead>
-				<tbody>
-				<?php foreach ($fact->values as $value => $value_stats): ?>
-					<tr>
-						<td>
-							<?php if (KnowledgeState::is_variable($value)): ?>
-							<a href="#var_<?=$this->id(KnowledgeState::variable_name($value))?>"><?=$this->html($value)?></a>
-							<?php else: ?>
-							<?=$this->html($value)?>
-							<?php endif ?>
-						</td>
-						<td><?=count($value_stats->inferringQuestions)?></td>
-						<td><?=count($value_stats->inferringRules)?></td>
-						<td><?=red_if_zero(count($value_stats->inferringQuestions) + count($value_stats->inferringRules))?></strong></td>
-						<td><?=red_if_zero(count($value_stats->dependingRules))?></td>
-					</tr>
+				<?php foreach ($stats as $fact): ?>
+					<tbody>
+						<tr class="fact-name">
+							<td colspan="5" id="var_<?=$this->id($fact->name)?>">
+								<!-- the link causes the system to attempt inferring the specified fact -->
+								<a href="webfrontend.php?goals=<?=urlencode($fact->name)?>"><?=$this->html($fact->name)?></a>
+							</td>
+						</tr>
+					<?php foreach ($fact->values as $value => $value_stats): ?>
+						<tr>
+							<td>
+								<?php if (KnowledgeState::is_variable($value)): ?>
+								<a href="#var_<?=$this->id(KnowledgeState::variable_name($value))?>"><?=$this->html($value)?></a>
+								<?php else: ?>
+								<?=$this->html($value)?>
+								<?php endif ?>
+							</td>
+							<td><?=count($value_stats->inferringQuestions)?></td>
+							<td><?=count($value_stats->inferringRules)?></td>
+							<td><?=red_if_zero(count($value_stats->inferringQuestions) + count($value_stats->inferringRules))?></strong></td>
+							<td><?=red_if_zero(count($value_stats->dependingRules))?></td>
+						</tr>
+					<?php endforeach ?>
+					</tbody>
 				<?php endforeach ?>
-				</tbody>
 			</table>
 			</div>
-			<?php endforeach ?>
 
 			<hr />
 			<section id="info-rules">
