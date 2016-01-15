@@ -35,11 +35,11 @@ class HTMLFormatter
 					</th>
 				</tr>
 				<tr>
-					<th>If</th>
+					<th class="keyword">If</th>
 					<td>%s</td>
 				</tr>
 				<tr>
-					<th>Then</th>
+					<th class="keyword">Then</th>
 					<td>%s</td>
 				</tr>
 			</table>',
@@ -196,11 +196,11 @@ class HTMLFormatter
 					</th>
 				</tr>
 				<tr>
-					<th>Q</th>
+					<th class="keyword">Q</th>
 					<td>%s</td>
 				</tr>
 				<tr>
-					<th>A</th>
+					<th class="keyword">A</th>
 					<td>%s</td>
 				</tr>
 			</table>',

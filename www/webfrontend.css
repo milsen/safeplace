@@ -439,7 +439,9 @@ form > div > label {
 	display: block;
 }
 
+/* Visualization of rules and buildings in analyse.phtml */
 .kb-rule {
+	width: 100%;
 	margin-bottom: 1em;
 	border: 2px solid #ccc;
 	border-collapse: collapse;
@@ -455,7 +457,7 @@ form > div > label {
 	margin-bottom: 1em;
 	border: 2px solid #ccc;
 	border-collapse: collapse;
-    width: 100%;
+	width: 100%;
 }
 
 .kb-building-title .name-value-pair {
@@ -482,6 +484,14 @@ form > div > label {
 .kb-rule th,
 .kb-rule td {
 	padding: 2px;
+}
+
+.kb-checklist-item .keyword {
+	width: 20px;
+}
+
+.kb-rule .keyword {
+	width: 50px;
 }
 
 .kb-building table th,
