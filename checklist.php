@@ -103,24 +103,24 @@ class Checklist extends Set
 
 		// header of table
 		$csv = array (
-			array('Safeplace Risico Inventarisatie'),
+			array('Safeplace Risk Inventory'),
 			array('pkt11.ikhoefgeen.nl'),
 			array(''),
-			array('Locatie:'),
-			array('Contactpersoon:'),
-			array('Adres:'),
+			array('Location:'),
+			array('Contact Person:'),
+			array('Address:'),
 			array(''),
-			array('Inventarisatiedatum:'),
-			array('Uitgevoerd door:'),
+			array('Inventory Date:'),
+			array('Carried out by:'),
 			array(''),
 			array(
-				'Urgentie',
-				// 'Itemnaam',
-				'Itemvraag',
-				'Advies',
-				'Actie/Opmerking',
-				'Streefdatum',
-				'Verantwoordelijk'
+				'Urgency',
+				// 'Item Name',
+				'Item',
+				'Advice',
+				'Action/Comment',
+				'Deadline',
+				'Responsible'
 			)
 		);
 
