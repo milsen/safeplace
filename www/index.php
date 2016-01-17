@@ -60,22 +60,21 @@ function process_file($kb_file, array &$errors = array())
 	// create default values of error level, filename and line number
 	// to describe errors which occurr while uploading and not while linting
 	$number = E_USER_WARNING;
-	$file = "Bestand te uploaden";
+	$file = "File to be uploaded";
 	$line = 0;
 	$number_file_line = array("number","file","line");
 
 	// check filename
 	if (!preg_match('/^[a-zA-Z0-9_\-\.]+\.xml$/i', $kb_file['name'])) {
-		$message = "De bestandsnaam bevat karakters die niet goed " .
-			"verwerkt kunnen worden. Het bestand moet zijn een " .
-			"XML-bestand.";
+		$message = "The file name includes characters that cannot be " .
+			"processed correctly, or the file is not an XML-file.";
 		$errors[] = (object) compact("message",$number_file_line);
 		return;
 	}
 
 	// check for upload errors: file size too large, connection error etc.
 	if ($kb_file['error'] != 0) {
-		$message = "Er is een fout opgetreden bij het uploaden.";
+		$message = "An error occurred while uploading the file.";
 		$errors[] = (object) compact("message",$number_file_line);
 		return;
 	}
@@ -90,8 +89,8 @@ function process_file($kb_file, array &$errors = array())
 
 	// save uploaded file in MODIFIED_KB, overwrite it if it already exists
 	if (!move_uploaded_file($kb_file['tmp_name'], MODIFIED_KB)) {
-		$message = "De knowledge-base kon niet worden opgeslagen op de " .
-			"server.";
+		$message = "It was not possible to transfer the knowledge " .
+			"base to its correct destination on the server.";
 		$errors[] = (object) compact("message",$number_file_line);
 	}
 }
