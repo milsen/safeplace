@@ -209,7 +209,7 @@ dt {
 
 /* Stylesheet for completed.phtml */
 .completed {
-	max-width: 900px;
+	max-width: 600px;
 	margin: 0 auto;
 	padding-top: 100px;
 }
@@ -222,8 +222,8 @@ dt {
 
 .completed-box {
 	max-width: 600px;
-	margin: 0 auto;
-	padding: 5px 10px 30px;
+	margin: 20px auto;
+	padding: 10px 20px 10px;
 	background-color: #eee;
 	border-radius: 7px;
 	text-align: center;
