@@ -13,7 +13,7 @@ function array_filter_type($type, $array)
 	foreach ($array as $element)
 		if ($element instanceof $type)
 			$hits[] = $element;
-	
+
 	return $hits;
 }
 
@@ -26,7 +26,7 @@ function array_flatten($array)
 			$values = array_merge($values, array_flatten($item));
 		else
 			$values[] = $item;
-	
+
 	return $values;
 }
 
@@ -36,7 +36,7 @@ function array_map_method($method, $array)
 
 	foreach ($array as $key => $value)
 		$values[$key] = call_user_func(array($value, $method));
-	
+
 	return $values;
 }
 
@@ -45,7 +45,7 @@ function iterator_contains(Iterator $it, $needle)
 	foreach ($it as $el)
 		if ($el == $needle)
 			return true;
-	
+
 	return false;
 }
 
@@ -74,7 +74,7 @@ class CallbackMapIterator extends IteratorIterator
 
 		$this->callback = $callback;
 	}
-	
+
 	public function current()
 	{
 		return call_user_func($this->callback, parent::current(), parent::key());
@@ -91,7 +91,7 @@ class Map implements ArrayAccess, IteratorAggregate
 	{
 		$this->default_value = $default_value;
 	}
-	
+
 	public function offsetExists($key)
 	{
 		if (!is_scalar($key))

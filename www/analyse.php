@@ -53,13 +53,13 @@ foreach ($state->rules as $rule)
 {
 	$fact_conditions = array_filter_type('FactCondition',
 		array_flatten($rule->condition->asArray()));
-	
+
 	foreach ($fact_conditions as $condition)
 		$stats[$condition->name]
 			->values[$condition->value]
 			->dependingRules
 			->push($condition->value);
-	
+
 	foreach ($rule->consequences as $fact_name => $value)
 		$stats[$fact_name]
 			->values[$value]
